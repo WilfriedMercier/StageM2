@@ -189,14 +189,9 @@ IRSA serves the COSMOS archive using the following search methods:
         content=
         "HTML Tidy for Solaris (vers 1 September 2005), see www.w3.org" />
 
-  <title>Tasca Morphology Catalog v1.1 Definitions</title>
-  
-  <script type="text/javascript" src="/include/ga_incl.js"></script>
-
 <link rel="stylesheet" type="text/css" media="screen,projection" href="/style.css" />
 <link rel="stylesheet" type="text/css" media="print" href="/print_style.css" />
 <link rel="stylesheet" type="text/css" media="screen,projection" href="/ui.css" />
-<script type="text/javascript" src="/ui_verbose.js"></script>
 
 <!--[if lt IE 7]>
 <style type="text/css" media="screen, projection">
@@ -215,7 +210,6 @@ height: 1%;
 <body >
 
 <div id="irsa-banner"   style= "min-width:768px; min-height:95px"></div>
-<script type="text/javascript" language='javascript' src='/frontpage/frontpage.nocache.js'> </script>
 
 <div id="content">
 <!--   #include virtual="/include/sysnotice.html"  -->
@@ -386,12 +380,6 @@ in the proximity of a bright source.
 
 </table>
 </center>
-
-
-</div> <!-- end #content -->
-<div id="irsa-footer" style="position:absolute;left:0;right:0;margin-top:20px">
-<iframe src="/frontpage/footer.html" width="100%" frameborder=0 scrolling=0 seamless=1/>
-</div>  <!-- end #irsa-footer -->
 
 </body>
 </html>
