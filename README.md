@@ -177,12 +177,6 @@ IRSA serves the COSMOS archive using the following search methods:
 </table>
 </center>
 
-
-</div> <!-- end #content -->
-<div id="irsa-footer" style="position:absolute;left:0;right:0;margin-top:20px">
-<iframe src="/frontpage/footer.html" width="100%" frameborder=0 scrolling=0 seamless=1/>
-</div>  <!-- end #irsa-footer -->
-
 </body>
 </html>
 
