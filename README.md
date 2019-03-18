@@ -1,9 +1,11 @@
-# Liste des programmes
+# Programs list
 
-Nom | Language | Description
+Name| Langage | Description
 :---: | :---: | :---:
-*Analyze_field_galaxies.ipynb* | Python | Notebook prévu pour analyser les propriétés cinématiques et morphologiques des galaxies de l'échantillon sélectionné
-*Check_RA_RA2000_Dec_Dec2000.ipynb* | Python | Notebook servant à vérifier que les (RA, DEC) dans les master .vot sont identiques aux (RA2000, DEC2000) donnés
-*Convert_tbl_to_vot.ipynb* | Python | Notebook qui convertit les fichiers .tbl de Cassata et Tasca en .vot lisible par TopCat
-*extraction_gals_test.ipynb* | Python | Notebook de test des fonctionnalités d'astropy et numpy vis-à-vis des structured_arrays, masked_arrays et des données issues de fichiers .vot
-*extraction_gals_whole.ipynb* | Python | Notebook contenant le programme qui se charge de construire les master catalogues à partir de ceux dans data/catalogues en uniformisant les noms des champs et le type des données qui varient d'un catalogue à l'autre
+*Analyze_field_galaxies.ipynb* | Python | Notebook in which the kinematical and morphological properties of the field galaxies within our sample are analyzed
+*Analyze_cluster_galaxies.ipynb* | Python | Notebook within which we look at the difference between the morphological properties of the selected cluster galaxies between GalFit and Cassata/Tasca catalogs
+*Check_RA_RA2000_Dec_Dec2000.ipynb* | Python | Notebook which checks that (RA, DEC) wihtin the master .vot files are identical to the given (RA2000, DEC2000) 
+*Convert_tbl_to_vot.ipynb* | Python | Notebook which converts .tbl files into .vot files for TopCat
+*extraction_gals_test.ipynb* | Python | A notebook to test astropy and numpy functionnalities towards structured arrays, masked arrays and data from .vot files
+*extraction_gals_whole.ipynb* | Python | Notebook with the main program which builds up master catalogs from those in data/catalogues by unifying the fields name and their data type which change from one file to another
+
