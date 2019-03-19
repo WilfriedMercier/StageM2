@@ -1,0 +1,154 @@
+% Zurich Structure&Morphology catalog - version v1.0
+
+% This catalog contains the measurements presented in:
+%
+% 1.  Scarlata, Carollo, Lilly et al 2007, ApJS, 172, 406
+%     (i.e., the Zurich Estimator of Structural Type [ZEST] catalog;
+%     measurements down to a limiting magnitude of I_AB=24.
+%     ZEST measurements for galaxies with half-light radii < 0 .17" are unreliable,
+%     especially for galaxies with a steep light profile)
+%
+% 2.  Sargent, Carollo, Lilly et al 2007, ApJS, 172, 434
+%     (i.e., Single-Sersic GIM2D fits;
+%     measurements down to a limiting magnitude of I_AB=22.5;
+%     formal GIM2D fits are also listed for approx. 2650 compulsory 
+%     zCOSMOS-Bright x-ray, radio, etc. sources with I_AB> 22.5 - however,
+%     the quality of the fits deteriorates for sources substantially 
+%     fainter than ~I_AB~23)
+%
+% This v1.0 catalog is based on the **May 2006** release 
+% of Alexie Leauthaud's ACS catalog (cut at the limits mentioned above)
+%
+% Notes:
+% (a) All ACS_"parameter" columns are copied from the original 
+%     May 2006 Leauthaud catalog
+% (b) The catalog has been cross-correlated with the 
+%     **January 2006** Capak catalog. 
+%     All "Capak IDs, RAs, and Decs" refer to this version of 
+%     the ground-based photometric catalog, and provide the closest 
+%     ground-based match to the ACS source within a radius 
+%     of 0.6 arcseconds.
+% (c) The catalog contains 71 colums and 131532 lines. Each line is written 
+%      in fortran format:  "format(i9,1x,2d23.12,1x,a37,1x,67d23.12)" 
+% (d) An entry of -999999 indicates "no measurement" 
+%     (including in the ACS and Capak catalogs).
+% (e) The pixel scale for the quantities in pixels is 0.03".
+%
+% List of columns:
+c1	Sequential number
+c2 	ACS_ALPHA_J2000 (degrees)
+c3 	ACS_DELTA_J2000 (degrees)
+c4 	ACS TILE number from which the object is extracted
+c5 	CAPAK_ID 
+c6 	CAPAK_RA (degrees)
+c7 	CAPAK_DEC (degrees)
+c8 	ACS_MAG_AUTO (total magnitude of object- used for catalog selection)
+c9 	ACS_MAGERR_AUTO	(magnitude error)
+c10 	ACS_X_IMAGE (X-pixel position on ACS tile)
+c11 	ACS_Y_IMAGE (Y-pixel position on ACS tile)
+c12 	ACS_XPEAK_IMAGE (X-pixel position of object peak flux on ACS tile)
+c13 	ACS_YPEAK_IMAGE (Y-pixel position of object peak flux on ACS tile)
+c14 	ACS_ALPHAPEAK_J2000 (RA of object peak flux, degrees)
+c15 	ACS_DELTAPEAK_J2000 (Dec of object peak flux, degrees)
+c16 	ACS_A_IMAGE (SExtractor semi-major axis, pixels)
+c17 	ACS_B_IMAGE (SExtractor semi-minor axis, pixels)
+c18 	ACS_THETA_IMAGE	(SExtractor position angle, degrees)
+c19 	ACS_ELONGATION (SExtractor a/b [semi-major axis / semi minor axis])
+c20 	ACS_CLASS_STAR (SExtractor stellarity parameter) 
+c21 	ACS_IDENT (Unique number that identifies object)
+c22 	ACS_SE	(FLAG = Detection from 'hot' pass or 'cold' pass of SExtractor)
+		se =0     cold (bright)
+        	se =1     hot  (faint)
+c23 	ACS_MU_CLASS (FLAG = type of object)
+		mu_class = 1	galaxy
+		mu_class = 2  	star
+		mu_class = 3	spurious
+c24 	ACS_OVERLAP (FLAG = object overlap)
+		all the objects in this morphological catalog have "overlap = 1",
+        	which means "no overlap" 
+c25 	ACS_NEARSTAR (FLAG = object in star mask)
+		all the objects in this morphological catalog have "nearstar = 1"
+		which means they are not in a star mask
+c26 	ACS_MASK (FLAG = object in automatic mask)
+		mask = 0 	
+		mask = 2	star used to make automatic masks
+c27 	ACS_MASKED (FLAG = object in manual mask)
+		masked = -1     object in manual mask (astrophysical obj)
+		masked = 0      object in manual mask (artefact or image defect)	
+		masked = 1      not in manual mask
+c28 	ACS_CLEAN (FLAG = object usable)
+		clean = 0	do not use this object
+		clean = 1	use this object
+c29 	ACS_UNIQUE (FLAG = object unique)
+		all the objects in this morphological catalog have "unique = 1"
+		which means they are all "unique" in the original ACS catalog
+c30 	GG (ZEST Gini coefficient)				      
+c31 	M20 (ZEST second order moment of the 20% brightest pixels)      
+c32 	CC (ZEST concentration)					      
+c33 	AA (ZEST asymmetry)					      
+c34 	R20 (ZEST semi-major axis length of ellipse encompassing 20% of total light, pixels) 	      
+c35 	R50 (ZEST semi-major axis length of ellipse encompassing 50% of total light, pixels)
+c36 	R80 (ZEST semi-major axis length of ellipse encompassing 80% of total light, pixels)
+c37 	RPET (Zest semi-major axis length for Petrosian Radius ellipse, pixels)      
+c38 	FLAGRPET (FLAG for Petrosian radius)
+		flag = 0  single Petrosian radius measured 
+		flag = 2  multiple Petrosian radii measured (noisy SB profile)
+		flag = 5  SB profile was corrected for diffuse light contribution
+			   from neighboring object(s)
+c39	FLUX_GIM2D (GIM2D total flux in counts)
+c40	LE_FLUX_GIM2D (99% conf. lower error on R_GIM2D)
+c41	UE_FLUX_GIM2D (99% conf. upper error on R_GIM2D)
+c42 	R_GIM2D (GIM2D psf-convolved half-light radius of object; arcseconds)
+c43 	LE_R_GIM2D (99% conf. lower error on R_GIM2D)
+c44 	UE_R_GIM2D (99% conf. upper error on R_GIM2D)
+c45 	ELL_GIM2D (GIM2D ellipticity = 1-b/a of object)
+c46 	LE_ELL_GIM2D (99% conf. lower error on ELL_GIM2D)
+c47 	UE_ELL_GIM2D (99% conf. upper error on ELL_GIM2D)
+c48 	PA_GIM2D (GIM2D position angle of object - cw from +y-axis, degrees)
+c49 	LE_PA_GIM2D (99% conf. lower error on PA_GIM2D)
+c50 	UE_PA_GIM2D (99% conf. upper error on PA_GIM2D)
+c51 	DX_GIM2D (x-offset of GIM2D-model center from ACS-coordinate center [ACS_ALPHA_J2000, ACS_DELTA_J2000]; arcseconds)
+c52 	LE_DX_GIM2D (99% conf. lower error on DX_GIM2D)
+c53 	UE_DX_GIM2D (99% conf. upper error on DX_GIM2D)
+c54 	DY_GIM2D (y-offset of GIM2D-model center from ACS-coordinate center [ACS_ALPHA_J2000, ACS_DELTA_J2000]; arcseconds)
+c55 	LE_DY_GIM2D (99% conf. lower error on DY_GIM2D)
+c56 	UE_DY_GIM2D (99% conf. upper error on DY_GIM2D)
+c57 	SERSIC_N_GIM2D (GIM2D Sersic index)
+c58 	LE_N_GIM2D (99% conf. lower error on SERSIC_N_GIM2D)
+c59 	UE_N_GIM2D (99% conf. upper error on SERSIC_N_GIM2D)
+c60 	R_0P5_GIM2D (GIM2D half-light radius of object without PSF convolution; arcseconds)
+c61 	CHI_GIM2D (reduced CHI2 of the best GIM2D model fit)
+c62 	ITER_GIM2D (no. of iterations required for GIM2D fit to converge)
+c63 	PC_1 (ZEST first principal component)	   
+c64 	PC_2 (ZEST second principal component)	   
+c65 	PC_3 (ZEST third principal component)	   
+c66 	TYPE (ZEST Type CLASS) 
+		1 = Early-Type Galaxy
+		2 = Disk Galaxy
+		3 = Irregular Galaxy
+		9 = no classification
+c67 	BULG (ZEST "Bulgeness" CLASS - only for Type 2 [i.e. disk] galaxies)			   
+		range: 0 to 3
+		0 = bulge dominated galaxy
+		1, 2 = intermediate-bulge galaxies
+		3 = pure disk galaxy
+		9 = no classification
+c68 	IRRE (ZEST Irregularity CLASS- only for Type 1 [i.e. elliptical] galaxies)		   
+		0 = regular
+		1 = irregular
+		9 = no value
+c69 	ELLI (ZEST Ellipticity CLASS)		   
+		0 to 3
+		0 = face-on
+		1, 2 = increasingly higher elongation
+		3 = edge-on
+		9 = no classification of elongation
+c70 	STELLARITY (FLAG for Visual Stellarity) 
+		flag = 0 if ACS_CLASS_STAR<0.6 (object is ASSUMED to be a galaxy; no visual inspection)
+		flag = 0 if ACS_CLASS_STAR>=0.6 AND object visually identified as a galaxy
+		flag = 1 if ACS_CLASS_STAR>=0.6 AND visually identified as a star
+		flag = 2 if ACS_CLASS_STAR>=0.8 (object is assumed to be a star and was not visually inspected)
+		flag = 3 if ACS_CLASS_STAR<0.6 AND but object is visually identified as a star (e.g. saturated star, etc)
+c71 	JUNKFLAG (FLAG for junk)
+		flag = 0 good object
+		flag = 1 detection visually identified as spurious (= junk)
