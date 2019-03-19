@@ -1,0 +1,620 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator"
+        content=
+        "HTML Tidy for Solaris (vers 1 September 2005), see www.w3.org" />
+
+  <title>Zurich Structure &amp; Morphology Catalog v1.0 Definitions</title>
+  
+  <script type="text/javascript" src="/include/ga_incl.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen,projection" href="/style.css" />
+<link rel="stylesheet" type="text/css" media="print" href="/print_style.css" />
+<link rel="stylesheet" type="text/css" media="screen,projection" href="/ui.css" />
+<script type="text/javascript" src="/ui_verbose.js"></script>
+
+<!--[if lt IE 7]>
+<style type="text/css" media="screen, projection">
+#irsa-menu li
+{
+float: left;
+height: 1%;
+}
+#irsa-menu a
+{
+height: 1%;
+}
+</style>
+<![endif]-->
+</head>
+<body >
+
+<div id="irsa-banner"   style= "min-width:768px; min-height:95px"></div>
+<script type="text/javascript" language='javascript' src='/frontpage/frontpage.nocache.js'> </script>
+
+<div id="content">
+<!--   #include virtual="/include/sysnotice.html"  -->
+
+
+  <p></p>
+
+  <center>
+    <h3>Zurich Structure &amp; Morphology Catalog v1.0 Definitions</h3>
+  </center>
+
+  <p></p>
+
+  <h4>COSMOS Overview</h4>
+
+<p>
+
+The COSMOS Archive serves data taken for the <b>Cosmic Evolution Survey</b> (COSMOS) project.
+<b>COSMOS</b> is an astronomical survey designed to probe the formation and evolution of 
+galaxies as a function of cosmic time (redshift) and large scale structural environment. 
+The survey covers a 2 square degree equatorial field with imaging by most of the major 
+space-based telescopes (Hubble, Spitzer, GALEX, XMM, Chandra) and a number of large ground 
+based telescopes (Subaru, VLA, ESO-VLT, UKIRT, NOAO, CFHT, and others). 
+
+</p>
+
+
+<p>
+IRSA serves the COSMOS archive using the following search methods:
+<ul>
+<li> Spatial search on all <a href="/data/COSMOS/">images and small catalogs</a>, using Atlas</li>
+<li> Advanced search on only the larger <a href="/applications/Gator">catalogs</a>, using Gator </li>
+</ul>
+
+
+<h4>Zurich Structure &amp; Morphology Catalog v1.0 Overview</h4>
+
+<p>This catalog contains the measurements presented in:</p>
+
+<ol>
+  <li>1.  Scarlata, Carollo, Lilly et al 2007, ApJS, 172, 406 (i.e., the Zurich Estimator of Structural Type [ZEST] catalog; measurements down to a limiting magnitude of I_AB=24. ZEST measurements for galaxies with half-light radii &lt; 0 .17" are unreliable, especially for galaxies with a steep light profile)</li>
+  <li>2.  Sargent, Carollo, Lilly et al 2007, ApJS, 172, 434 (i.e., Single-Sersic GIM2D fits; measurements down to a limiting magnitude of I_AB=22.5;formal GIM2D fits are also listed for approx. 2650 compulsory  zCOSMOS-Bright x-ray, radio, etc. sources with I_AB &gt; 22.5 - however, the quality of the fits deteriorates for sources substantially fainter than ~I_AB~23)</li>
+</ol>
+
+<p>This v1.0 catalog is based on the <b>May 2006</b> release % of Alexie Leauthaud's ACS catalog (cut at the limits mentioned above)</p>
+
+<p>Notes:</p>
+
+<p>(a) All ACS_"parameter" columns are copied from the original  May 2006 Leauthaud catalog</p>
+
+<p>(b) The catalog has been cross-correlated with the <b>January 2006</b> Capak catalog. </p>
+
+<p>All "Capak IDs, RAs, and Decs" refer to this version of the ground-based photometric catalog, and provide the closest ground-based match to the ACS source within a radius of 0.6 arcseconds.</p>
+
+<p>(c) The catalog contains 71 colums and 131532 lines. Each line is written in fortran format:  "format(i9,1x,2d23.12,1x,a37,1x,67d23.12)" </p>
+
+<p>(d) An entry of -999999 indicates "no measurement" (including in the ACS and Capak catalogs).</p>
+
+<p>(e) The pixel scale for the quantities in pixels is 0.03".</p>
+
+<h4>Zurich Structure &amp; Morphology Catalog v1.0 Column Definitions</h4>
+
+<p>Gator serves the <b>Zurich Structure &amp; Morphology Catalog v1.0</b> (76 columns [71 delivered + 5 IRSA-created], 131,532 data rows).  The column descriptions can be found below.  
+</p>
+
+
+<center>
+<table border="1" class="coldescrip">
+<tr bgcolor="#c0c0c0" align="center">
+<td><b>Column Name</b></td>
+<td><b>Data Type</b></td>
+<td><b>Units</b></td>
+<td><b>Description</b></td>
+</tr>
+
+<tr>
+<td valign="top"><a name="SequentialID">SequentialID</a></td>
+<td valign="top">int</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Identification number</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="RA">RA</a></td>
+<td valign="top">float</td>
+<td valign="top">degrees</td>
+<td valign="top">Right ascension</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="DEC">DEC</a></td>
+<td valign="top">float</td>
+<td valign="top">degrees</td>
+<td valign="top">Declination</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="CAPAK_ID">CAPAK_ID</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ID based on ground-based photometric catalog of Capak 2006</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="CAPAK_RA">CAPAK_RA</a></td>
+<td valign="top">float</td>
+<td valign="top">degrees</td>
+<td valign="top">Closest matched right ascension to ground-based catalog within 0.6"</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="CAPAK_DEC">CAPAK_DEC</a></td>
+<td valign="top">float</td>
+<td valign="top">degrees</td>
+<td valign="top">Closest matched declination to ground-based catalog within 0.6"</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_MAG_AUTO">ACS_MAG_AUTO</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Total magnitude of object- used for catalog selection</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_MAGERR_AUTO">ACS_MAGERR_AUTO</a></td>
+<td valign="top">float</td>
+<td valign="top">magnitude</td>
+<td valign="top">Magnitude error</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_X_IMAGE">ACS_X_IMAGE</a></td>
+<td valign="top">float</td>
+<td valign="top">pixel</td>
+<td valign="top">X-pixel position on ACS-tile</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_Y_IMAGE">ACS_Y_IMAGE</a></td>
+<td valign="top">float</td>
+<td valign="top">pixel</td>
+<td valign="top">Y-pixel position on ACS-tile</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_XPEAK_IMAGE">ACS_XPEAK_IMAGE</a></td>
+<td valign="top">float</td>
+<td valign="top">pixel</td>
+<td valign="top">X-pixel position of object peak flux on ACS tile</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_YPEAK_IMAGE">ACS_YPEAK_IMAGE</a></td>
+<td valign="top">float</td>
+<td valign="top">pixel</td>
+<td valign="top">Y-pixel position of object peak flux on ACS tile</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_ALPHAPEAK_">ACS_ALPHAPEAK_</a></td>
+<td valign="top">float</td>
+<td valign="top">degrees</td>
+<td valign="top">RA of object peak flux</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_DELTAPEAK_">ACS_DELTAPEAK_</a></td>
+<td valign="top">float</td>
+<td valign="top">degrees</td>
+<td valign="top">Dec of object peak flux</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_A_IMAGE">ACS_A_IMAGE</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">SExtractor semi-major axis</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_B_IMAGE">ACS_B_IMAGE</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">SExtractor semi-minor axis</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_THETA_IMAGE">ACS_THETA_IMAGE</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">SExtractor position angle</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_ELONGATION">ACS_ELONGATION</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">SExtractor a/b [semi-major axis / semi minor axis]</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_CLASS_STAR">ACS_CLASS_STAR</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">SExtractor stellarity parameter</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_IDENT">ACS_IDENT</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Unique number that identifies object</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_SE">ACS_SE</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">1 = Detection from 'hot' pass of SExtractor.<br /><br />0 = Detection from 'cold' pass of SExtractor.</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_MU_CLASS">ACS_MU_CLASS</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Type of object.<br /><br />1 = galaxy<br />2 = star<br /><br />3 = spurious</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_OVERLAP">ACS_OVERLAP</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Object overlap flag.   All objects here have overlap =1 i.e. no overlap.</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_NEARSTAR">ACS_NEARSTAR</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Object in star mask flag.  All the objects in this morphological catalog have "nearstar = 1" which means they are not in a star mask.</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_MASK">ACS_MASK</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Object in automatic mask flag.<br /><br />2 = star used to make automatic mask</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_MASKED">ACS_MASKED</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Object in manual mask flag. <br /><br />-1 = manual mask (astrophysical obj)<br /><br />0 = manual mask (artifact or image defect)<br /><br />1 = not in manual mask</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_CLEAN">ACS_CLEAN</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Object useable flag.<br /><br />0 = do not use this object<br /><br />1 = use this object</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACS_UNIQUE">ACS_UNIQUE</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Object unique flag.  All the objects in this morphological catalog have "unique = 1" which means they are all "unique" in the original ACS catalog.</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="GG">GG</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST Gini coefficient</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="M20">M20</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST second order moment of the 20% brightest pixels</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="CC">CC</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST concentration</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="AA">AA</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST asymmetry</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="R20">R20</a></td>
+<td valign="top">float</td>
+<td valign="top">pixels</td>
+<td valign="top">ZEST semi-major axis length of ellipse encompassing 20% of total light</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="R50">R50</a></td>
+<td valign="top">float</td>
+<td valign="top">pixels</td>
+<td valign="top">ZEST semi-major axis length of ellipse encompassing 50% of total light</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="R80">R80</a></td>
+<td valign="top">float</td>
+<td valign="top">pixels</td>
+<td valign="top">ZEST semi-major axis length of ellipse encompassing 80% of total light</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="RPET">RPET</a></td>
+<td valign="top">float</td>
+<td valign="top">pixels</td>
+<td valign="top">Zest semi-major axis length for Petrosian Radius ellipse</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="FLAGRPET">FLAGRPET</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Petrosian radius flag.<br /><br />0 = single Petrosian radius measured<br /><br />2 = multiple radii measured (noisy SB profile)<br /><br />5 = SB profile was corrected for diffuse light contribution from neighboring object(s)</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="FLUX_GIM2D">FLUX_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">counts</td>
+<td valign="top">GIM2D total flux</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="LE_FLUX_GIM2D">LE_FLUX_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">LE_FLUX_GIM2D (99% conf. lower error on R_GIM2D)</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="UE_FLUX_GIM2D">UE_FLUX_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">UE_FLUX_GIM2D (99% conf. lower error on R_GIM2D)</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="R_GIM2D">R_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">arcseconds</td>
+<td valign="top">GIM2D psf-convolved half-light radius of object</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="LE_R_GIM2D">LE_R_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. lower error on R_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="UE_R_GIM2D">UE_R_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. upper error on R_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ELL_GIM2D">ELL_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">GIM2D ellipticity = 1-b/a of object</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="LE_ELL_GIM2D">LE_ELL_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. lower error on ELL_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="UE_ELL_GIM2D">UE_ELL_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. upper error on ELL_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="PA_GIM2D">PA_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">degrees</td>
+<td valign="top">GIM2D position angle of object - cw from +y-axis</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="LE_PA_GIM2D">LE_PA_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. lower error on PA_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="UE_PA_GIM2D">UE_PA_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. upper error on PA_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="DX_GIM2D">DX_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">arcseconds</td>
+<td valign="top">x-offset of GIM2D-model center from ACS-coordinate center</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="LE_DX_GIM2D">LE_DX_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. lower error on DX_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="UE_DX_GIM2D">UE_DX_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. upper error on DX_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="DY_GIM2D">DY_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">arcseconds</td>
+<td valign="top">y-offset of GIM2D-model center from ACS-coordinate center</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="LE_DY_GIM2D">LE_DY_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. lower error on DY_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="UE_DY_GIM2D">UE_DY_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. upper error on DY_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="SERSIC_N_GIM2D">SERSIC_N_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">GIM2D Sersic index</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="LE_N_GIM2D">LE_N_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. lower error on SERSIC_N_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="UE_N_GIM2D">UE_N_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">99% conf. upper error on SERSIC_N_GIM2D</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="R_0P5_GIM2D">R_0P5_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">arcseconds</td>
+<td valign="top">GIM2D half-light radius of object without PSF convolution</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="CHI_GIM2D">CHI_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">reduced CHI2 of the best GIM2D model fit</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ITER_GIM2D">ITER_GIM2D</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">no. of iterations required for GIM2D fit to converge</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="PC_1">PC_1</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST first principal component</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="PC_2">PC_2</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST second principal component</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="PC_3">PC_3</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST third principal component</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="TYPE">TYPE</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST Type CLASS<br /><br />1 = Early type<br /><br />2 = Disk<br /><br />3 = Irregular Galaxy<br /><br />9 = no classification</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="BULG">BULG</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST "Bulgeness" CLASS - only for Type 2 (disk) galaxies.<br /><br />0 = bulge dominated galaxy<br /><br />1,2 = intermediate-bulge galaxies<br /><br />3 = pure disk galaxy<br /><br />9 = no classification</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="IRRE">IRRE</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST Irregularity CLASS - only for Type 1 (elliptical) galaxies<br /><br />0 = regular<br /><br />1 = irregular<br /><br />9 = no value</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ELLI">ELLI</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ZEST Ellipticity CLASS, 0 = fac-on, 1,2 = increasingly higher elongation, 3 = edge-on, 9 = no classification of elongation</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="STELLARITY">STELLARITY</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">Visual Stellarity flag.<br /><br />0 if ACS_CLASS_STAR&lt;0.6 (object is ASSUMED to be a galaxy; no visual inspection)<br /><br />0 if ACS_CLASS_STAR&gt;=0.6 AND object visually identified as a galaxy.<br /><br />1 if ACS_CLASS_STAR&gt;=0.6 AND visually identified as a star.<br /><br />2 if ACS_CLASS_STAR&gt;=0.8 (object is assumed to be a star and was not visually inspected)<br /><br />3 if ACS_CLASS_STAR&lt;0.6 but object is visually identified as a star (e.g. saturated star, etc)</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="JUNKFLAG">JUNKFLAG</a></td>
+<td valign="top">float</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">0 = good object<br /><br />1 = spurious</td>
+</tr>
+
+<tr>
+<td valign="top"><a name="ACSTile">ACSTile</a></td>
+<td valign="top">char</td>
+<td valign="top">&nbsp;</td>
+<td valign="top">ACS TILE number from which the object is extracted</td>
+</tr>
+
+</table>
+</center>
+
+
+</div> <!-- end #content -->
+<div id="irsa-footer" style="position:absolute;left:0;right:0;margin-top:20px">
+<iframe src="/frontpage/footer.html" width="100%" frameborder=0 scrolling=0 seamless=1/>
+</div>  <!-- end #irsa-footer -->
+
+</body>
+</html>
+
