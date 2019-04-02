@@ -10,7 +10,6 @@ from sys import exit
 
 from astropy.io.votable import is_votable
 import numpy as np
-import matplotlib.pyplot as plt
 
 def is_VOtable(fullname):
     """
@@ -137,6 +136,36 @@ def findWhereIsValue(listOfArrays, val=None):
             else:
                 print("Value", val, "found at position", np.where((array==val))[0], "within array number", num)
                 
+def checkDupplicates(master, names=None):
+    
+    if (names is None) or (len(names) != len(master)):
+        try:
+            len(names) != len(master)
+            print("Given names were not enough. Using position in the list as name instead.")
+        except TypeError:
+            pass
+        
+        
+        names = np.char.array(['catalog nb ']*len(master)) + np.char.array(np.array(range(len(master)), dtype='str'))
+    
+    for catalog, nameCat in zip(master, names):
+        cnt = True
+        for ra, dec, nb in zip(catalog['RA'], catalog['DEC'], range(catalog['RA'].shape[0])):
+            
+            where1 = np.where(catalog['RA']==ra)[0]
+            where2 = np.where(catalog['DEC']==dec)[0]
+            
+            if (len(where1)>1) and (len(where2)>1):
+                
+                flag = True
+                for w in where2:
+                    
+                    if flag and (w in where1):
+                        print("RA =", ra, "deg and DEC =", dec, "deg galaxy (line " + str(nb) + ") is present more than once in catalog", nameCat)
+                        flag = False
+                        cnt  = False
+        if cnt:
+            print("All the galaxies are only listed once in the catalog", nameCat)     
                 
 def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideYticks=False,
                 placeYaxisOnRight=False, xlabel="", ylabel='', marker='o', color='black', plotFlag=True,
