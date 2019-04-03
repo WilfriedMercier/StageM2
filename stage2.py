@@ -200,7 +200,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         the marker to use for the data
     color : string/char/RGB/list of values, list of those for many plots
         the color for the data. If a list of values is given, plotFlag must be False and a cmap must be given.
-    plotFlag : boolean
+    plotFlag : boolean, list of booleans for many plots
         if True, plots with pyplot.plot function. If False, use pyplot.scatter
     label : string
         legend label for the data
@@ -248,30 +248,34 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         
     #If we have an array instead of a list of arrays, transform it to the latter
     try:
-        np.shape(datax)[1]
+        np.shape(datax[1])
     except IndexError:
         datax = [datax]
         datay = [datay]
         
-    #If we have only one marker/color/zorder/linestyle/label, transform them to a list of the relevant length
+    #If we have only one marker/color/zorder/linestyle/label/plotFlag, transform them to a list of the relevant length
     try:
-        np.shape(marker)[0]
+        np.shape(marker)
     except IndexError:
         marker = [marker]*len(datax)
     try:
-        np.shape(color)[0]
+        np.shape(color)
     except IndexError:
         color = [color]*len(datax)
     try:
-        np.shape(zorder)[0]
+        np.shape(zorder)
     except IndexError:
         zorder = [zorder]*len(datax)
     try:
-        np.shape(linestyle)[0]
+        np.shape(linestyle)
     except IndexError:
         linestyle = [linestyle]*len(datax)
     try:
-        np.shape(label)[0]
+        np.shape(plotFlag)
+    except IndexError:
+        plotFlag = [plotFlag]*len(datax)
+    try:
+        np.shape(label)
     except IndexError:
         if len(datax)>1:
             print("Not enough labels were given compared to data dimension. Printing empty strings instead.")
@@ -294,19 +298,19 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         ax1.yaxis.set_label_position("right")
 
     #Plotting
-    for dtx, dty, mrkr, clr, zrdr, lnstl, lbl in zip(datax, datay, marker, color, zorder, linestyle, label):
-        if plotFlag:
+    for dtx, dty, mrkr, clr, zrdr, lnstl, lbl, pltFlg in zip(datax, datay, marker, color, zorder, linestyle, label, plotFlag):
+        if pltFlg:
             tmp = plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, linestyle=lnstl)
         else:            
             #Defining default bounds for scatter plot if not given
             if cmapMin is None:
-                cmapMin = np.min(olr)
+                cmapMin = np.min(clr)
             if cmapMax is None:
                 cmapMax = np.max(clr)
             tmp = plt.scatter(dtx, dty, label=lbl, marker=mrkr, c=clr, zorder=zrdr, 
                               cmap=cmap, vmin=cmapMin, vmax=cmapMax)
         
-    if (not plotFlag) and showColorbar:
+    if np.any(np.logical_not(plotFlag)) and showColorbar:
         plt.colorbar(tmp)
             
     if showLegend:
@@ -334,9 +338,9 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     
     return ax1, tmp
 
-a = np.array([[1,2,3], [0,1.5,4]])
-b = a**2
-
-asManyPlots(111, a, b, color=['red', 'black'], marker=['x','o'], linestyle=['None', '--'], showLegend=True, label=['a','b'], 
-            ylim=[-10, None])
-plt.show()
+#a = np.array([[1,2,3], [0,1.5,4]])
+#b = a**2
+#
+#asManyPlots(111, a, b, color=['red', 'black'], marker=['x','o'], linestyle=['None', '--'], showLegend=True, label=['a','b'], 
+#            ylim=[-10, None])
+#plt.show()
