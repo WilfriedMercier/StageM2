@@ -10,6 +10,7 @@ from sys import exit
 
 from astropy.io.votable import is_votable
 import numpy as np
+import matplotlib.pyplot as plt
 
 def is_VOtable(fullname):
     """
@@ -173,15 +174,15 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 ylim=[None, None], xlim=[None, None], cmap=None, cmapMin=None, cmapMax=None,
                 showColorbar=False, locLegend='best', tickSize=24):
     """
-    Function which plots on a configurable subplot grid either with pyplot.plot or pyplot.scatter.
+    Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     
     Input
     -----
     numPlot : int (3 digits)
         the subplot number
-    datax: list, numpy array
+    datax: numpy array, list of numpy arrays
         the x data
-    datay :list, numpy array
+    datay : numpy array, list of numpy arrays 
         the y data
     hideXlabel : boolean
         whether to hide the x label or not
@@ -195,15 +196,15 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         the x label
     ylabel : string
         the y label
-    marker : string, char (pyplot symbol)
+    marker : string, char, list of both for many plots
         the marker to use for the data
-    color : string/char/RGB/list of values
+    color : string/char/RGB/list of values, list of those for many plots
         the color for the data. If a list of values is given, plotFlag must be False and a cmap must be given.
     plotFlag : boolean
         if True, plots with pyplot.plot function. If False, use pyplot.scatter
     label : string
         legend label for the data
-    zorder : int
+    zorder : int, list of ints for many plots
         whether the data will be plot in first position or in last. The lower the value, the earlier it will be plotted
     textsize : int
         size for the labels
@@ -211,7 +212,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         whether to show the legend or not
     legendTextSize : int
         size for the legend
-    linestyle : string
+    linestyle : string, list of strings for many plots
         which line style to use
     ylim : list of floats/None
         the y-axis limits to use. If None is specified as lower/upper/both limit(s), the minimum/maximum/both values are used
@@ -239,6 +240,44 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     ax1.tick_params(which='both', direction='in', labelsize=tickSize)
     plt.grid()
     
+    #Checking shape consistency between datax and datay
+    shpX = np.shape(datax)
+    shpY = np.shape(datay)
+    if shpX != shpY:
+        exit("X data was found to have shape", shpX, "but Y data seems to have shape", shpY, ".Exiting.")
+        
+    #If we have an array instead of a list of arrays, transform it to the latter
+    try:
+        np.shape(datax)[1]
+    except IndexError:
+        datax = [datax]
+        datay = [datay]
+        
+    #If we have only one marker/color/zorder/linestyle/label, transform them to a list of the relevant length
+    try:
+        np.shape(marker)[0]
+    except IndexError:
+        marker = [marker]*len(datax)
+    try:
+        np.shape(color)[0]
+    except IndexError:
+        color = [color]*len(datax)
+    try:
+        np.shape(zorder)[0]
+    except IndexError:
+        zorder = [zorder]*len(datax)
+    try:
+        np.shape(linestyle)[0]
+    except IndexError:
+        linestyle = [linestyle]*len(datax)
+    try:
+        np.shape(label)[0]
+    except IndexError:
+        if len(datax)>1:
+            print("Not enough labels were given compared to data dimension. Printing empty strings instead.")
+            label = ''
+        label = [label]*len(datax)
+        
     #hiding labels if required
     if hideXlabel:
         ax1.axes.get_xaxis().set_ticklabels([])
@@ -253,21 +292,22 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     if placeYaxisOnRight:
         ax1.yaxis.tick_right()
         ax1.yaxis.set_label_position("right")
-    
+
     #Plotting
-    if plotFlag:
-        tmp = plt.plot(datax, datay, label=label, marker=marker, color=color, zorder=zorder, linestyle=linestyle)
-    else:
-        if cmapMin is None:
-            cmapMin = np.min(color)
-        if cmapMax is None:
-            cmapMax = np.max(color)
+    for dtx, dty, mrkr, clr, zrdr, lnstl, lbl in zip(datax, datay, marker, color, zorder, linestyle, label):
+        if plotFlag:
+            tmp = plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, linestyle=lnstl)
+        else:            
+            #Defining default bounds for scatter plot if not given
+            if cmapMin is None:
+                cmapMin = np.min(olr)
+            if cmapMax is None:
+                cmapMax = np.max(clr)
+            tmp = plt.scatter(dtx, dty, label=lbl, marker=mrkr, c=clr, zorder=zrdr, 
+                              cmap=cmap, vmin=cmapMin, vmax=cmapMax)
         
-        tmp = plt.scatter(datax, datay, label=label, marker=marker, c=color, zorder=zorder, 
-                          cmap=cmap, vmin=cmapMin, vmax=cmapMax)
-        
-        if showColorbar:
-            plt.colorbar(tmp)
+    if (not plotFlag) and showColorbar:
+        plt.colorbar(tmp)
             
     if showLegend:
         plt.legend(loc=locLegend, prop={'size': legendTextSize})
@@ -279,8 +319,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
 #         ax1.set_ylim(bottom=ax.get_ylim()[0])
     if ylim[1] is not None:
         ax1.set_ylim(top=ylim[1])
-#     else:
-#         ax1.set_ylim(top=ax.get_ylim()[1])
+#    else:
+#         ax1.set_ylim(top=ax1.get_ylim()[1])
         
     #define X limits if required
     if xlim[0] is not None:
@@ -293,3 +333,10 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
 #         ax1.set_xlim(right=ax.get_xlim()[1])
     
     return ax1, tmp
+
+a = np.array([[1,2,3], [0,1.5,4]])
+b = a**2
+
+asManyPlots(111, a, b, color=['red', 'black'], marker=['x','o'], linestyle=['None', '--'], showLegend=True, label=['a','b'], 
+            ylim=[-10, None])
+plt.show()
