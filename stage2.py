@@ -172,7 +172,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 placeYaxisOnRight=False, xlabel="", ylabel='', marker='o', color='black', plotFlag=True,
                 label='', zorder=0, textsize=24, showLegend=False, legendTextSize=24, linestyle='None',
                 ylim=[None, None], xlim=[None, None], cmap=None, cmapMin=None, cmapMax=None,
-                showColorbar=False, locLegend='best', tickSize=24):
+                showColorbar=False, locLegend='best', tickSize=24, title='', titlesize=24):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     
@@ -237,6 +237,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     ax1 = plt.subplot(numPlot)
     ax1.yaxis.set_ticks_position('both')
     ax1.xaxis.set_ticks_position('both')
+    ax1.set_title(title, size=titlesize)
     ax1.tick_params(which='both', direction='in', labelsize=tickSize)
     plt.grid()
     
@@ -255,27 +256,27 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         
     #If we have only one marker/color/zorder/linestyle/label/plotFlag, transform them to a list of the relevant length
     try:
-        np.shape(marker)
+        np.shape(marker)[0]
     except IndexError:
         marker = [marker]*len(datax)
     try:
-        np.shape(color)
+        np.shape(color)[0]
     except IndexError:
         color = [color]*len(datax)
     try:
-        np.shape(zorder)
+        np.shape(zorder)[0]
     except IndexError:
         zorder = [zorder]*len(datax)
     try:
-        np.shape(linestyle)
+        np.shape(linestyle)[0]
     except IndexError:
         linestyle = [linestyle]*len(datax)
     try:
-        np.shape(plotFlag)
+        np.shape(plotFlag)[0]
     except IndexError:
         plotFlag = [plotFlag]*len(datax)
     try:
-        np.shape(label)
+        np.shape(label)[0]
     except IndexError:
         if len(datax)>1:
             print("Not enough labels were given compared to data dimension. Printing empty strings instead.")
