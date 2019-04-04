@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#MERCIER Wilfried
+#writes the list of galaxies with their full name (path+name) in the first column
+#and their redshift from the .config file in the second one
+
+outputName="list_gal"
+folder="../data"
+if [ $# -ge 1 ]
+then
+   outputName=$1
+   if [ $# -ge 2 ]
+   then
+      folder=$2
+   fi
+fi
+
+for i in $(find $folder -name *.config -type f -print)
+do
+   z=$(more $i | grep -F "REDSHIFT" | awk -F'= ' '{print $2}' | awk -F' /' '{print $1}')
+   name=$(echo $i | awk -F/ '{print $NF}' | awk -F. '{print $1}')
+   echo $name  $z >> $outputName
+done
+
+
+exit 0
+
+
