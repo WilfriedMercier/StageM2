@@ -172,14 +172,36 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 placeYaxisOnRight=False, xlabel="", ylabel='', marker='o', color='black', plotFlag=True,
                 label='', zorder=0, textsize=24, showLegend=False, legendTextSize=24, linestyle='None',
                 ylim=[None, None], xlim=[None, None], cmap=None, cmapMin=None, cmapMax=None,
-                showColorbar=False, locLegend='best', tickSize=24, title='', titlesize=24):
+                showColorbar=False, locLegend='best', tickSize=24, title='', titlesize=24, 
+                colorbarOrientation='vertical', colorbarLabel=None, colorbarTicks=None, colorbarTicksLabels=None,
+                colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     
     Input
     -----
-    numPlot : int (3 digits)
-        the subplot number
+    cmap : matplotlib colormap
+        the colormap to use for the scatter plot only
+    cmapMin: float
+        the minmum value for the colormap
+    cmapMax: float
+        the maximum value for the colormap
+    color : string/char/RGB/list of values, list of those for many plots
+        the color for the data. If a list of values is given, plotFlag must be False and a cmap must be given
+    colorbarLabel : string
+        the name to be put next to the colorbar
+    colorbarLabelSize : int
+        size of the label next to the colorbar
+    colorbarOrientation : 'vertical' or 'horizontal'
+        specifies if the colorbar must be place on the right or on the bottom of the graph
+    colorbarTicks : list of int/float
+        specifies the values taken by the ticks which will be printed next to the colorbar
+    colorbarTicksLabels : list of string
+        specifies the labels associated to the chosen ticks values
+    colorbarTicksLabelsSize : int
+        size of the labels associated to the chosen ticks
+    colorbarTicksSize : int
+        size of the chosen ticks
     datax: numpy array, list of numpy arrays
         the x data
     datay : numpy array, list of numpy arrays 
@@ -190,46 +212,40 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         whether to hide the y label or not
     hideYticks : boolean
         whether to hide the y ticks or not
-    placeYaxisOnRight : boolean
-        whether to place the y axis of the plot on the right or not
-    xlabel : string
-        the x label
-    ylabel : string
-        the y label
-    marker : string, char, list of both for many plots
-        the marker to use for the data
-    color : string/char/RGB/list of values, list of those for many plots
-        the color for the data. If a list of values is given, plotFlag must be False and a cmap must be given.
-    plotFlag : boolean, list of booleans for many plots
-        if True, plots with pyplot.plot function. If False, use pyplot.scatter
     label : string
         legend label for the data
-    zorder : int, list of ints for many plots
-        whether the data will be plot in first position or in last. The lower the value, the earlier it will be plotted
-    textsize : int
-        size for the labels
-    showLegend : boolean
-        whether to show the legend or not
     legendTextSize : int
         size for the legend
     linestyle : string, list of strings for many plots
         which line style to use
-    ylim : list of floats/None
-        the y-axis limits to use. If None is specified as lower/upper/both limit(s), the minimum/maximum/both values are used
-    xlim : list of floats/None
-        the x-axis limits to use. If None is specified as lower/upper/both limit(s), the minimum/maximum/both values are used
-    cmap : matplotlib colormap
-        the colormap to use for the scatter plot only
-    cmapMin: float
-        the minmum value for the colormap
-    cmapMax: float
-        the maximum value for the colormap
-    showColorbar : boolean
-        whether to show the colorbar for a scatter plot or not
     locLegend : string, int
         position where to place the legend
+    marker : string, char, list of both for many plots
+        the marker to use for the data
+    numPlot : int (3 digits)
+        the subplot number
+    placeYaxisOnRight : boolean
+        whether to place the y axis of the plot on the right or not
+    plotFlag : boolean, list of booleans for many plots
+        if True, plots with pyplot.plot function. If False, use pyplot.scatter
+    textsize : int
+        size for the labels
+    showColorbar : boolean
+        whether to show the colorbar for a scatter plot or not
+    showLegend : boolean
+        whether to show the legend or not
     tickSize : int
         size of the ticks on both axes
+    xlabel : string
+        the x label
+    xlim : list of floats/None
+        the x-axis limits to use. If None is specified as lower/upper/both limit(s), the minimum/maximum/both values are used
+    ylabel : string
+        the y label
+    ylim : list of floats/None
+        the y-axis limits to use. If None is specified as lower/upper/both limit(s), the minimum/maximum/both values are used
+    zorder : int, list of ints for many plots
+        whether the data will be plot in first position or in last. The lower the value, the earlier it will be plotted
         
     Return current axis and last plot.
     """
@@ -312,7 +328,17 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                               cmap=cmap, vmin=cmapMin, vmax=cmapMax)
         
     if np.any(np.logical_not(plotFlag)) and showColorbar:
-        plt.colorbar(tmp)
+        col = plt.colorbar(tmp, orientation=colorbarOrientation)
+        
+        if colorbarLabel is not None:
+            col.set_label(colorbarLabel, size=colorbarLabelSize)
+        if colorbarTicks is not None:
+            col.set_ticks(colorbarTicks)
+        if colorbarTicksLabels is not None:
+            if colorbarOrientation == 'vertical':
+                col.ax.set_yticklabels(colorbarTicksLabels, size=colorbarTicksLabelsSize)
+            elif colorbarOrientation == 'horizontal':
+                col.ax.set_xticklabels(colorbarTicksLabels, size=colorbarTicksLabelsSize)
             
     if showLegend:
         plt.legend(loc=locLegend, prop={'size': legendTextSize})
