@@ -18,6 +18,8 @@ import logging
 #import ipdb
 from astropy import constants as ct
 
+from sys import exit
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('Clean')
 
@@ -101,13 +103,11 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
     if not(os.path.isdir(path)):
         logger.info('clean_galaxy: path % s does not exist' % (str(path)) )
         return
-    logger.info('clean_galaxy: entering % s' % (str(path)) )
  
     #Checking output path exists
     if not(os.path.isdir(outputpath)):
         logger.info('clean_galaxy: path % s does not exist' % (str(outputpath)) )
         return
-    logger.info('clean_galaxy: entering % s' % (str(outputpath)) )
     
     
     smin = lsfw * fraction
@@ -117,6 +117,9 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
     #fim0 = glob.glob(path + name + '/' + name + option + '_disp_*[pn]' + line + '.fits')
     fim0 = glob.glob(path + name + option + '_disp_*[pn].fits')
     fim1 = glob.glob(path + name + option + '_' + data_mask + '_*[pn].fits')
+    
+    print(path+name+option+'_disp_*[pn].fits', fim0)
+    exit()
     
     try:
         hdul0 = fits.open(fim0[0])
@@ -216,7 +219,7 @@ def clean_setofgalaxies(path='/home/wilfried/ST2/', outfilename='list_output_fol
         name        = ligne[0].split('/')[-1]
         path        = ligne[0].split(name)[0]
         outpath     = '../outputs/MUSE/' + path.split('../data/')[1]
-        #clean_galaxy(path, outpath, name, ligne[1], fraction, data_mask=data_mask, thru=thru, thrl=thrl, line=line, option=option, clean=clean)
+        clean_galaxy(path, outpath, name, ligne[1], fraction, data_mask=data_mask, thru=thru, thrl=thrl, line=line, option=option, clean=clean)
 
 def compute_velres(z, lbda0, a2=5.835e-8, a1=-9.080e-4, a0=5.983):
     '''
