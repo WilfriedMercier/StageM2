@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+@author: Benoit Epinat
+
+modified by Wilfried Mercier 5th April 2019
+"""
+
 import os, glob
 import numpy as np
 import astropy.io.ascii as ascii
@@ -61,7 +67,7 @@ def apply_mask(mask, image):
     return image
 
 
-def clean_galaxy(path, name, lsfw, fraction, data_mask='snr', thrl=None, thru=None, option='', line='', clean=None):
+def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=None, thru=None, option='', line='', clean=None):
     '''
     This function cleans the maps created by camel for a given galaxy
     
@@ -90,10 +96,19 @@ def clean_galaxy(path, name, lsfw, fraction, data_mask='snr', thrl=None, thru=No
     
     XXX utiliser des listes si on veut ajouter des fichiers pour masquer?
     '''
+    
+    #Checking path exists
     if not(os.path.isdir(path)):
         logger.info('clean_galaxy: path % s does not exist' % (str(path)) )
         return
     logger.info('clean_galaxy: entering % s' % (str(path)) )
+ 
+    #Checking output path exists
+    if not(os.path.isdir(outputpath)):
+        logger.info('clean_galaxy: path % s does not exist' % (str(outputpath)) )
+        return
+    logger.info('clean_galaxy: entering % s' % (str(outputpath)) )
+    
     
     smin = lsfw * fraction
     logger.info('clean_galaxy: dispersion threshold % s' % (str(smin)) )
@@ -106,7 +121,7 @@ def clean_galaxy(path, name, lsfw, fraction, data_mask='snr', thrl=None, thru=No
     try:
         hdul0 = fits.open(fim0[0])
         im0 = hdul0[0].data
-        logger.info('clean_galaxy: using % s' % (str(fim0[0])) )+ '/' + name + '/' + name
+        logger.info('clean_galaxy: using % s' % (str(fim0[0])) )
     except:
         logger.info('clean_galaxy: % s not found' % (str(path + name + option + '_disp_*[pn].fits')) )
         return
@@ -156,25 +171,29 @@ def clean_galaxy(path, name, lsfw, fraction, data_mask='snr', thrl=None, thru=No
             
         hdul[0].data = apply_mask(mask, im)
         fimcl = fim.split('.fits')[0] + '_clean%3.1f.fits' %thr
-        hdul.writeto(fimcl, overwrite=True)
+        hdul.writeto(outputpath + fimcl, overwrite=True)
 
         if clean is not None:
             hdul[0].data = apply_mask(mask2, im)
             fimcl = fim.split('.fits')[0] + '_mclean%3.1f.fits' %thr
-            hdul.writeto(fimcl, overwrite=True)
+            hdul.writeto(outputpath + fimcl, overwrite=True)
 
 
 
-def clean_setofgalaxies(path, filename='', fraction=1., data_mask='snr', thrl=None, thru=None, option='_ssmooth', line='', clean='clean.fits'):
+def clean_setofgalaxies(path='/home/wilfried/ST2/', outfilename='list_output_folders', filename='list_gal', 
+                        fraction=1., data_mask='snr', thrl=None, thru=None, option='_ssmooth', line='', 
+                        clean='clean.fits'):
     '''
     This function cleans the maps created by camel for a list of galaxies
     
     Parameters
     ----------
     path: string
-        path where are stored the data
+        path where the data are stored
     filename: string
-        full name of the file containing the list of galaxies and the associated spectral resolution in km/s (sigma)
+        name of the file containing the list of galaxies and the associated spectral resolution in km/s (sigma)
+    outfilename: string
+        name of of the file containing the list of the output folders names
     fraction: float
         fraction for a lower threshold on the velocity dispersion map
     data_mask: string
@@ -194,9 +213,10 @@ def clean_setofgalaxies(path, filename='', fraction=1., data_mask='snr', thrl=No
     cat = ascii.read(filename)
     
     for ligne in cat:
-        name = ligne[0].split('/')[-1]
-        path = ligne[0].split(name)[0]
-        clean_galaxy(path, name, ligne[1], fraction, data_mask=data_mask, thru=thru, thrl=thrl, line=line, option=option, clean=clean)
+        name        = ligne[0].split('/')[-1]
+        path        = ligne[0].split(name)[0]
+        outpath     = '../outputs/MUSE/' + path.split('../data/')[1]
+        #clean_galaxy(path, outpath, name, ligne[1], fraction, data_mask=data_mask, thru=thru, thrl=thrl, line=line, option=option, clean=clean)
 
 def compute_velres(z, lbda0, a2=5.835e-8, a1=-9.080e-4, a0=5.983):
     '''
@@ -253,7 +273,7 @@ def velres_setofgalaxies(inname, outname, lbda0, a2=5.835e-8, a1=-9.080e-4, a0=5
     for ligne in cat:
         z    = float(ligne[1])
         lbda, fwhm, velsig = compute_velres(z, lbda0, a2=a2, a1=a1, a0=a0)
-        line = '{0:38} {1:5.1f} \n'.format(ligne[0], velsig)
+        line = '{0:100} {1:5.1f} \n'.format(ligne[0], velsig)
         f.write(line)
     f.close()
    
@@ -272,14 +292,15 @@ def main():
         #clean_setofgalaxies(path, thru=None, thrl=5, fraction=1., filename='../clean_o3hb.txt', clean='clean.fits', option='_ssmooth', line='_OIII5007', data_mask='snr')
         
     #UDF
-    path    = '/home/wilfried/ST2/'
-    inname  = path + 'scripts_python_Benoit/' + 'list_gal'
-    outname = path + 'scripts_python_Benoit/' + 'clean_o2'
-    lbda0   = 3729.  # OII wavelength at restframe in Angstroms
+    path        = '/home/wilfried/ST2/'
+    scripts     = 'scripts_python_Benoit/'
+    inname      = path + scripts + 'list_gal'
+    outname     = path + scripts + 'clean_o2'
+    lbda0       = 3729.  # OII wavelength at restframe in Angstroms
     velres_setofgalaxies(inname, outname, lbda0)
     
     fraction = 0.8
-    clean_setofgalaxies(path, thru=None, thrl=5, fraction=fraction, filename=outname, clean='clean.fits', option='_ssmooth', line='_OII3729', data_mask='snr')
+    clean_setofgalaxies(path=path, thru=None, thrl=5, fraction=fraction, filename=outname, clean='clean.fits', option='_ssmooth', line='_OII3729', data_mask='snr')
     
 
 if __name__ == "__main__":
