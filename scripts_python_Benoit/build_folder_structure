@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#MERCIER Wilfried
+#builds the folder structure for ouput data
+
+inputName="list_gal"
+outputName="list_output_folders"
+folder="../outputs/MUSE/"
+depthstart=3
+if [ $# -ge 1 ]
+then
+   inputName=$1
+   if [ $# -ge 2 ]
+   then
+      folder=$2
+   fi
+fi
+
+if [ ! -d $folder ]
+then
+   echo -e "Creating main folder $folder"
+   mkdir $folder
+fi
+
+#go through the different names
+for i in $(more $inputName)
+do
+   #compute the number of fields separeted by a /
+   nbtot=$(echo $i | awk -F/ '{printf NF}')
+
+   for nb in $(seq $depthstart $(($nbtot-1)))
+   do
+
+      #keep the path from the starting field number $depthstart to number $nb
+      dir=$(echo $i | awk -v nb=$nb -v dep=$depthstart -F/ '{for(j=dep;j<=nb;j++) printf $j"/"}')
+      dir=$folder$dir
+
+      #if the folder does not exists yet
+      if [ ! -d $dir ]
+      then
+         echo -e "Creating directory $dir"
+         mkdir $dir
+      fi
+
+      #if we are at the end of the tree, write the path in an output file
+      if [ $nb -eq $(($nbtot-1)) ]
+      then
+         echo $dir >> $outputName
+      fi
+   done
+done
+
+exit 0
+
+
