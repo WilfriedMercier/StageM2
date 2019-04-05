@@ -21,6 +21,13 @@ then
    mkdir $folder
 fi
 
+#Check if outputfile exists
+if [ -f $outputName ]
+then
+   echo -e "File $outputName already exists. If you want to overwrite it, please delete it first before running this program again."
+   exit 1
+fi
+
 #go through the different names
 for i in $(more $inputName)
 do
