@@ -76,7 +76,9 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
     Parameters
     ----------
     path: string
-        path where are stored the data
+        path where the input data are stored
+    ouputpath: string
+        path where the ouput data will be stored
     name: string
         name of the galaxy
     lsfw: float
@@ -117,9 +119,6 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
     #fim0 = glob.glob(path + name + '/' + name + option + '_disp_*[pn]' + line + '.fits')
     fim0 = glob.glob(path + name + option + '_disp_*[pn].fits')
     fim1 = glob.glob(path + name + option + '_' + data_mask + '_*[pn].fits')
-    
-    print(path+name+option+'_disp_*[pn].fits', fim0)
-    exit()
     
     try:
         hdul0 = fits.open(fim0[0])
@@ -173,13 +172,14 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
             thr = thru
             
         hdul[0].data = apply_mask(mask, im)
-        fimcl = fim.split('.fits')[0] + '_clean%3.1f.fits' %thr
+        fimcl = fim.split('.fits')[0].split('/')[-1] + '_clean%3.1f.fits' %thr
         hdul.writeto(outputpath + fimcl, overwrite=True)
 
         if clean is not None:
             hdul[0].data = apply_mask(mask2, im)
-            fimcl = fim.split('.fits')[0] + '_mclean%3.1f.fits' %thr
+            fimcl = fim.split('.fits')[0].split('/')[-1] + '_mclean%3.1f.fits' %thr
             hdul.writeto(outputpath + fimcl, overwrite=True)
+        logger.info('output written in %s' %(outputpath+fimcl))
 
 
 
@@ -216,8 +216,8 @@ def clean_setofgalaxies(path='/home/wilfried/ST2/', outfilename='list_output_fol
     cat = ascii.read(filename)
     
     for ligne in cat:
-        name        = ligne[0].split('/')[-1]
-        path        = ligne[0].split(name)[0]
+        name        = ligne[0].split('/')[-1].split('.config')[0]
+        path        = ligne[0].split(name+'.config')[0]
         outpath     = '../outputs/MUSE/' + path.split('../data/')[1]
         clean_galaxy(path, outpath, name, ligne[1], fraction, data_mask=data_mask, thru=thru, thrl=thrl, line=line, option=option, clean=clean)
 
@@ -298,6 +298,7 @@ def main():
     path        = '/home/wilfried/ST2/'
     scripts     = 'scripts_python_Benoit/'
     inname      = path + scripts + 'list_gal'
+    inname      = path + scripts + 'test'
     outname     = path + scripts + 'clean_o2'
     lbda0       = 3729.  # OII wavelength at restframe in Angstroms
     velres_setofgalaxies(inname, outname, lbda0)
