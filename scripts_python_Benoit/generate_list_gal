@@ -17,7 +17,7 @@ fi
 for i in $(find $folder -name *.config -type f -print)
 do
    z=$(more $i | grep -F "REDSHIFT" | awk -F'= ' '{print $2}' | awk -F' /' '{print $1}')
-   name=$(echo $i | awk -F/ '{for(i=1;i<=NF;i++) printf $i"/"}' | awk -F'.config' '{print $1}')
+   name=$(echo $i | awk -F/ '{for(i=1;i<=NF;i++) printf $i"/"}' | awk -F'.config' '{printf $1".config"}')
    LC_NUMERIC="en_US.UTF-8" printf "%-100s %f\n" "$name" "$z" >> $outputName
 done
 
