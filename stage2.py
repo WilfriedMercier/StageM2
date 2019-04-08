@@ -52,6 +52,7 @@ def printSimpleStat(catalog):
     Input
     -----
     catalog : array/list or list of arrays
+        array from which the statistic is computed
     """
     
     try:
@@ -59,12 +60,45 @@ def printSimpleStat(catalog):
     except IndexError:
         catalog = [catalog]
     
-    for cat in catalog:
+    for cat, num in zip(catalog, range(len(catalog))):
+        print("Stat for catalog number", num, ":")
         print("Maximum separation is", str((cat*u.arcsec).max()) + ".")
         print("Mean separation is", str(np.mean(cat*u.arcsec)) + ".")
         print("Median separation is", str(np.median(cat*u.arcsec)) + ".")
         print("1st quantile is", str(np.quantile(cat, 0.25)*u.arcsec) + ".")
         print("3rd quantile is", str(np.quantile(cat, 0.75)*u.arcsec) + ".\n")
+        
+    return      
+
+def uniqueArr(tables, arraysToBeUnique):
+    """
+    Apply a mask from np.unique on arraysToBeUnique for many arrays.
+    
+    Input
+    -----
+    tables : table/array or list of tables/arrays
+        tables to which the mask is applied
+    arraysToBeUnique : table/array or list of tables/arrays
+        tables or arrays from which the mask is computed (with np.unique)
+        
+    Returns tables with the mask applied.
+    """
+    
+    #Transform into a list if it is an array
+    try:
+        np.shape(tables[1])
+    except IndexError:
+        tables = [tables]
+    try:
+        np.shape(arraysToBeUnique[1])
+    except IndexError:
+        arraysToBeUnique = [arraysToBeUnique]
+        
+    for num, uniq in zip(range(len(tables)), arraysToBeUnique):    
+        arr, indices = np.unique(uniq, return_index=True)
+        tables[num]  = tables[num][indices]
+        
+    return tables
 
 def maskToRemoveVal(listOfArrays, val=None, keep=True, astroTableMask=False):
     """
