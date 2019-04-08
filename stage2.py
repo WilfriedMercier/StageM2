@@ -9,6 +9,7 @@ Created on Tue Apr  2 09:32:44 2019
 from sys import exit
 
 from astropy.io.votable import is_votable
+from astropy import units as u
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -43,6 +44,27 @@ def linear_fit(x, A, offset):
     Returns a numpy array A*x+offset.
     """
     return A*x+offset
+
+def printSimpleStat(catalog):
+    """
+    Print basic stats such as median and mean values, as well as 1st and 3rd quantiles.
+    
+    Input
+    -----
+    catalog : array/list or list of arrays
+    """
+    
+    try:
+        np.shape(catalog[1])
+    except IndexError:
+        catalog = [catalog]
+    
+    for cat in catalog:
+        print("Maximum separation is", str((cat*u.arcsec).max()) + ".")
+        print("Mean separation is", str(np.mean(cat*u.arcsec)) + ".")
+        print("Median separation is", str(np.median(cat*u.arcsec)) + ".")
+        print("1st quantile is", str(np.quantile(cat, 0.25)*u.arcsec) + ".")
+        print("3rd quantile is", str(np.quantile(cat, 0.75)*u.arcsec) + ".\n")
 
 def maskToRemoveVal(listOfArrays, val=None, keep=True, astroTableMask=False):
     """
