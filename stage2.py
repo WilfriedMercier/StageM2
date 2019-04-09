@@ -45,7 +45,7 @@ def linear_fit(x, A, offset):
     """
     return A*x+offset
 
-def printSimpleStat(catalog):
+def printSimpleStat(catalog, unit=None):
     """
     Print basic stats such as median and mean values, as well as 1st and 3rd quantiles.
     
@@ -53,6 +53,8 @@ def printSimpleStat(catalog):
     -----
     catalog : array/list or list of arrays
         array from which the statistic is computed
+    unit: astropy unit
+        unit of the array if there is one
     """
     
     try:
@@ -61,12 +63,15 @@ def printSimpleStat(catalog):
         catalog = [catalog]
     
     for cat, num in zip(catalog, range(len(catalog))):
+        if unit is not None:
+            cat = cat*unit
+        
         print("Stat for catalog number", num, ":")
-        print("Maximum separation is", str((cat*u.arcsec).max()) + ".")
-        print("Mean separation is", str(np.mean(cat*u.arcsec)) + ".")
-        print("Median separation is", str(np.median(cat*u.arcsec)) + ".")
-        print("1st quantile is", str(np.quantile(cat, 0.25)*u.arcsec) + ".")
-        print("3rd quantile is", str(np.quantile(cat, 0.75)*u.arcsec) + ".\n")
+        print("Maximum separation is", str((cat).max()) + ".")
+        print("Mean separation is", str(np.mean(cat)) + ".")
+        print("Median separation is", str(np.median(cat)) + ".")
+        print("1st quantile is", str(np.quantile(cat, 0.25)) + ".")
+        print("3rd quantile is", str(np.quantile(cat, 0.75)) + ".\n")
         
     return      
 
