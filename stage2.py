@@ -8,9 +8,11 @@ Created on Tue Apr  2 09:32:44 2019
 
 from sys import exit
 
-from astropy.io.votable import is_votable
-from astropy import units as u
+from astropy.table import Table
+from astropy.io.votable import is_votable, writeto
+
 import numpy as np
+
 import matplotlib.pyplot as plt
 
 def is_VOtable(fullname):
@@ -27,6 +29,27 @@ def is_VOtable(fullname):
     tag = is_votable(fullname)
     print("The file", fullname, "is a VOtable, right ?", tag)
     return tag
+
+def write_array_to_vot(array, outputFile, isTable):
+    """
+    Writes an array or an astropy table into a .vot file.
+    
+    Input
+    -----
+    array : numpy array, astropy table
+        The array to write into the file
+    outputFile : string
+        The file to write the array into
+    isTable : boolean
+        Whether the array is an astropy table or not.
+    """
+    
+    #If it is an array it creates an astropy table
+    if not isTable:
+        array = Table(data=array)
+        
+    writeto(array, outputFile)
+    return
 
 def linear_fit(x, A, offset):
     """
