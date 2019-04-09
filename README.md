@@ -1,5 +1,7 @@
 # Programs list
 
+## Main folder
+
 Name| Langage | Description
 :---: | :---: | :---:
 *Analyze_field_galaxies.ipynb* | Jupyter notebook | Notebook in which the kinematical and morphological properties of the field galaxies within our sample are analyzed
@@ -12,3 +14,4 @@ Name| Langage | Description
 *Selecting_field_Gals.ipynb* | Jupyter notebook | File within which the SFR = f(Mass) is inversitgated and galaxies from MUSE are selected according to the graphs from *Plot_differences_between_catalogs.ipynb* and in Plots folder
 *stage2.py* | Python | Library with useful functions for the internship, namely computing and applying masks on many arrays in two lines, plotting nice and highly configurable graphs with one command, finding occurences of some value in many arrays, etc
 
+## Scripts benoit
