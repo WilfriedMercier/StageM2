@@ -14,4 +14,14 @@ Name| Langage | Description
 *Selecting_field_Gals.ipynb* | Jupyter notebook | File within which the SFR = f(Mass) is inversitgated and galaxies from MUSE are selected according to the graphs from *Plot_differences_between_catalogs.ipynb* and in Plots folder
 *stage2.py* | Python | Library with useful functions for the internship, namely computing and applying masks on many arrays in two lines, plotting nice and highly configurable graphs with one command, finding occurences of some value in many arrays, etc
 
-## Scripts benoit
+## scripts_python_Benoit
+
+### How to use
+
+
+
+Name| Langage | Description
+:---: | :---: | :---:
+*build_folder_structure* | Bash | Twofold program. Firstly, builds a tree structure in the given folder (default is ../outputs/MUSE) based on the MUSE file structure found in ../data. Secondly, generate a file (default name is list_output_folders) with the newly created folders. If the structure already exists, nothing is created or overwritten.
+*clean_data.py* | Python | Program which cleans MUSE data using a threshold in velocity dispersion, SNR and potentially a manually applied mask
+*generate_list_gal* | Bash | Look for all the galaxies in a given folder (default is ../data). Galaxies must have a .config file in their folder in order to be listed. The outputfile (default file name is list_gal) contains in the first column the full names (path+name) of the galaxies, and their redshift in the second column.
