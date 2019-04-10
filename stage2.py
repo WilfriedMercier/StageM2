@@ -30,7 +30,7 @@ def is_VOtable(fullname):
     print("The file", fullname, "is a VOtable, right ?", tag)
     return tag
 
-def write_array_to_vot(array, outputFile, isTable):
+def write_array_to_vot(array, outputFile, isTable=False):
     """
     Writes an array or an astropy table into a .vot file.
     
