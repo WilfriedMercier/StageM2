@@ -94,7 +94,7 @@ def printSimpleStat(catalog, unit=None):
         print("Mean separation is", str(np.mean(cat)) + ".")
         print("Median separation is", str(np.median(cat)) + ".")
         print("1st quantile is", str(np.quantile(cat, 0.25)) + ".")
-        print("3rd quantile is", str(np.quantile(cat, 0.75)) + "."")
+        print("3rd quantile is", str(np.quantile(cat, 0.75)) + ".")
         
     return      
 
@@ -166,7 +166,7 @@ def maskToRemoveVal(listOfArrays, val=None, keep=True, astroTableMask=False):
     for (num, array) in enumerate(listOfArrays[1:]):
         #consider we are looking for nan in the arrays
         if astroTableMask:
-            tmp = np.logical_and(tmp, np.logcial_not(listOfArrays[0].mask))  
+            tmp = np.logical_and(tmp, np.logical_not(array.mask))  
         elif val is None:
             tmp = np.logical_and(tmp, np.logical_not(np.isnan(array)))
         else:
@@ -207,20 +207,28 @@ def findWhereIsValue(listOfArrays, val=None):
         list from which the value val is searched
     val : float or None
         value to look for. If val=None, it looks for nan values.
+        
+    Returns a list of booleans with the same length as listOfArrays, with True when the value was found in the array and False otherwise.
     """
+    
+    returnArr = []
     
     for (num, array) in enumerate(listOfArrays):
         if val is None:
             if np.any(np.isnan(array)):
+                returnArr.append(True)
                 print("A nan was found at position", np.where(np.isnan(array))[0], "within array number", num)
             else:
+                returnArr.append(False)
                 print("No nan was found in array number", num)
         else:
             if np.asarray(np.where(array==val)).shape[1] == 0:
+                returnArr.append(False)
                 print("No value", val, "found within array number", num)
             else:
+                returnArr.append(True)
                 print("Value", val, "found at position", np.where((array==val))[0], "within array number", num)
-    return
+    return returnArr
                 
 def checkDupplicates(master, names=None):
     """
@@ -265,10 +273,11 @@ def checkDupplicates(master, names=None):
 def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideYticks=False,
                 placeYaxisOnRight=False, xlabel="", ylabel='', marker='o', color='black', plotFlag=True,
                 label='', zorder=0, textsize=24, showLegend=False, legendTextSize=24, linestyle='None',
-                ylim=[None, None], xlim=[None, None], cmap=None, cmapMin=None, cmapMax=None,
+                ylim=[None, None], xlim=[None, None], cmap='Greys', cmapMin=None, cmapMax=None,
                 showColorbar=False, locLegend='best', tickSize=24, title='', titlesize=24, 
                 colorbarOrientation='vertical', colorbarLabel=None, colorbarTicks=None, colorbarTicksLabels=None,
-                colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24):
+                colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24,
+                outputName=None, overwrite=False, tightLayout=True):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     
@@ -318,6 +327,10 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         the marker to use for the data
     numPlot : int (3 digits)
         the subplot number
+    outputName : str
+        name of the file to save the graph into. If None, the plot is not saved into a file
+    overwrite : boolean
+        whether to overwrite the ouput file or not
     placeYaxisOnRight : boolean
         whether to place the y axis of the plot on the right or not
     plotFlag : boolean, list of booleans for many plots
@@ -330,6 +343,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         whether to show the legend or not
     tickSize : int
         size of the ticks on both axes
+    tightLayout : boolean
+        whether to use bbox_inches='tight' if tightLayout is True or bbox_inches=None otherwise
     xlabel : string
         the x label
     xlim : list of floats/None
@@ -366,30 +381,31 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         
     #If we have only one marker/color/zorder/linestyle/label/plotFlag, transform them to a list of the relevant length
     try:
-        np.shape(marker)[0]
-    except IndexError:
-        marker = [marker]*len(datax)
-    try:
-        np.shape(color)[0]
-    except IndexError:
+        np.shape(color[1])
+    except:
         color = [color]*len(datax)
     try:
-        np.shape(zorder)[0]
-    except IndexError:
+        np.shape(marker[1])
+    except:
+        marker = [marker]*len(datax)
+    try:
+        np.shape(zorder[1])
+    except:
         zorder = [zorder]*len(datax)
     try:
-        np.shape(linestyle)[0]
-    except IndexError:
+        np.shape(linestyle[1])
+    except:
         linestyle = [linestyle]*len(datax)
     try:
-        np.shape(plotFlag)[0]
-    except IndexError:
+        np.shape(plotFlag[1])
+    except:
         plotFlag = [plotFlag]*len(datax)
     try:
-        np.shape(label)[0]
-    except IndexError:
+        np.shape(label[1])
+    except:
         if len(datax)>1:
-            print("Not enough labels were given compared to data dimension. Printing empty strings instead.")
+            if showLegend:
+                print("Not enough labels were given compared to data dimension. Printing empty strings instead.")
             label = ''
         label = [label]*len(datax)
         
@@ -410,6 +426,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
 
     #Plotting
     for dtx, dty, mrkr, clr, zrdr, lnstl, lbl, pltFlg in zip(datax, datay, marker, color, zorder, linestyle, label, plotFlag):
+        print(pltFlg)
         if pltFlg:
             tmp = plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, linestyle=lnstl)
         else:            
@@ -418,11 +435,11 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 cmapMin = np.min(clr)
             if cmapMax is None:
                 cmapMax = np.max(clr)
-            tmp = plt.scatter(dtx, dty, label=lbl, marker=mrkr, c=clr, zorder=zrdr, 
+            sct = plt.scatter(dtx, dty, label=lbl, marker=mrkr, c=clr, zorder=zrdr, 
                               cmap=cmap, vmin=cmapMin, vmax=cmapMax)
         
     if np.any(np.logical_not(plotFlag)) and showColorbar:
-        col = plt.colorbar(tmp, orientation=colorbarOrientation)
+        col = plt.colorbar(sct, orientation=colorbarOrientation)
         
         if colorbarLabel is not None:
             col.set_label(colorbarLabel, size=colorbarLabelSize)
@@ -456,12 +473,90 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         ax1.set_xlim(right=xlim[1])
 #     else:
 #         ax1.set_xlim(right=ax.get_xlim()[1])
+
+    if outputName is not None:
+        #If we do not want to overwrite the file
+        f = None
+        if not overwrite:
+            #Try to open it to check if it exists
+            try:
+                f = open(outputName, 'r')
+            except:
+                pass
+            if f is not None:
+                print('File %s already exists but overwritting was disabled. Thus exiting without writing.' %outputName)
+                return ax1, tmp
+                
+        f = open(outputName, 'w')
+        
+        bbox_inches = None
+        if tightLayout:
+            bbox_inches = 'tight'
+            
+        plt.savefig(outputName, bbox_inches=bbox_inches)
     
     return ax1, tmp
 
-#a = np.array([[1,2,3], [0,1.5,4]])
-#b = a**2
-#
-#asManyPlots(111, a, b, color=['red', 'black'], marker=['x','o'], linestyle=['None', '--'], showLegend=True, label=['a','b'], 
-#            ylim=[-10, None])
-#plt.show()
+
+
+# from sys import exit
+# import importlib
+
+# from astropy.io.votable import is_votable, parse
+# from astropy.table import Table, vstack
+# from astropy.coordinates import SkyCoord
+# from astropy import units as u
+# import numpy as np
+
+# import matplotlib.pyplot as plt
+# from matplotlib.colors import from_levels_and_colors
+# from matplotlib.markers import MarkerStyle
+
+# pathdata = "outputs/"
+# data     = ["matching_fieldGals_Cassata_and_Zurich_corrected_radius.vot"]
+
+# for name in data:
+#     voTag = is_VOtable(pathdata+name)
+#     if voTag:        
+#         fullFileName = pathdata + name
+#         #Retrieving the data
+#         table = parse(fullFileName)
+#         full  = table.get_first_table()
+        
+#         print("Size of", name, "is", full.array.shape[0], "\n")
+#     else:
+#         exit("Exiting")
+        
+# catalog = parse(pathdata+data[0]).get_first_table().array
+# fields  = np.asarray(catalog.dtype.names)
+
+# #Checking that the matching procedure did not duplicate galaxies
+# checkDupplicates([catalog], names=["matching_fieldGals_Cassata_and_Zurich_corrected_radius.vot"])
+
+# #Converting to an astropy table for simplicity
+# table = Table(catalog)      
+
+# printSimpleStat(catalog['Separation_ZURICH'], unit=u.arcsec)
+# print("\nNumber of galaxies in matching catalog:", np.shape(table)[0])
+
+# #Converting size in arcsec
+# size     = table['Corrected_radius']*0.03
+# redshift = table['Z_MUSE']
+# lmass    = table['lmass']
+
+# m           = np.logical_and(maskToRemoveVal([size, lmass], astroTableMask=True),
+#                              maskToRemoveVal([size, lmass]))
+# size, lmass, redshift = applyMask([size, lmass, redshift], m)
+
+# findWhereIsValue([size, lmass])
+
+# plt.rcParams["figure.figsize"] = (12, 12) # (w, h)
+# f = plt.figure()
+# plt.subplots_adjust(wspace=0.45, hspace=0.05)
+
+# xline = [np.min(lmass), np.max(lmass)]
+# yline = [0.7, 0.7]
+# asManyPlots(111, [lmass, xline], [size, yline], xlabel=r'$\log_{10} (M/M_{\odot})$', ylabel=r'$R_{1/2} \ \ [\rm{arcsec}]$',
+#             plotFlag=[False, True], color=[redshift, 'black'], marker=['o', 'None'], linestyle=["None", 'dashed'],
+#             cmap='gist_heat', showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
+#             outputName='Plots/Selection_plots/size_vs_log10Mass.pdf', overwrite=False)
