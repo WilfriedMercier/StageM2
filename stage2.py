@@ -74,14 +74,14 @@ def printSimpleStat(catalog, unit=None):
     
     Input
     -----
-    catalog : array/list or list of arrays
+    catalog : array/astropy table/list or list of arrays/astropy tables/lists
         array from which the statistic is computed
     unit: astropy unit
         unit of the array if there is one
     """
-    
+
     try:
-        np.shape(catalog[1])
+        np.shape(catalog)[1]
     except IndexError:
         catalog = [catalog]
     
@@ -94,7 +94,7 @@ def printSimpleStat(catalog, unit=None):
         print("Mean separation is", str(np.mean(cat)) + ".")
         print("Median separation is", str(np.median(cat)) + ".")
         print("1st quantile is", str(np.quantile(cat, 0.25)) + ".")
-        print("3rd quantile is", str(np.quantile(cat, 0.75)) + ".\n")
+        print("3rd quantile is", str(np.quantile(cat, 0.75)) + "."")
         
     return      
 
@@ -220,8 +220,19 @@ def findWhereIsValue(listOfArrays, val=None):
                 print("No value", val, "found within array number", num)
             else:
                 print("Value", val, "found at position", np.where((array==val))[0], "within array number", num)
+    return
                 
 def checkDupplicates(master, names=None):
+    """
+    Check if galaxies are found multiple times in an array by looking for duplicates of (RA, DEC) pairs.
+    
+    Input
+    -----
+    master : list of structured numpy arrays (with 'RA' and 'DEC' fields)
+        a list of structured arrays to check
+    names : list of strings
+        the names of the arrays
+    """
     
     if (names is None) or (len(names) != len(master)):
         try:
@@ -229,8 +240,6 @@ def checkDupplicates(master, names=None):
             print("Given names were not enough. Using position in the list as name instead.")
         except TypeError:
             pass
-        
-        
         names = np.char.array(['catalog nb ']*len(master)) + np.char.array(np.array(range(len(master)), dtype='str'))
     
     for catalog, nameCat in zip(master, names):
@@ -251,6 +260,7 @@ def checkDupplicates(master, names=None):
                         cnt  = False
         if cnt:
             print("All the galaxies are only listed once in the catalog", nameCat)     
+    return
                 
 def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideYticks=False,
                 placeYaxisOnRight=False, xlabel="", ylabel='', marker='o', color='black', plotFlag=True,
