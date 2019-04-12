@@ -275,13 +275,18 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
                 placeYaxisOnRight=False, xlabel="", ylabel='', color='black',
                 label='', zorder=0, textsize=24, showLegend=False, legendTextSize=24,
                 xlim=[None, None], locLegend='best', tickSize=24, title='', titlesize=24,
-                outputName=None, overwrite=False, tightLayout=True, integralIsOne=None)
+                outputName=None, overwrite=False, tightLayout=True, integralIsOne=None,
+                align='mid', histtype='stepfilled', alpha=1.0):
 
     """
     Function which plots on a highly configurable subplot grid 1D histograms. A list of data can be given to have multiple histograms on the same subplot.
 
     Input
     -----
+    align : 'left', 'mid' or 'right'
+        how to align bars respective to their value
+    alpha : float
+        how transparent the bars are
     bins : int or list of int
         if an integer, the number of bins. If it is a list, edges of the bins must be given.
     color : list of strings/chars/RGBs
@@ -294,6 +299,8 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
         whether to hide the y label or not
     hideYticks : boolean
         whether to hide the y ticks or not
+    histtype : 'bar', 'barstacked', 'step', 'stepfilled'
+        how the histogram is plotted. Bar puts histograms next to each other. Barstacked stacks them. Step plots unfilled histograms. Stepfilled generates a filled histogram by default.
     integralIsOne : boolean or list of boolean
         whether to normalize the integral of the histogram
     label : string
@@ -331,7 +338,7 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
     zorder : int, list of ints for many plots
         whether the data will be plot in first position or in last. The lower the value, the earlier it will be plotted
         
-    Return current axis and last plot.
+    Return current axis, hist values and bins.
     """
     
     ax1 = plt.subplot(numPlot)
@@ -340,33 +347,59 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
     ax1.set_title(title, size=titlesize)
     ax1.tick_params(which='both', direction='in', labelsize=tickSize)
     plt.grid()
+        
+    #hiding labels if required
+    if hideXlabel:
+        ax1.axes.get_xaxis().set_ticklabels([])
+    else:
+        plt.xlabel(xlabel, size=textsize)    
+    if hideYticks:
+        ax1.axes.get_yaxis().set_ticklabels([])
+    if not hideYlabel:    
+        plt.ylabel(ylabel, size=textsize)
     
-    #If we have an array instead of a list of arrays, transform it to the latter
-    try:
-        np.shape(data[1])[0]
-    except:
-        data = [data]
-    try:
-        np.shape(weights[1])[0]
-    except:
-        weights = [weights]
+    #Place Y axis on the right if required
+    if placeYaxisOnRight:
+        ax1.yaxis.tick_right()
+        ax1.yaxis.set_label_position("right")
         
-    try:
-        np.shape(bins)[0]
-    except:
-        bins = [bins]*len(data)
-    try:
-        np.shape(integralIsOne)[0]
-    except:
-        integralIsOne = [integralIsOne]*len(data)
-    try:
-        np.shape(weights)[0]
-    except:
-        weights = [weights]*len(data)
+    #Plotting
+    #define X limits if required
+    if (xlim[0] is None) and (xlim[1] is None):
+        rang = None
+    else:
+        rang = (xlim[0], xlim[1])
+
+#     print(data, bins, integralIsOne, weights, color, align)
         
-       
-    for dt, bn, ntgrlsn, wghts in zip(data, bins, integralIsOne, weights):
-        plt.hist(dt, bins=nb, range=(xlim[0], ylim[0]), density=ntgrlsn, weights=wghts)
+    n, bns, ptchs = plt.hist(data, bins=bins, range=rang, density=integralIsOne, weights=weights, color=color,
+                             align=align, histtype=histtype, label=label, zorder=zorder, alpha=alpha)
+    
+    if showLegend:
+        plt.legend(loc=locLegend, prop={'size': legendTextSize})
+        
+    if outputName is not None:
+        #If we do not want to overwrite the file
+        f = None
+        if not overwrite:
+            #Try to open it to check if it exists
+            try:
+                f = open(outputName, 'r')
+            except:
+                pass
+            if f is not None:
+                print('File %s already exists but overwritting was disabled. Thus exiting without writing.' %outputName)
+                return ax1, n, bns
+                
+        f = open(outputName, 'w')
+        
+        bbox_inches = None
+        if tightLayout:
+            bbox_inches = 'tight'
+            
+        plt.savefig(outputName, bbox_inches=bbox_inches)
+        
+    return ax1, n, bns
 
                 
 def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideYticks=False,
@@ -687,3 +720,9 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
 #             plotFlag=False, color=[redshift], marker='o', cmap='gist_heat', 
 #             showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
 #             outputName='Plots/Selection_plots/Flux_vs_SNR.pdf', overwrite=False)
+
+asManyHists(111, [np.array([1,2,2,3]), np.array([1,1,1,2,3])], xlabel='xlabel', ylabel='ylabel', color=['blue', 'yellow'], histtype='stepfilled', label=['a', 'b'], showLegend=True, alpha=0.7, outputName='test.pdf', overwrite=True)
+
+# asManyHists(111, np.array([1,2,2,3]), xlabel='xlabel', ylabel='ylabel', color='red', histtype='barstacked', label='a', showLegend=True)
+
+plt.show()
