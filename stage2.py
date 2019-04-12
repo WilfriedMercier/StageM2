@@ -269,6 +269,105 @@ def checkDupplicates(master, names=None):
         if cnt:
             print("All the galaxies are only listed once in the catalog", nameCat)     
     return
+
+
+def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYlabel=False, hideYticks=False,
+                placeYaxisOnRight=False, xlabel="", ylabel='', color='black',
+                label='', zorder=0, textsize=24, showLegend=False, legendTextSize=24,
+                xlim=[None, None], locLegend='best', tickSize=24, title='', titlesize=24,
+                outputName=None, overwrite=False, tightLayout=True, integralIsOne=None)
+
+    """
+    Function which plots on a highly configurable subplot grid 1D histograms. A list of data can be given to have multiple histograms on the same subplot.
+
+    Input
+    -----
+    bins : int or list of int
+        if an integer, the number of bins. If it is a list, edges of the bins must be given.
+    color : list of strings/chars/RGBs
+        color for the data. It can either be a string, char or RGB value.
+    data: numpy array, list of numpy arrays
+        the data
+    hideXlabel : boolean
+        whether to hide the x label or not
+    hideYlabel : boolean
+        whether to hide the y label or not
+    hideYticks : boolean
+        whether to hide the y ticks or not
+    integralIsOne : boolean or list of boolean
+        whether to normalize the integral of the histogram
+    label : string
+        legend label for the data
+    legendTextSize : int
+        size for the legend
+    locLegend : string, int
+        position where to place the legend
+    numPlot : int (3 digits)
+        the subplot number
+    outputName : str
+        name of the file to save the graph into. If None, the plot is not saved into a file
+    overwrite : boolean
+        whether to overwrite the ouput file or not
+    placeYaxisOnRight : boolean
+        whether to place the y axis of the plot on the right or not
+    textsize : int
+        size for the labels
+    showLegend : boolean
+        whether to show the legend or not
+    tickSize : int
+        size of the ticks on both axes
+    tightLayout : boolean
+        whether to use bbox_inches='tight' if tightLayout is True or bbox_inches=None otherwise
+    weights : numpy array of floats or list of numpy arrays
+        the weights to apply to each value in data
+    xlabel : string
+        the x label
+    xlim : list of floats/None
+        the x-axis limits to use. If None is specified as lower/upper/both limit(s), the minimum/maximum/both values are used
+    ylabel : string
+        the y label
+    ylim : list of floats/None
+        the y-axis limits to use. If None is specified as lower/upper/both limit(s), the minimum/maximum/both values are used
+    zorder : int, list of ints for many plots
+        whether the data will be plot in first position or in last. The lower the value, the earlier it will be plotted
+        
+    Return current axis and last plot.
+    """
+    
+    ax1 = plt.subplot(numPlot)
+    ax1.yaxis.set_ticks_position('both')
+    ax1.xaxis.set_ticks_position('both')
+    ax1.set_title(title, size=titlesize)
+    ax1.tick_params(which='both', direction='in', labelsize=tickSize)
+    plt.grid()
+    
+    #If we have an array instead of a list of arrays, transform it to the latter
+    try:
+        np.shape(data[1])[0]
+    except:
+        data = [data]
+    try:
+        np.shape(weights[1])[0]
+    except:
+        weights = [weights]
+        
+    try:
+        np.shape(bins)[0]
+    except:
+        bins = [bins]*len(data)
+    try:
+        np.shape(integralIsOne)[0]
+    except:
+        integralIsOne = [integralIsOne]*len(data)
+    try:
+        np.shape(weights)[0]
+    except:
+        weights = [weights]*len(data)
+        
+       
+    for dt, bn, ntgrlsn, wghts in zip(data, bins, integralIsOne, weights):
+        plt.hist(dt, bins=nb, range=(xlim[0], ylim[0]), density=ntgrlsn, weights=wghts)
+
                 
 def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideYticks=False,
                 placeYaxisOnRight=False, xlabel="", ylabel='', marker='o', color='black', plotFlag=True,
@@ -280,6 +379,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 outputName=None, overwrite=False, tightLayout=True):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
+    This function has been developed to be used with numpy arrays or list of numpy arrays (structured or not). Working with astropy tables or any other kind of data structure might or might not work depending on its complexity and behaviour. 
     
     Input
     -----
@@ -289,8 +389,9 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         the minmum value for the colormap
     cmapMax: float
         the maximum value for the colormap
-    color : string/char/RGB/list of values, list of those for many plots
-        the color for the data. If a list of values is given, plotFlag must be False and a cmap must be given
+    color : list of strings/chars/RGBs/lists of values
+        color for the data. For scatter plots, the values must be in numpy array format. For plots, it can either be a string, char or RGB value.
+        WARNING: it is highly recommanded to give the color as a list. For instance, if plotting only one plot of black color, you should preferentially use ['black'] rather than 'black'. For, say one plot and one scatter plot, you have to use ['black', yourNumpyArray].
     colorbarLabel : string
         the name to be put next to the colorbar
     colorbarLabelSize : int
@@ -374,40 +475,42 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         
     #If we have an array instead of a list of arrays, transform it to the latter
     try:
-        np.shape(datax[1])
-    except IndexError:
+        np.shape(datax[1])[0]
+    except:
         datax = [datax]
         datay = [datay]
         
     #If we have only one marker/color/zorder/linestyle/label/plotFlag, transform them to a list of the relevant length
     try:
-        np.shape(color[1])
+        np.shape(color)[0]
     except:
         color = [color]*len(datax)
     try:
-        np.shape(marker[1])
+        np.shape(marker)[0]
     except:
         marker = [marker]*len(datax)
     try:
-        np.shape(zorder[1])
+        np.shape(zorder)[0]
     except:
         zorder = [zorder]*len(datax)
     try:
-        np.shape(linestyle[1])
+        np.shape(linestyle)[0]
     except:
         linestyle = [linestyle]*len(datax)
     try:
-        np.shape(plotFlag[1])
+        np.shape(plotFlag)[0]
     except:
         plotFlag = [plotFlag]*len(datax)
     try:
-        np.shape(label[1])
+        np.shape(label)[0]
     except:
         if len(datax)>1:
             if showLegend:
                 print("Not enough labels were given compared to data dimension. Printing empty strings instead.")
             label = ''
         label = [label]*len(datax)
+    
+#     print(color, marker, zorder, linestyle, plotFlag, label)
         
     #hiding labels if required
     if hideXlabel:
@@ -425,8 +528,9 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         ax1.yaxis.set_label_position("right")
 
     #Plotting
+    tmp = None
+    sct = None
     for dtx, dty, mrkr, clr, zrdr, lnstl, lbl, pltFlg in zip(datax, datay, marker, color, zorder, linestyle, label, plotFlag):
-        print(pltFlg)
         if pltFlg:
             tmp = plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, linestyle=lnstl)
         else:            
@@ -435,8 +539,11 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 cmapMin = np.min(clr)
             if cmapMax is None:
                 cmapMax = np.max(clr)
+                
             sct = plt.scatter(dtx, dty, label=lbl, marker=mrkr, c=clr, zorder=zrdr, 
                               cmap=cmap, vmin=cmapMin, vmax=cmapMax)
+    if tmp is None:
+        tmp = sct
         
     if np.any(np.logical_not(plotFlag)) and showColorbar:
         col = plt.colorbar(sct, orientation=colorbarOrientation)
@@ -560,3 +667,23 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
 #             plotFlag=[False, True], color=[redshift, 'black'], marker=['o', 'None'], linestyle=["None", 'dashed'],
 #             cmap='gist_heat', showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
 #             outputName='Plots/Selection_plots/size_vs_log10Mass.pdf', overwrite=False)
+
+# redshift = table['Z_MUSE']
+# fluxOII = table['OII_3726_FLUX'] + table['OII_3729_FLUX']
+# errflux = table['OII_3726_FLUX_ERR'] + table['OII_3729_FLUX_ERR']
+# m = maskToRemoveVal([fluxOII, errflux], astroTableMask=True)
+# m = np.logical_and(m, maskToRemoveVal([fluxOII, errflux]))
+
+# fluxOII, errflux, redshift = applyMask([fluxOII, errflux, redshift], m)
+
+# findWhereIsValue([fluxOII, errflux])
+# SNR     = fluxOII/errflux
+
+# plt.rcParams["figure.figsize"] = (12, 12) # (w, h)
+# f = plt.figure()
+# plt.subplots_adjust(wspace=0.45, hspace=0.05)
+
+# asManyPlots(111, SNR, fluxOII, xlabel=r'$\rm{SNR}$', ylabel=r'$\rm{Flux OII \ \ [10^{-20} erg \, s^{-1} \, cm^{-2}]}$',
+#             plotFlag=False, color=[redshift], marker='o', cmap='gist_heat', 
+#             showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
+#             outputName='Plots/Selection_plots/Flux_vs_SNR.pdf', overwrite=False)
