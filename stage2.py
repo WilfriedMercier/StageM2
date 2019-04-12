@@ -276,7 +276,7 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
                 label='', zorder=0, textsize=24, showLegend=False, legendTextSize=24,
                 xlim=[None, None], locLegend='best', tickSize=24, title='', titlesize=24,
                 outputName=None, overwrite=False, tightLayout=True, integralIsOne=None,
-                align='mid', histtype='stepfilled', alpha=1.0):
+                align='mid', histtype='stepfilled', alpha=1.0, cumulative=False):
 
     """
     Function which plots on a highly configurable subplot grid 1D histograms. A list of data can be given to have multiple histograms on the same subplot.
@@ -291,6 +291,8 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
         if an integer, the number of bins. If it is a list, edges of the bins must be given.
     color : list of strings/chars/RGBs
         color for the data. It can either be a string, char or RGB value.
+    cumulative : boolean
+        whether to plot the cumulative distribution (where each bin equals the sum of the values in the previous bins up to this one) or the histogram
     data: numpy array, list of numpy arrays
         the data
     hideXlabel : boolean
@@ -373,7 +375,8 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
 #     print(data, bins, integralIsOne, weights, color, align)
         
     n, bns, ptchs = plt.hist(data, bins=bins, range=rang, density=integralIsOne, weights=weights, color=color,
-                             align=align, histtype=histtype, label=label, zorder=zorder, alpha=alpha)
+                             align=align, histtype=histtype, label=label, zorder=zorder, alpha=alpha,
+                             cumulative=cumulative)
     
     if showLegend:
         plt.legend(loc=locLegend, prop={'size': legendTextSize})
@@ -639,67 +642,67 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
 
 
 
-from sys import exit
-import importlib
+# from sys import exit
+# import importlib
 
-from astropy.io.votable import is_votable, parse
-from astropy.table import Table, vstack
-from astropy.coordinates import SkyCoord
-from astropy import units as u
-import numpy as np
+# from astropy.io.votable import is_votable, parse
+# from astropy.table import Table, vstack
+# from astropy.coordinates import SkyCoord
+# from astropy import units as u
+# import numpy as np
 
-import matplotlib.pyplot as plt
-from matplotlib.colors import from_levels_and_colors
-from matplotlib.markers import MarkerStyle
+# import matplotlib.pyplot as plt
+# from matplotlib.colors import from_levels_and_colors
+# from matplotlib.markers import MarkerStyle
 
-pathdata = "outputs/"
-data     = ["matching_fieldGals_Cassata_and_Zurich_corrected_radius.vot"]
+# pathdata = "outputs/"
+# data     = ["matching_fieldGals_Cassata_and_Zurich_corrected_radius.vot"]
 
-for name in data:
-    voTag = is_VOtable(pathdata+name)
-    if voTag:        
-        fullFileName = pathdata + name
-        #Retrieving the data
-        table = parse(fullFileName)
-        full  = table.get_first_table()
+# for name in data:
+#     voTag = is_VOtable(pathdata+name)
+#     if voTag:        
+#         fullFileName = pathdata + name
+#         #Retrieving the data
+#         table = parse(fullFileName)
+#         full  = table.get_first_table()
         
-        print("Size of", name, "is", full.array.shape[0], "\n")
-    else:
-        exit("Exiting")
+#         print("Size of", name, "is", full.array.shape[0], "\n")
+#     else:
+#         exit("Exiting")
         
-catalog = parse(pathdata+data[0]).get_first_table().array
-fields  = np.asarray(catalog.dtype.names)
+# catalog = parse(pathdata+data[0]).get_first_table().array
+# fields  = np.asarray(catalog.dtype.names)
 
-#Checking that the matching procedure did not duplicate galaxies
-checkDupplicates([catalog], names=["matching_fieldGals_Cassata_and_Zurich_corrected_radius.vot"])
+# #Checking that the matching procedure did not duplicate galaxies
+# checkDupplicates([catalog], names=["matching_fieldGals_Cassata_and_Zurich_corrected_radius.vot"])
 
-#Converting to an astropy table for simplicity
-table = Table(catalog)      
+# #Converting to an astropy table for simplicity
+# table = Table(catalog)      
 
-printSimpleStat(catalog['Separation_ZURICH'], unit=u.arcsec)
-print("\nNumber of galaxies in matching catalog:", np.shape(table)[0])
+# printSimpleStat(catalog['Separation_ZURICH'], unit=u.arcsec)
+# print("\nNumber of galaxies in matching catalog:", np.shape(table)[0])
 
-#Converting size in arcsec
-size     = table['Corrected_radius']*0.03
-redshift = table['Z_MUSE']
-lmass    = table['lmass']
+# #Converting size in arcsec
+# size     = table['Corrected_radius']*0.03
+# redshift = table['Z_MUSE']
+# lmass    = table['lmass']
 
-m           = np.logical_and(maskToRemoveVal([size, lmass], astroTableMask=True),
-                             maskToRemoveVal([size, lmass]))
-size, lmass, redshift = applyMask([size, lmass, redshift], m)
+# m           = np.logical_and(maskToRemoveVal([size, lmass], astroTableMask=True),
+#                              maskToRemoveVal([size, lmass]))
+# size, lmass, redshift = applyMask([size, lmass, redshift], m)
 
-findWhereIsValue([size, lmass])
+# findWhereIsValue([size, lmass])
 
-plt.rcParams["figure.figsize"] = (12, 12) # (w, h)
-f = plt.figure()
-plt.subplots_adjust(wspace=0.45, hspace=0.05)
+# plt.rcParams["figure.figsize"] = (12, 12) # (w, h)
+# f = plt.figure()
+# plt.subplots_adjust(wspace=0.45, hspace=0.05)
 
-xline = [np.min(lmass), np.max(lmass)]
-yline = [0.7, 0.7]
-asManyPlots(111, [lmass, xline], [size, yline], xlabel=r'$\log_{10} (M/M_{\odot})$', ylabel=r'$R_{1/2} \ \ [\rm{arcsec}]$',
-            plotFlag=[False, True], color=[redshift, 'black'], marker=['o', 'None'], linestyle=["None", 'dashed'],
-            cmap='gist_heat', showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
-            outputName='Plots/Selection_plots/size_vs_log10Mass.pdf', overwrite=False)
+# xline = [np.min(lmass), np.max(lmass)]
+# yline = [0.7, 0.7]
+# asManyPlots(111, [lmass, xline], [size, yline], xlabel=r'$\log_{10} (M/M_{\odot})$', ylabel=r'$R_{1/2} \ \ [\rm{arcsec}]$',
+#             plotFlag=[False, True], color=[redshift, 'black'], marker=['o', 'None'], linestyle=["None", 'dashed'],
+#             cmap='gist_heat', showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
+#             outputName='Plots/Selection_plots/size_vs_log10Mass.pdf', overwrite=False)
 
 # redshift = table['Z_MUSE']
 # fluxOII = table['OII_3726_FLUX'] + table['OII_3729_FLUX']
@@ -721,8 +724,8 @@ asManyPlots(111, [lmass, xline], [size, yline], xlabel=r'$\log_{10} (M/M_{\odot}
 #             showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
 #             outputName='Plots/Selection_plots/Flux_vs_SNR.pdf', overwrite=False)
 
-# asManyHists(111, [np.array([1,2,2,3]), np.array([1,1,1,2,3])], xlabel='xlabel', ylabel='ylabel', color=['blue', 'yellow'], histtype='stepfilled', label=['a', 'b'], showLegend=True, alpha=0.7, outputName='test.pdf', overwrite=True)
+# asManyHists(111, [np.array([1,2,2,3]), np.array([1,1,1,2,3])], xlabel='xlabel', ylabel='ylabel', color=['blue', 'yellow'], histtype='stepfilled', label=['a', 'b'], showLegend=True, alpha=0.7, outputName='test.pdf', overwrite=True, cumulative=True)
 
 # asManyHists(111, np.array([1,2,2,3]), xlabel='xlabel', ylabel='ylabel', color='red', histtype='barstacked', label='a', showLegend=True)
 
-plt.show()
+# plt.show()
