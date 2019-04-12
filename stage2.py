@@ -81,16 +81,16 @@ def printSimpleStat(catalog, unit=None):
     """
 
     try:
-        np.shape(catalog)[1]
+        np.shape(catalog[1])
     except IndexError:
         catalog = [catalog]
     
     for cat, num in zip(catalog, range(len(catalog))):
         if unit is not None:
             cat = cat*unit
-        
+            
         print("Stat for catalog number", num, ":")
-        print("Maximum separation is", str((cat).max()) + ".")
+        print("Maximum separation is", str(np.max(cat)) + ".")
         print("Mean separation is", str(np.mean(cat)) + ".")
         print("Median separation is", str(np.median(cat)) + ".")
         print("1st quantile is", str(np.quantile(cat, 0.25)) + ".")
@@ -640,6 +640,11 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     
     return ax1, tmp
 
+
+# a = np.array([0,1,2])
+# test = [a, a*2]
+
+# printSimpleStat(test)
 
 
 # from sys import exit
