@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#MERCIER Wilfried
+#Allows to open multiple MUSE files (identical, for instance dispersion or velocity fields) in different directories by
+#specifying the location of each file and how its name ends (which file open)
+
+end="_ssmooth_vel_common.fits"
+buffered=0
+if [ $# -ge 1 ]
+then
+   file=$1
+   if [ $# -ge 2 ]
+   then
+      if [ $2 == "-b" ]
+      then
+         buffered=1
+      else
+         end=$2
+      fi
+
+      if [ $# -ge 3 ] && [ $3 == "-b" ]
+      then
+         buffered=1
+      fi
+   fi
+else
+   echo -e "Not enough arguments given. The intput filename containing the list of folders within which we want to open the MUSE files must be given as a first argument. The end of the file (for instance _ssmooth_vel_common_clean5.0.fits) must be given as a second argument."
+   exit 1
+fi
+
+if [ $buffered -eq 0 ]
+then
+   for name in $(more $file | cut -d' ' -f2)
+   do
+      f=$(echo $name | awk -F'.config' '{print $1}')
+      nameFull=$f$end
+      PyQubeVis $nameFull &
+   done
+else
+   nameFull=""
+   for name in $(more $file | cut -d' ' -f2)
+   do
+      f=$(echo $name | awk -F'.config' '{print $1}')
+      nameFull="$nameFull $f$end"
+   done
+    PyQubeVis $nameFull &
+fi
+
+exit 0
+
+
