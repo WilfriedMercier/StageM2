@@ -77,8 +77,6 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
     ----------
     path: string
         path where the input data are stored
-    ouputpath: string
-        path where the ouput data will be stored
     name: string
         name of the galaxy
     lsfw: float
@@ -93,6 +91,8 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
         upper threshold for cleaning
     option: string
         option of camel to find the files to clean (e.g. '_ssmooth')
+    ouputpath: string
+        path where the ouput data will be stored
     line: string
         line used (suffixe, e.g. '_Ha')
     clean: string
@@ -179,6 +179,8 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
             fimcl = fim.split('.fits')[0].split('/')[-1] + '_mclean%3.1f.fits' %thr
             hdul.writeto(outputpath + fimcl, overwrite=True)
         logger.info('output written in %s' %(outputpath+fimcl))
+    
+    return
 
 
 
@@ -212,13 +214,20 @@ def clean_setofgalaxies(path='/home/wilfried/ST2/', outfilename='list_output_fol
         name of the manually cleaned map
     '''
     
-    cat = ascii.read(filename)
+    cat             = ascii.read(filename)
+    f               = open(outfilename, "w")
     
     for ligne in cat:
-        name        = ligne[0].split('/')[-1].split('.config')[0]
-        path        = ligne[0].split(name+'.config')[0]
-        outpath     = '../outputs/MUSE/' + path.split('../data/')[1]
+        name            = ligne[0].split('/')[-1].split('.config')[0]
+        path            = ligne[0].split(name+'.config')[0]
+        outpath         = '../outputs/MUSE/' + path.split('../data/')[1]
         clean_galaxy(path, outpath, name, ligne[1], fraction, data_mask=data_mask, thru=thru, thrl=thrl, line=line, option=option, clean=clean)
+        
+        f.write(outpath.rpartition('/')[0] + "\n")
+        
+    f.close()
+    return
+        
 
 def compute_velres(z, lbda0, a2=5.835e-8, a1=-9.080e-4, a0=5.983):
     '''
@@ -302,11 +311,12 @@ def main():
     name        = possibleNames.get('wellResolved')
     inname      = path + scripts + name
     outname     = path + scripts + name + '_clean_o2'
+    outfilename = path + scripts + name + "_outputFolders"
     lbda0       = 3729.  # OII wavelength at restframe in Angstroms
     velres_setofgalaxies(inname, outname, lbda0)
     
     fraction = 0.8
-    clean_setofgalaxies(path=path, thru=None, thrl=5, fraction=fraction, filename=outname, clean='clean.fits', option='_ssmooth', line='_OII3729', data_mask='snr')
+    clean_setofgalaxies(path=path, thru=None, thrl=5, fraction=fraction, filename=outname, clean='clean.fits', option='_ssmooth', line='_OII3729', data_mask='snr', outfilename=outfilename)
     
 
 if __name__ == "__main__":
