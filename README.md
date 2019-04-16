@@ -53,3 +53,37 @@ or if you want to use a list of galaxies from a different file and/or change the
 ```
 
 where inputName is the file with all the galaxies we want to clean and folder is the location of the main folder where the structure will be built.
+
+## I/O in clean_data.py
+
+### Input files
+
+Clean_data.py uses a file as an input in order to know which galaxy it must clean. Available filenames are listed in the dictionnary *possibleNames*. 
+
+The input text file must have the following structure. The first column contains the full relative filename to the .config file of every galaxy we want to clean. The second column must have the redshift of the galaxy, which can be found in the .config file.
+
+### Output files
+
+Two ouput files are created in addition to the cleaned maps. Those files appear in the same folder as clean_data.py.
+
+The first one is the clean_o2 file which has the same structure as the input file but with the lsfw instead of redshift. The second one is the outputFolders file which lists every folder where a cleaned map has been made.
+
+## Comparing maps before and after cleaning
+
+To compare the maps with PyQubeVis before and after cleaning, *checkGalsBefore* and *checkGalsAfter* programs can be used. These require PyQubeVis to be in the path under this specific name.
+
+To open all the newly cleaned maps in PyQubeVis, run the following command
+
+```bash
+./checkGalsAfter filename |extension] [-b] 
+```
+
+where filename is the outputFolders file. Parameters in square brackets are optional, with extension refering to the kind of file we want to open and -b to open the files in buffer mode. Default is to open velocity field maps un unbuffered mode.
+
+For instance, the following command
+
+```bash
+./checkGalsAfter listGal _ssmooth_vel_common_clean5.0.fits -b
+```
+
+will open all the galaxies listed in listGal, finishing with the extension \_ssmooth_vel_common_clean5.0.fits in a single PyQubeVis window (buffered mode). In order for each galaxy to have its own window, remove -b.
