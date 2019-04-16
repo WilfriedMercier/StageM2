@@ -30,28 +30,28 @@ If you run clean_data.py for the first time, you must first generate the list of
 
 First, generate the list of galaxies by running
 
-```bash
-./generate_list_gal 
+```console
+wilfried:~/ST2$ ./generate_list_gal 
 ```
 
 or if you want to change the ouput file name and/or the folder location (where the MUSE data is stored), use
 
-```bash
-./generate_list_gal outputName folder
+```console
+wilfried:~/ST2$ ./generate_list_gal outputName folder
 ```
 
 where outputName is the name of the ouput file, and folder is the MUSE data folder location.
 
 Secondly, build the output folder structure for the cleaned maps. To do so, run
 
-```bash
-./build_folder_structure
+```console
+wilfried:~/ST2$ ./build_folder_structure
 ```
 
 or if you want to use a list of galaxies from a different file and/or change the main folder name where the structure will be built (default is ../outputs/MUSE), use instead
 
-```bash
-./build_folder_structure inputName folder
+```console
+wilfried:~/ST2$ ./build_folder_structure inputName folder
 ```
 
 where inputName is the file with all the galaxies we want to clean and folder is the location of the main folder where the structure will be built.
@@ -80,16 +80,16 @@ To compare the maps with PyQubeVis before and after cleaning, *checkGalsBefore* 
 
 To open all the newly cleaned maps in PyQubeVis, run the following command
 
-```bash
-./checkGalsAfter filename [extension] [-b] 
+```console
+wilfried:~/ST2$ ./checkGalsAfter filename [extension] [-b] 
 ```
 
 where filename is the outputFolders file. Parameters in square brackets are optional, with extension refering to the kind of file we want to open and -b to open the files in buffer mode. Default is to open velocity field maps un unbuffered mode.
 
 For instance, the following command
 
-```bash
-./checkGalsAfter listGal _ssmooth_vel_common_clean5.0.fits -b
+```console
+wilfried:~/ST2$ ./checkGalsAfter listGal _ssmooth_vel_common_clean5.0.fits -b
 ```
 
 will open all the galaxies listed in *listGal*, finishing with the extension \_ssmooth_vel_common_clean5.0.fits in a single PyQubeVis window (buffer mode). In order for each galaxy to have its own window, remove -b.
@@ -97,8 +97,8 @@ will open all the galaxies listed in *listGal*, finishing with the extension \_s
 Maps before cleaning can be opened in the same way with the command
 
 
-```bash
-./checkGalsBefore filename [extension] [-b] 
+```console
+wilfried:~/ST2$ ./checkGalsBefore filename [extension] [-b] 
 ```
 
 where filename should be in this case the same file as the input file used for cleaning the maps.
