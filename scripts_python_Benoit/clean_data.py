@@ -111,7 +111,6 @@ def clean_galaxy(path, outputpath, name, lsfw, fraction, data_mask='snr', thrl=N
         logger.info('clean_galaxy: path % s does not exist' % (str(outputpath)) )
         return
     
-    
     smin = lsfw * fraction
     logger.info('clean_galaxy: dispersion threshold % s' % (str(smin)) )
     
@@ -297,9 +296,12 @@ def main():
     #UDF
     path        = '/home/wilfried/ST2/'
     scripts     = 'scripts_python_Benoit/'
-    inname      = path + scripts + 'list_gal'
-    inname      = path + scripts + 'test'
-    outname     = path + scripts + 'clean_o2'
+    
+    possibleNames = {'wholeList' : 'list_gal', 'testFile' : 'test', 'sizeCut' :'galsBelowSizeCut', 'wellResolved' : 'galsWellResolved'}
+    
+    name        = possibleNames.get('wellResolved')
+    inname      = path + scripts + name
+    outname     = path + scripts + name + '_clean_o2'
     lbda0       = 3729.  # OII wavelength at restframe in Angstroms
     velres_setofgalaxies(inname, outname, lbda0)
     
