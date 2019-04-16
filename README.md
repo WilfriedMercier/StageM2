@@ -58,9 +58,13 @@ where inputName is the file with all the galaxies we want to clean and folder is
 
 ### Input files
 
-Clean_data.py uses a file as an input in order to know which galaxy it must clean. Available filenames are listed in the dictionnary *possibleNames*. 
+Clean_data.py uses a file as an input in order to know which galaxy it must clean. Available filenames are listed in the dictionnary possibleNames. 
 
-The input text file must have the following structure. The first column contains the full relative filename to the .config file of every galaxy we want to clean. The second column must have the redshift of the galaxy, which can be found in the .config file.
+The input text file must have the following structure
+
+- the first column contains the full relative filename to the .config file of every galaxy we want to clean
+
+- the second column must have the redshift of the galaxy, which can be found in the .config file
 
 ### Output files
 
@@ -75,7 +79,7 @@ To compare the maps with PyQubeVis before and after cleaning, *checkGalsBefore* 
 To open all the newly cleaned maps in PyQubeVis, run the following command
 
 ```bash
-./checkGalsAfter filename |extension] [-b] 
+./checkGalsAfter filename [extension] [-b] 
 ```
 
 where filename is the outputFolders file. Parameters in square brackets are optional, with extension refering to the kind of file we want to open and -b to open the files in buffer mode. Default is to open velocity field maps un unbuffered mode.
@@ -86,4 +90,4 @@ For instance, the following command
 ./checkGalsAfter listGal _ssmooth_vel_common_clean5.0.fits -b
 ```
 
-will open all the galaxies listed in listGal, finishing with the extension \_ssmooth_vel_common_clean5.0.fits in a single PyQubeVis window (buffered mode). In order for each galaxy to have its own window, remove -b.
+will open all the galaxies listed in *listGal*, finishing with the extension \_ssmooth_vel_common_clean5.0.fits in a single PyQubeVis window (buffered mode). In order for each galaxy to have its own window, remove -b.
