@@ -90,4 +90,13 @@ For instance, the following command
 ./checkGalsAfter listGal _ssmooth_vel_common_clean5.0.fits -b
 ```
 
-will open all the galaxies listed in *listGal*, finishing with the extension \_ssmooth_vel_common_clean5.0.fits in a single PyQubeVis window (buffered mode). In order for each galaxy to have its own window, remove -b.
+will open all the galaxies listed in *listGal*, finishing with the extension \_ssmooth_vel_common_clean5.0.fits in a single PyQubeVis window (buffer mode). In order for each galaxy to have its own window, remove -b.
+
+Maps before cleaning can be opened in the same way with the command
+
+
+```bash
+./checkGalsBefore filename [extension] [-b] 
+```
+
+where filename should be in this case the same file as the input file used for cleaning the maps.
