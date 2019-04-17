@@ -84,7 +84,7 @@ To open all the newly cleaned maps in PyQubeVis, run the following command
 wilfried:~/ST2$ ./checkGalsAfter filename [extension] [-b] 
 ```
 
-where filename is the outputFolders file. Parameters in square brackets are optional, with extension refering to the kind of file we want to open and -b to open the files in buffer mode. Default is to open velocity field maps un unbuffered mode.
+where filename is the outputFolders file. Parameters in square brackets are optional, with extension refering to the kind of file we want to open and -b to open the files in buffer mode. Default is to open velocity field maps in unbuffered mode.
 
 For instance, the following command
 
