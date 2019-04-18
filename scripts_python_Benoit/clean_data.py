@@ -46,7 +46,10 @@ def create_mask(image, thrl=None, thru=None):
     if thrl is None:
         thrl = np.nanmin(image)
     if thru is None:
-        thru = np.nanmax(image)
+        try:
+            thru = np.nanmax(image)
+        except ValueError:
+            print("\nIt seems that no maximum value can be found. Please check that your .fits file is not corrupted.\n")
     logger.info('create_mask: lower threshold % s' % (str(thrl)) )
     logger.info('create_mask: upper threshold % s' % (str(thru)) )
     return ((image <= thru) & (image >= thrl))
