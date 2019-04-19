@@ -501,7 +501,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     ax1.xaxis.set_ticks_position('both')
     ax1.set_title(title, size=titlesize)
     ax1.tick_params(which='both', direction='in', labelsize=tickSize)
-    plt.grid()
+    plt.grid(zorder=1000)
     
     #Checking shape consistency between datax and datay
     shpX = np.shape(datax)
