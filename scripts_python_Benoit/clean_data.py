@@ -309,9 +309,10 @@ def main():
     path        = '/home/wilfried/ST2/'
     scripts     = 'scripts_python_Benoit/'
     
-    possibleNames = {'wholeList' : 'list_gal', 'testFile' : 'test', 'sizeCut' :'galsBelowSizeCut', 'wellResolved' : 'galsWellResolved'}
+    possibleNames = {'wholeList' : 'list_gal', 'testFile' : 'test', 'sizeCut' :'galsBelowSizeCut', 'wellResolved' : 'galsWellResolved',
+                     'sizeCutAbove' : 'galsAboveSizeCut'}
     
-    name        = possibleNames.get('sizeCut')
+    name        = possibleNames.get('sizeCutAbove')
     inname      = path + scripts + name
     outname     = path + scripts + name + '_clean_o2'
     outfilename = path + scripts + name + "_outputFolders"
