@@ -310,9 +310,9 @@ def main():
     scripts     = 'scripts_python_Benoit/'
     
     possibleNames = {'wholeList' : 'list_gal', 'testFile' : 'test', 'sizeCut' :'galsBelowSizeCut', 'wellResolved' : 'galsWellResolved',
-                     'sizeCutAbove' : 'galsAboveSizeCut', 'SNRcut' : 'galsBelowSNRCut'}
+                     'sizeCutAbove' : 'galsAboveSizeCut', 'SNRcut' : 'galsBelowSNRCut', 'SNRcutAbove' : 'galsAboveSNRCut'}
     
-    name        = possibleNames.get('SNRcut')
+    name        = possibleNames.get('SNRcutAbove')
     inname      = path + scripts + name
     outname     = path + scripts + name + '_clean_o2'
     outfilename = path + scripts + name + "_outputFolders"
