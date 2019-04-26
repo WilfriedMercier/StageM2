@@ -118,8 +118,8 @@ def extract_stamps_groups(image_file, gal_list, size=2., factor=1., pathout='./'
     hdr['UZERO'] = -2.5 * np.log10(1. / factor)
     cat = ascii.read(gal_list)
     
-    radeg = cat['RA']
-    decdeg = cat['DEC']
+    radeg = cat['ra']
+    decdeg = cat['dec']
     
     hst_pix = np.sqrt(hdr['CD1_1'] ** 2 + hdr['CD1_2'] ** 2) * 3600
     npix = np.round(size / hst_pix)
@@ -134,7 +134,7 @@ def extract_stamps_groups(image_file, gal_list, size=2., factor=1., pathout='./'
         im1 = im[np.int(np.round(yc[i] - npix)):np.int(np.round(yc[i] + npix)), np.int(np.round(xc[i] - npix)):np.int(np.round(xc[i] + npix))]
         hdu = fits.PrimaryHDU(im1, hdrc)
         hdulist = fits.HDUList(hdu)
-        hdulist.writeto(pathout + str(cat['ID'][i]) + '_f814_comb.fits', overwrite=True)
+        hdulist.writeto(pathout + str(cat['ID'][i]) + '_CGr_30.fits', overwrite=True)
 
 def extract_stamps(image_file, gal_list, size=2., factor=1., pathout='./'):
     '''This function enables to extract several images centered on galaxies from a large image
@@ -290,19 +290,19 @@ def main():
     #------#
     # UDF  #
     #------#
-    factor = 1e4
-    path = '/home/bepinat/Instruments/MUSE/analyse/UDF/data/camel/'
-    gal_list = path + 'udf_mos_c042_e030_spectrocat.txt'
-    path_hst = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/hst/'
-    pathout = path_hst + 'stamps/'
-    bands = ['f105w', 'f125w', 'f140w', 'f160w', 'f435w', 'f606w', 'f775w', 'f814w', 'f850lp']
+#    factor = 1e4
+#    path = '/home/bepinat/Instruments/MUSE/analyse/UDF/data/camel/'
+#    gal_list = path + 'udf_mos_c042_e030_spectrocat.txt'
+#    path_hst = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/hst/'
+#    pathout = path_hst + 'stamps/'
+#    bands = ['f105w', 'f125w', 'f140w', 'f160w', 'f435w', 'f606w', 'f775w', 'f814w', 'f850lp']
     #band = 'f160w'
-    sz = 2.
-    for band in bands:
+#    sz = 2.
+#    for band in bands:
         #image_file = glob.glob(path_hst + '*_hst_*_' + band + '_*.fits')[0]
-        image_file = glob.glob(path_hst + 'hlsp_xdf_hst_*_' + band + '_*.fits')[0]
-        print(image_file)
-        extract_stamps_udf(image_file, gal_list, size=sz, factor=factor, pathout=pathout, suffixe=band)
+#        image_file = glob.glob(path_hst + 'hlsp_xdf_hst_*_' + band + '_*.fits')[0]
+#        print(image_file)
+#        extract_stamps_udf(image_file, gal_list, size=sz, factor=factor, pathout=pathout, suffixe=band)
     #gal_list = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/Commissioning/morpho_largerstamps.txt'
     #sz = 3.
     #extract_stamps(image_file, gal_list, size=sz, factor=factor, pathout=pathout)
@@ -366,19 +366,19 @@ def main():
     # groups #
     #--------#
     
-    #path = '/home/bepinat/Instruments/MUSE/groups/morpho/'
-    #groups = ['gr28', 'gr32', 'gr83', 'gr116']
-    #factor = 1e4
-    #szg = 3.
-    #szs = 1.
-    #for group in groups:
-        #pathgr = path + 'acs_mosaic_2.0_' + group + '/'
-        #pathpsf = path + 'acs_mosaic_2.0_' + group + '/psf/'
-        ##image_file = glob.glob(pathgr + '*acs_I_mosaic_30mas_sci.fits')[0]
-        ##gal_list = path + group + '_catalog.txt'
-        ##star_list = path + group + '_starcatalog.txt'
-        ##extract_stamps_groups(image_file, gal_list, pathout=pathgr, size=szg, factor=factor)
-        ##extract_stamps_groups(image_file, star_list, pathout=pathpsf, size=szs, factor=factor)
+    path = '/home/wilfried/ST2/data/hst/'
+    groups = ['CGr30']
+    factor = 1e4
+    szg = 3.
+#    szs = 1.
+    for group in groups:
+        pathgr = path + group + '/'
+#        pathpsf = path + 'acs_mosaic_2.0_' + group + '/psf/'
+        image_file = pathgr + 'HST_' + group + '.fits'
+        gal_list = pathgr + 'catalog_field_galaxies_' + group + '.txt'
+        #star_list = path + group + '_starcatalog.txt'
+        extract_stamps_groups(image_file, gal_list, pathout=pathgr, size=szg, factor=factor)
+        #extract_stamps_groups(image_file, star_list, pathout=pathpsf, size=szs, factor=factor)
         #display_all_hst_models_groups(pathgr, pathgr, basename='_f814_comb_out.fits')
 
 
