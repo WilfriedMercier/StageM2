@@ -134,7 +134,8 @@ def extract_stamps_groups(image_file, gal_list, size=2., factor=1., pathout='./'
         im1 = im[np.int(np.round(yc[i] - npix)):np.int(np.round(yc[i] + npix)), np.int(np.round(xc[i] - npix)):np.int(np.round(xc[i] + npix))]
         hdu = fits.PrimaryHDU(im1, hdrc)
         hdulist = fits.HDUList(hdu)
-        hdulist.writeto(pathout + str(cat['ID'][i]) + '_CGr_30.fits', overwrite=True)
+        nm=image_file.split('_')[1].split('.fits')[0]
+        hdulist.writeto(pathout + str(cat['ID'][i]) + '_' + nm + '.fits', overwrite=True)
 
 def extract_stamps(image_file, gal_list, size=2., factor=1., pathout='./'):
     '''This function enables to extract several images centered on galaxies from a large image
@@ -367,7 +368,9 @@ def main():
     #--------#
     
     path = '/home/wilfried/ST2/data/hst/'
-    groups = ['CGr30']
+    groups = ['CGr114', 'CGr23', 'CGr26', 'CGr28', 'CGr30',
+              'CGr32', 'CGr34', 'CGr51', 'CGr61', 'CGr79',
+              'CGr84', 'CGr84-N']
     factor = 1e4
     szg = 3.
 #    szs = 1.
