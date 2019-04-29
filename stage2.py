@@ -14,6 +14,7 @@ from astropy.io.votable import is_votable, writeto
 import numpy as np
 
 import matplotlib.pyplot as plt
+from matplotlib.markers import MarkerStyle
 
 def is_VOtable(fullname):
     """
@@ -412,13 +413,16 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 showColorbar=False, locLegend='best', tickSize=24, title='', titlesize=24, 
                 colorbarOrientation='vertical', colorbarLabel=None, colorbarTicks=None, colorbarTicksLabels=None,
                 colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24,
-                outputName=None, overwrite=False, tightLayout=True):
+                outputName=None, overwrite=False, tightLayout=True, 
+                fillstyle='full', unfilledFlag=False, alpha=1.0):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     This function has been developed to be used with numpy arrays or list of numpy arrays (structured or not). Working with astropy tables or any other kind of data structure might or might not work depending on its complexity and behaviour. 
     
     Input
     -----
+    alpha : float, list of floats
+        indicates the transparency of the data points (1 is plain, 0 is invisible)
     cmap : matplotlib colormap
         the colormap to use for the scatter plot only
     cmapMin: float
@@ -446,6 +450,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         the x data
     datay : numpy array, list of numpy arrays 
         the y data
+    fillstyle : string, list of strings
+        which fillstyle use for the markers (see matplotlib fillstyles for more information)
     hideXlabel : boolean
         whether to hide the x label or not
     hideYlabel : boolean
@@ -482,6 +488,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         size of the ticks on both axes
     tightLayout : boolean
         whether to use bbox_inches='tight' if tightLayout is True or bbox_inches=None otherwise
+    unfilledFlag : boolean, list of booleans
+        whether to unfill the points' markers or not
     xlabel : string
         the x label
     xlim : list of floats/None
@@ -538,6 +546,18 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     except:
         plotFlag = [plotFlag]*len(datax)
     try:
+        np.shape(fillstyle)[0]
+    except:
+        fillstyle = [fillstyle]*len(datax)
+    try:
+        np.shape(unfilledFlag)[0]
+    except:
+        unfilledFlag = [unfilledFlag]*len(datax)
+    try:
+        np.shape(alpha)[0]
+    except:
+        alpha = [alpha]*len(datax)
+    try:
         np.shape(label)[0]
     except:
         if len(datax)>1:
@@ -566,9 +586,17 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     #Plotting
     tmp = None
     sct = None
-    for dtx, dty, mrkr, clr, zrdr, lnstl, lbl, pltFlg in zip(datax, datay, marker, color, zorder, linestyle, label, plotFlag):
+    
+    for dtx, dty, mrkr, clr, zrdr, lnstl, lbl, pltFlg, fllstl, lph, nflldFlg in zip(datax, datay, marker, color, zorder, linestyle, label, plotFlag, fillstyle, alpha, unfilledFlag):
+        edgecolor = clr
+        if nflldFlg:
+            facecolor = "none"
+        else:
+            facecolor=clr
+        
         if pltFlg:
-            tmp = plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, linestyle=lnstl)
+            tmp = plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, alpha=lph,
+                           linestyle=lnstl, markerfacecolor=facecolor, markeredgecolor=edgecolor)
         else:            
             #Defining default bounds for scatter plot if not given
             if cmapMin is None:
@@ -576,8 +604,12 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
             if cmapMax is None:
                 cmapMax = np.max(clr)
                 
-            sct = plt.scatter(dtx, dty, label=lbl, marker=mrkr, c=clr, zorder=zrdr, 
-                              cmap=cmap, vmin=cmapMin, vmax=cmapMax)
+            markerObject = MarkerStyle(marker=mrkr, fillstyle=fllstl)
+            sct = plt.scatter(dtx, dty, label=lbl, marker=markerObject, zorder=zrdr, 
+                              cmap=cmap, vmin=cmapMin, vmax=cmapMax, alpha=lph, c=clr)
+            if nflldFlg:
+                sct.set_facecolor('none')
+            
     if tmp is None:
         tmp = sct
         
