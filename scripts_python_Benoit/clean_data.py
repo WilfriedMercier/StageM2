@@ -224,7 +224,7 @@ def clean_setofgalaxies(path='/home/wilfried/ST2/', outfilename='list_output_fol
         name            = ligne[0].split('/')[-1].split('.config')[0]
         path            = ligne[0].split(name+'.config')[0]
         outpath         = '../outputs/MUSE/' + path.split('../data/')[1]
-        clean_galaxy(path, outpath, name, ligne[1], fraction, data_mask=data_mask, thru=thru, thrl=thrl, line=line, option=option, clean=clean)
+        clean_galaxy(outpath, outpath, name, ligne[1], fraction, data_mask=data_mask, thru=thru, thrl=thrl, line=line, option=option, clean=clean)
         
         f.write(outpath.rpartition('/')[0] + "\n")
         
@@ -311,9 +311,9 @@ def main():
     
     possibleNames = {'wholeList' : 'list_gal', 'testFile' : 'test', 'sizeCut' :'galsBelowSizeCut', 'wellResolved' : 'galsWellResolved',
                      'sizeCutAbove' : 'galsAboveSizeCut', 'SNRcut' : 'galsBelowSNRCut', 'SNRcutAbove' : 'galsAboveSNRCut',
-                     'tmp' : 'tmpp'}
+                     'tmp' : 'tmpp', 'test' : 'galsTraining'}
     
-    name        = possibleNames.get('tmp')
+    name        = possibleNames.get('test')
     inname      = path + scripts + name
     outname     = path + scripts + name + '_clean_o2'
     outfilename = path + scripts + name + "_outputFolders"
