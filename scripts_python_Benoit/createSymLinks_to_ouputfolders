@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#MERCIER Wilfried
+#used to create symbolic links between the input folder with the uncleaned maps and
+#the ouput folder with the cleaned and model maps
+
+folder="$STG/data/"
+
+totNumOfFiles=$(find $folder -name "CGr*" -type f -print | wc -l)
+
+cnt=0
+for i in $(find $folder -name "CGr*" -type f -print)
+do
+   nbtot=$(echo $i | awk -F/ '{printf NF}')
+   newfile=$(echo $i | sed 's/data/outputs\/MUSE/g')
+
+   if [ $(expr $cnt % 1000) -eq 0 ]
+   then
+      percentage=$((cnt*100/totNumOfFiles))
+      echo "$percentage% completed. $(($totNumOfFiles-$cnt)) more to go."
+   fi
+
+   cnt=$(($cnt+1))
+   #cp $i $newfile
+   if ! [ -L $newfile ]
+   then
+      ln -s $i $newfile
+      #echo $i $newfile
+   fi
+done
