@@ -13,7 +13,7 @@ Name| Langage | Description
 *Selecting\_field\_Gals.ipynb* | Jupyter notebook | File within which the SFR = f(Mass) is inversitgated and galaxies from MUSE are selected according to the graphs from *Plot\_differences\_between\_catalogs.ipynb* and in *[Plots](https://github.com/WilfriedMercier/StageM2/tree/master/Plots)* folder.
 *stage2.py* | Python | Library with useful functions for the internship, namely computing and applying masks on many arrays in two lines, plotting nice and highly configurable graphs with one command, finding occurences of some value in many arrays, etc.
 
-# [scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)
+# *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)*
 
 ## Programs list
 
@@ -28,7 +28,7 @@ Name| Langage | Description
 *clean\_data.py* | Python | Program which cleans MUSE data using a threshold in velocity dispersion, SNR and potentially a manually applied mask.
 *generate\_list\_gal* | Bash | Look for all the galaxies in a given folder (default is *[../data](https://github.com/WilfriedMercier/StageM2/tree/master/data)*). Galaxies must have a *.config* file in their folder in order to be listed. The outputfile (default file name is *list_gal*) contains in the first column the full names (path+name) of the galaxies, and their redshift in the second column.
 
-## How to use
+## Preliminary
 
 ### Building the folder structure
 
@@ -140,3 +140,31 @@ wilfried:~/ST2$ ./checkGalsBefore filename [extension] [-b]
 ```
 
 where `filename` should be in this case the same file as the input file used for cleaning the maps.
+
+## Fitting a model to the data
+
+To fit a model to the data, the maps must have been previously automatically, and then manually cleaned. 
+
+## Making HST images of galaxies
+
+It can be useful to have HST close-up images of the selected galaxies. This can be done with *create\_hst\_stamps.py*.
+
+This program will use both *.txt* input files and the *HST\_CGr\*.fits* files found in the *[data/hst/](https://github.com/WilfriedMercier/StageM2/tree/master/data/hst)CGr\** folders.
+
+Within each group folder, a *.txt* file must be built with the following structure:
+
+ID  | ID_LAIGLE  |      z |  flag       |   ra   |    dec  |      Iab 
+:---: | :---: | :---: | :---: | :---: | :---: | :---:
+  18  |   628424 | 0.37964   |  3 |  150.006272 | 2.253330 | 21.667969 
+  21   |  628636 | 0.34542    | 3 | 149.992574  | 2.252479  |23.621355 
+  23   |  628677 | 0.83942   |  3 | 150.006706 | 2.253204 | 21.654572
+
+where `ID` is the galaxy MUSE ID, `ID_LAIGLE` is the galaxy ID from Laigle+16 catalogue, `z` is the redshift, `flag` is the MUSE CONFID flag (confidence level in redshift value), `ra` and `dec` are the galaxy position, and `Iab` is the galaxy magnitude (generally i++ mag.).
+
+__Note__: column names must be exactly these ones
+
+Such *.txt* files can either be made manually or can be automatically generated using *Create\_hst\_stamps\_input.ipynb*. 
+
+This notebook will use the *.vot* files in *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders which contain the selected galaxies in each cluster.
+
+
