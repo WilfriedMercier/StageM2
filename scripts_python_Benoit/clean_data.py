@@ -27,7 +27,6 @@ logger = logging.getLogger('Clean')
 This module is to be used to clean kinematics map created using camel.
 '''
 
-
 def create_mask(image, thrl=None, thru=None):
     '''
     This function creates a mask from one image using a lower and an upper threshold (True everywhere thrl<=image<=thru)
