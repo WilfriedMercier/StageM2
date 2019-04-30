@@ -181,6 +181,8 @@ def recap_kinem_params(path, basename='hdfs_v*', model='slp', suff1='_xyi', suff
         filen2 = gal + '/' + gal.split('/')[-1] + '_parameters_residual_' + model + suff1 + suff2 + '.txt'
         filen3 = gal + '/' + gal.split('/')[-1] + '_vmax_map_rlast' + suff2 + '.txt'
         cube = gal + '/' + gal.split('/')[-1] + '_ssmooth_cube.fits'
+        
+        print(filen, "\n", filen2, "\n", filen3, "\n", cube)
 #        print("gal", gal, "\n", gal.split('/')[-1], "\n", filen, "\n", filen2, "\n", filen3, "\n", cube)
         line = '%38s '%(gal.split('/')[-1])
         try:
@@ -776,16 +778,22 @@ def main():
 #    pathkin = '/home/vabril/MUSE/Groups_Snapshots/'
 #    pathkin = '/home/vabril/MUSE/Emission_region_CGr32-M1/galaxy_473/o2/'
 #    pathkin = '/home/vabril/MUSE/groups/kinematics/'
-    pathkin = '/home/wilfried/ST2/outputs/MUSE/'
      
     #groups = ['23','26', '28', '51', '61', '79','32-M1', '32-M2', '32-M3','84-NorthA','84-NorthB']
     #groups = ['23', '61']   #Activate the options for calculating the psf for n2ha and o2 bands
     #groups = ['26', '28',  '79','32-M1', '32-M2', '32-M3','84-NorthA'] 
-    groups = ['30'] #'32-M1', '32-M2', '32-M3', '79'
+
     #groups = ['gr32_middeep','gr83_middeep', 'gr28_deep']
     #groups = ['gr32', 'gr83', 'gr116', 'gr28_best_seeing','gr28_shallow']
 #    groups = ['51'] 
-    
+
+    pathkin = '/home/wilfried/ST2/outputs/MUSE/'
+    groups = ['114_s', '23_s', '26_s', '28_s', '30_bs', '30_d', '32-M1_d', '32-M2_d',
+              '32-M3_d', '34_bs', '34_d', '51_s', '61_s', '79_d', '84_d', '84-N_s']
+    groups = ['CGr' + i for i in groups]
+
+    #Selecting galaxy
+    groups = [groups[11]]
     for group in groups:
 #        #path_star = pathkin + group + '/stars/'
 #        path_star = pathkin + 'CGr' + group + '/stars/' # '/stars_A/' or '/stars_B/' for group 51
@@ -815,18 +823,23 @@ def main():
 #        recap_morphopsf_params(path_star, basename='_comb_sky_mg.log', ipath=ipath, outname='_n2ha_mg')
 #        recap_morphopsf_params(path_star, basename='_comb_sky_m.log', ipath=ipath, outname='_n2ha_m')
 
-        gr = group.split('_')[0]
-        print(group)
-#        pathk = pathkin + 'CGr'+ group + '/o2/'
-        pathk = pathkin
-        pathk = pathkin + 'CGr'+ group + '_d/o2/'
-        #pathk = pathkin + 'CGr'+ group + '_mid_deep/CGr84_mdeep_A/o2/'
-        basename = 'CGr'+ gr + '_deep_67_o2'
+        gr = group.split('_')[0].split('CGr')[1]
+        supp = ''
+        if group in ['CGr30_d', 'CGr32-M1_d', 'CGr32-M2_d', 'CGr32-M3_d', 'CGr34_d', 'CGr79_d']:
+            supp = '_deep'
+        elif group in ['CGr34_bs', 'CGr30_bs']:
+            supp = '_bs'
+        elif group == 'CGr84_d':
+            supp = '_mdeep'
+        elif group == 'CGr84-N_s':
+            supp = 'orth'
+
+        pathk = pathkin + group + '/o2/'
+        basename = 'CGr'+ gr + supp + '_' + '28' + '_o2'
 #        basename = 'CGr'+ gr + '*_*' #Activate for Group 51 Snapshots to include 51B and 51 A in the same output
-        print(basename)
+        print(pathk, basename)
         recap_kinem_params(pathk, basename=basename)
-        
-        
+
 #        pathk = pathkin +'CGr'+ group + '/o3hb/'
 #        pathk = pathkin +'CGr'+ group + '_deep/o3hb/'
         #pathk = pathkin +'CGr'+ group + '_mid_deep/CGr84_mdeep_A/o3hb/'
