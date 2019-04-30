@@ -69,6 +69,34 @@ def linear_fit(x, A, offset):
     """
     return A*x+offset
 
+def convertCoords(coordinates, inSize=(200.0, 200.0), outSize=(31.0, 31.0), conversionFactor=1.0):
+    '''
+    Transforms the coordinates of a/many point(s) from one image to another
+    
+    Input
+    -----
+    coordinates : dictionnary or list of dictionnaries
+        the coordinates of the points to convert form one image to another
+    conversionFactor : float
+        a numerical factor to convert the position from pixel to another relavant unit
+    inSize : tuple/list
+        the size of the image the points are from
+    outSize : tuple/list
+        the size of the image whereto we want to convert the positions of the points
+        
+    Returns a list of dictionnaries with transformed coordinates.
+    '''
+    
+    try:
+        np.shape(coordinates)[0]
+    except:
+        coordinates = [coordinates]
+        
+    for num, points in enumerate(coordinates):
+        for pos, key in enumerate(points.keys()):
+            coordinates[num][key] *= outSize[pos]/inSize[pos]*conversionFactor
+    return coordinates
+
 def printSimpleStat(catalog, unit=None):
     """
     Print basic stats such as median and mean values, as well as 1st and 3rd quantiles.
