@@ -97,6 +97,74 @@ def convertCoords(coordinates, inSize=(200.0, 200.0), outSize=(31.0, 31.0), conv
             coordinates[num][key] *= outSize[pos]/inSize[pos]*conversionFactor
     return coordinates
 
+def computeGroupFWHM(wavelength, groups, verbose=True):
+    '''
+    Computes the FWHM at a given observed wavelength assuming a linearly decreasing relation for the FWHM with wavelength (calibrated on OII and OIII) stars measurements for each group in the COSMOS field.
+    
+    Input
+    -----
+    groups : string or list of strings
+        the group for each desired wavelength
+    verbose : boolean
+        whether to print a message on screen with the computed FWHM or not
+    wavelength : integer
+        the wavelength(s) at which we want to compute the FWHM (must be in Angstroms)
+    
+    Returns a list of tuples with the group and the computed FWHM.
+    '''
+    
+    #structure is as folows : number of the group, o2 FWHM, o3hb FWHM
+    listGroups = {'23' : [3.97, 3.29], '26' : [3.16, 2.9], '28' : [3.18, 3.13],
+              '32-M1' : [2.36, 1.99], '32-M2' : [2.52, 2.31], '32-M3' : [2.625, 2.465],
+              '51' : [3.425, 2.95], '61' : [3.2, 3.02], '79' : [2.91, 2.47], 
+              '84-N' : [2.49, 2.21], '30_d' : [2.89, 2.695], '30_bs' : [3.3, 3.003]}
+    
+    #lines wavelengths in Anstrom
+    OIIlambda   = 3729 
+    OIIIlambda  = 5007
+    deltaLambda = OIIIlambda - OIIlambda
+    
+    try:
+        np.shape(wavelength)[0]
+    except:
+        wavelength = [wavelength]
+    try:
+        np.shape(groups)[0]
+    except:
+        groups = [groups]
+        
+    #check wavelength and groups have the same size
+    if len(wavelength) != len(groups):
+        exit("Wavelength and group lists do not have the same length. Please provide exactly one group for each wavelength you want to compute.")
+    
+    #checking given group names exist
+    for pos, name in enumerate(groups):
+        name        = str(name)
+        groups[pos] = name
+        
+        try:
+            listGroups[name]
+        except KeyError:
+            exit("Given group %s is not correct. Possible values are %s" %(name, listGroups.keys()))
+    
+    outputList = []
+    for wv, gr in zip(wavelength, groups):
+        grVals = listGroups[gr]
+        slope  = (grVals[1] - grVals[0])/deltaLambda
+        offset = grVals[0] - slope*OIIlambda
+        
+        FWHM = slope*wv+offset
+        outputList.append((gr, FWHM))
+        
+        if verbose:
+            print("FWHM at wavelength", wv, "angstroms in group", gr, "is", FWHM)
+            
+    return outputList
+        
+    
+    
+    
+
 def printSimpleStat(catalog, unit=None):
     """
     Print basic stats such as median and mean values, as well as 1st and 3rd quantiles.
