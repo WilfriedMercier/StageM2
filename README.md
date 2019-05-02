@@ -145,9 +145,9 @@ where `filename` should be in this case the same file as the input file used for
 
 To fit a model to the data, the maps must have been automatically, and then manually, cleaned. Once this is done, move to the corresponding CGr* group folder in *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE* and create a file *input\_fit\_o2.txt* with the following structure:
 
-ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
-:---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
-CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
+# |      ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
+:---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
+| CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
 
 where each line represents a galaxy with the following properties:
 
@@ -158,7 +158,7 @@ X | x-position of the centre of the galaxy.  | Determined from the hst stamp ima
 Y | y-position of the centre.  | Derived in the same way as X.
 PA | Position angle of the morphological major axis (with respect to North). | Sometimes given by Zurich in the catalogs.
 INC | Inclination of the galaxy (taken such that sin(INC) = ellipticity) | Sometimes derived from Zurich entries in the catalogs.
-psfx | Spatial PSF in pixels | Since this is wavelength and group dependent, the function `computeGroupFWHM` in *stage2.py* can be used to derive its value. This requires to give the observed wavelength of the spectral feature (rest frame wavelength x (1+z)) as well as the group number. 
+psfx | Spatial PSF in pixels | Since this is wavelength and group dependent, the `computeGroupFWHM` function in *stage2.py* can be used to derive its value. This requires to give the observed wavelength of the spectral feature (rest frame wavelength x (1+z)) as well as the group number. 
 psfz | LSF FWHM in km/s | Found in the *_o2* file in *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)*.
 
 __Notes__:
