@@ -145,69 +145,69 @@ where `filename` should be in this case the same file as the input file used for
 
 To fit a model to the data, the maps must have been automatically, and then manually, cleaned. Once this is done, move to the corresponding CGr* group folder in *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE* and create a file *input\_fit\_o2.txt* with the following structure:
 
-       ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
-       :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
-       CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
+ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
+:---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
+CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
 
-       where each line represents a galaxy with the following properties:
+where each line represents a galaxy with the following properties:
 
-       Table column | Description | How to determine ?
-       :---: | :---: | :---
-       ID | The galaxy folder name (within the o2 folder). | 
-       X | x-position of the centre of the galaxy.  | Determined from the hst stamp image (see next section) but a conversion factor must be applied since hst stamps are larger than MUSE images (generally 200x200 px instead of 36x36 px). 
-       Y | y-position of the centre.  | Derived in the same way as X.
-       PA | Position angle of the morphological major axis (with respect to North). | Sometimes given by Zurich in the catalogs.
-       INC | Inclination of the galaxy (taken such that sin(INC) = ellipticity) | Sometimes derived from Zurich entries in the catalogs.
-       psfx | Spatial PSF in pixels | Since this is wavelength and group dependent, the function `computeGroupFWHM` in *stage2.py* can be used to derive its value. This requires to give the observed wavelength of the spectral feature (rest frame wavelength x (1+z)) as well as the group number. 
-       psfz | LSF FWHM in km/s | Found in the *_o2* file in *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)*.
+Table column | Description | How to determine ?
+:---: | :---: | :---
+ID | The galaxy folder name (within the o2 folder). | 
+X | x-position of the centre of the galaxy.  | Determined from the hst stamp image (see next section) but a conversion factor must be applied since hst stamps are larger than MUSE images (generally 200x200 px instead of 36x36 px). 
+Y | y-position of the centre.  | Derived in the same way as X.
+PA | Position angle of the morphological major axis (with respect to North). | Sometimes given by Zurich in the catalogs.
+INC | Inclination of the galaxy (taken such that sin(INC) = ellipticity) | Sometimes derived from Zurich entries in the catalogs.
+psfx | Spatial PSF in pixels | Since this is wavelength and group dependent, the function `computeGroupFWHM` in *stage2.py* can be used to derive its value. This requires to give the observed wavelength of the spectral feature (rest frame wavelength x (1+z)) as well as the group number. 
+psfz | LSF FWHM in km/s | Found in the *_o2* file in *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)*.
 
-       __Notes__:
+__Notes__:
 
-       - the other parameters should not be modified
-       - X and Y position of the centre are fixed parameters and must therefore be tightly constrained
+- the other parameters should not be modified
+- X and Y position of the centre are fixed parameters and must therefore be tightly constrained
 
-       When the input file containing the information for all the galaxies you want to fit a model to is made, either copy in the current folder and run in IDL the *batch\_kin\_analysis.pro* program found in the *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)* folder or run the following lines directly in IDL:
+When the input file containing the information for all the galaxies you want to fit a model to is made, either copy in the current folder and run in IDL the *batch\_kin\_analysis.pro* program found in the *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)* folder or run the following lines directly in IDL:
 
-       ```idl
-       fito=2
-       version='1.0'
-       model='slp'
-       options='_mclean5.0'
-       option1='_ssmooth'
-       file='input_fit_o2.txt'
-       path='o2/'
-       line='_OII3729'
-       fit_massiv, fito, /ifix, pfix=0, /xfix, /yfix, plot=0, file=file, options=options, option1=option1, path=path, line=line
-       ```
+```idl
+fito=2
+version='1.0'
+model='slp'
+options='_mclean5.0'
+option1='_ssmooth'
+file='input_fit_o2.txt'
+path='o2/'
+line='_OII3729'
+fit_massiv, fito, /ifix, pfix=0, /xfix, /yfix, plot=0, file=file, options=options, option1=option1, path=path, line=line
+```
 
-       If everything went fine, this should have created model files (*modd*, *modhr* and *modv*), residual maps (*resd* and *resv*), as well as three recap files with model parameters and residual information:
+If everything went fine, this should have created model files (*modd*, *modhr* and *modv*), residual maps (*resd* and *resv*), as well as three recap files with model parameters and residual information:
 
-       - *CGr\*\_parameters\_red_slp\_xyi\_mclean5.0.txt*
-       - *CGr\*\_parameters\_residual\_slp\_xyi\_mclean5.0.txt*
-       - *CGr\*\_o2\_vmax\_map_rlast\_mclean5.0.txt*
+- *CGr\*\_parameters\_red_slp\_xyi\_mclean5.0.txt*
+- *CGr\*\_parameters\_residual\_slp\_xyi\_mclean5.0.txt*
+- *CGr\*\_o2\_vmax\_map_rlast\_mclean5.0.txt*
 
-       ## Making HST images of galaxies
+## Making HST images of galaxies
 
-       It can be useful to have HST close-up images of the selected galaxies. This can be done with *create\_hst\_stamps.py*.
+It can be useful to have HST close-up images of the selected galaxies. This can be done with *create\_hst\_stamps.py*.
 
-       This program will use both *.txt* input files and the *HST\_CGr\*.fits* files found in the *[data/hst/](https://github.com/WilfriedMercier/StageM2/tree/master/data/hst)CGr\** folders.
+This program will use both *.txt* input files and the *HST\_CGr\*.fits* files found in the *[data/hst/](https://github.com/WilfriedMercier/StageM2/tree/master/data/hst)CGr\** folders.
 
-       Within each group folder, a *.txt* file must be built with the following structure:
+Within each group folder, a *.txt* file must be built with the following structure:
 
-       ID  | ID_LAIGLE  |      z |  flag       |   ra   |    dec  |      Iab 
-       :---: | :---: | :---: | :---: | :---: | :---: | :---:
-         18  |   628424 | 0.37964   |  3 |  150.006272 | 2.253330 | 21.667969 
-           21   |  628636 | 0.34542    | 3 | 149.992574  | 2.252479  |23.621355 
-           ... | ... | ... | ... | ... | ... | ...
-             23   |  628677 | 0.83942   |  3 | 150.006706 | 2.253204 | 21.654572
+ID  | ID_LAIGLE  |      z |  flag       |   ra   |    dec  |      Iab 
+:---: | :---: | :---: | :---: | :---: | :---: | :---:
+18  |   628424 | 0.37964   |  3 |  150.006272 | 2.253330 | 21.667969 
+21   |  628636 | 0.34542    | 3 | 149.992574  | 2.252479  |23.621355 
+... | ... | ... | ... | ... | ... | ...
+23   |  628677 | 0.83942   |  3 | 150.006706 | 2.253204 | 21.654572
 
 
-             where `ID` is the galaxy MUSE ID, `ID_LAIGLE` is the galaxy ID from [Laigle+16](https://ui-adsabs-harvard-edu.ezproxy.obspm.fr/#abs/2016ApJS..224...24L/abstract) catalogue, `z` is the redshift, `flag` is the MUSE CONFID flag (confidence level in redshift value), `ra` and `dec` are the galaxy position, and `Iab` is the galaxy magnitude (generally i++ mag.).
+where `ID` is the galaxy MUSE ID, `ID_LAIGLE` is the galaxy ID from [Laigle+16](https://ui-adsabs-harvard-edu.ezproxy.obspm.fr/#abs/2016ApJS..224...24L/abstract) catalogue, `z` is the redshift, `flag` is the MUSE CONFID flag (confidence level in redshift value), `ra` and `dec` are the galaxy position, and `Iab` is the galaxy magnitude (generally i++ mag.).
 
-             __Note__: Column names must be exactly these ones.
+__Note__: Column names must be exactly these ones.
 
-             Such *.txt* files can either be made manually or can be automatically generated using *Create\_hst\_stamps\_input.ipynb*. 
+Such *.txt* files can either be made manually or can be automatically generated using *Create\_hst\_stamps\_input.ipynb*. 
 
-             This notebook will use the *.vot* files in *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders which contain the selected galaxies in the corresponding cluster.
+This notebook will use the *.vot* files in *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders which contain the selected galaxies in the corresponding cluster.
 
-             
+
