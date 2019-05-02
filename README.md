@@ -64,15 +64,15 @@ where inputName is the file with all the galaxies we want to clean and folder is
 
 ### Creating symbolic links
 
-For later analysis purposes, it can be useful to have all the .fits files from the data folder within the MUSE ouput folder where the cleaned maps and the model will be saved.
+For later analysis purposes, it can be useful to have all the *.fits* files from the data folder within the MUSE ouput folder where the cleaned maps and the model will be saved.
 
-To automatically create symbolic links between the MUSE ouput folder and the .fits files in the data folder, use
+To automatically create symbolic links between the MUSE ouput folder and the *.fits* files in the data folder, use
 
 ```console
 wilfried:~/ST2$ ./createSymLinks_to_ouputfolders
 ```
 
-__Note__ : this program only works with the default folder structure (i.e. input data in the corresponding data/CGr* folders, outputs files in the outputs/MUSE/CGr* folders, etc.
+__Note__ : this program only works with the default folder structure (i.e. input data in the corresponding data/CGr* folders, outputs files in the outputs/MUSE/CGr* folders.
 
 
 ## Cleaning galaxies
@@ -104,11 +104,11 @@ To apply the modifications to all the maps, move back to *[scripts\_python\_Beno
 
 ### Standard procedure
 
-To check that the cleaning procedure did work correctly, the usual way is to move into the ouput folder (listed in the *\_outputFolders* file) and to open in two different PyQueVis session the velocity maps before and after cleaning (usually ending with *\_cleanNB.fits* where NB is one of the thresholds used for the cleaning).
+To check that the cleaning procedure did work correctly, the usual way is to move into the ouput folder (listed in the *\_outputFolders* file) and to open in two different PyQueVis sessions the velocity maps before and after cleaning (usually ending with *\_cleanNB.fits* where NB is one of the thresholds used for the cleaning).
 
 This then allows the user to open the cube file (ending with *\_ssmooth_cube.fits*) to check the lines.
 
-__Note__ : in order to open the maps before cleaning from the ouput folder, one has to create the relevant symbolic links to the input .fits files in the input folder either manually or automatically (using *createSymLinks\_to\_ouputfolders*).
+__Note__ : in order to open the maps before cleaning from the ouput folder, one has to create the relevant symbolic links to the input *.fits* files in the input folder either manually or automatically (using *createSymLinks\_to\_ouputfolders*).
 
 ### Quick look for large numbers of files
 
@@ -143,28 +143,71 @@ where `filename` should be in this case the same file as the input file used for
 
 ## Fitting a model to the data
 
-To fit a model to the data, the maps must have been previously automatically, and then manually cleaned. 
+To fit a model to the data, the maps must have been automatically, and then manually, cleaned. Once this is done, move to the corresponding CGr* group folder in *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE* and create a file *input\_fit\_o2.txt* with the following structure:
 
-## Making HST images of galaxies
+       ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
+       :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
+       CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
 
-It can be useful to have HST close-up images of the selected galaxies. This can be done with *create\_hst\_stamps.py*.
+       where each line represents a galaxy with the following properties:
 
-This program will use both *.txt* input files and the *HST\_CGr\*.fits* files found in the *[data/hst/](https://github.com/WilfriedMercier/StageM2/tree/master/data/hst)CGr\** folders.
+       Table column | Description | How to determine ?
+       :---: | :---: | :---
+       ID | The galaxy folder name (within the o2 folder). | 
+       X | x-position of the centre of the galaxy.  | Determined from the hst stamp image (see next section) but a conversion factor must be applied since hst stamps are larger than MUSE images (generally 200x200 px instead of 36x36 px). 
+       Y | y-position of the centre.  | Derived in the same way as X.
+       PA | Position angle of the morphological major axis (with respect to North). | Sometimes given by Zurich in the catalogs.
+       INC | Inclination of the galaxy (taken such that sin(INC) = ellipticity) | Sometimes derived from Zurich entries in the catalogs.
+       psfx | Spatial PSF in pixels | Since this is wavelength and group dependent, the function `computeGroupFWHM` in *stage2.py* can be used to derive its value. This requires to give the observed wavelength of the spectral feature (rest frame wavelength x (1+z)) as well as the group number. 
+       psfz | LSF FWHM in km/s | Found in the *_o2* file in *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)*.
 
-Within each group folder, a *.txt* file must be built with the following structure:
+       __Notes__:
 
-ID  | ID_LAIGLE  |      z |  flag       |   ra   |    dec  |      Iab 
-:---: | :---: | :---: | :---: | :---: | :---: | :---:
-  18  |   628424 | 0.37964   |  3 |  150.006272 | 2.253330 | 21.667969 
-  21   |  628636 | 0.34542    | 3 | 149.992574  | 2.252479  |23.621355 
-  23   |  628677 | 0.83942   |  3 | 150.006706 | 2.253204 | 21.654572
+       - the other parameters should not be modified
+       - X and Y position of the centre are fixed parameters and must therefore be tightly constrained
 
-where `ID` is the galaxy MUSE ID, `ID_LAIGLE` is the galaxy ID from Laigle+16 catalogue, `z` is the redshift, `flag` is the MUSE CONFID flag (confidence level in redshift value), `ra` and `dec` are the galaxy position, and `Iab` is the galaxy magnitude (generally i++ mag.).
+       When the input file containing the information for all the galaxies you want to fit a model to is made, either copy in the current folder and run in IDL the *batch\_kin\_analysis.pro* program found in the *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)* folder or run the following lines directly in IDL:
 
-__Note__: column names must be exactly these ones
+       ```idl
+       fito=2
+       version='1.0'
+       model='slp'
+       options='_mclean5.0'
+       option1='_ssmooth'
+       file='input_fit_o2.txt'
+       path='o2/'
+       line='_OII3729'
+       fit_massiv, fito, /ifix, pfix=0, /xfix, /yfix, plot=0, file=file, options=options, option1=option1, path=path, line=line
+       ```
 
-Such *.txt* files can either be made manually or can be automatically generated using *Create\_hst\_stamps\_input.ipynb*. 
+       If everything went fine, this should have created model files (*modd*, *modhr* and *modv*), residual maps (*resd* and *resv*), as well as three recap files with model parameters and residual information:
 
-This notebook will use the *.vot* files in *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders which contain the selected galaxies in each cluster.
+       - *CGr\*\_parameters\_red_slp\_xyi\_mclean5.0.txt*
+       - *CGr\*\_parameters\_residual\_slp\_xyi\_mclean5.0.txt*
+       - *CGr\*\_o2\_vmax\_map_rlast\_mclean5.0.txt*
+
+       ## Making HST images of galaxies
+
+       It can be useful to have HST close-up images of the selected galaxies. This can be done with *create\_hst\_stamps.py*.
+
+       This program will use both *.txt* input files and the *HST\_CGr\*.fits* files found in the *[data/hst/](https://github.com/WilfriedMercier/StageM2/tree/master/data/hst)CGr\** folders.
+
+       Within each group folder, a *.txt* file must be built with the following structure:
+
+       ID  | ID_LAIGLE  |      z |  flag       |   ra   |    dec  |      Iab 
+       :---: | :---: | :---: | :---: | :---: | :---: | :---:
+         18  |   628424 | 0.37964   |  3 |  150.006272 | 2.253330 | 21.667969 
+           21   |  628636 | 0.34542    | 3 | 149.992574  | 2.252479  |23.621355 
+           ... | ... | ... | ... | ... | ... | ...
+             23   |  628677 | 0.83942   |  3 | 150.006706 | 2.253204 | 21.654572
 
 
+             where `ID` is the galaxy MUSE ID, `ID_LAIGLE` is the galaxy ID from [Laigle+16](https://ui-adsabs-harvard-edu.ezproxy.obspm.fr/#abs/2016ApJS..224...24L/abstract) catalogue, `z` is the redshift, `flag` is the MUSE CONFID flag (confidence level in redshift value), `ra` and `dec` are the galaxy position, and `Iab` is the galaxy magnitude (generally i++ mag.).
+
+             __Note__: Column names must be exactly these ones.
+
+             Such *.txt* files can either be made manually or can be automatically generated using *Create\_hst\_stamps\_input.ipynb*. 
+
+             This notebook will use the *.vot* files in *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders which contain the selected galaxies in the corresponding cluster.
+
+             
