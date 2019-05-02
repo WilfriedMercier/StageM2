@@ -145,9 +145,9 @@ where `filename` should be in this case the same file as the input file used for
 
 To fit a model to the data, the maps must have been automatically, and then manually, cleaned. Once this is done, move to the corresponding CGr* group folder in *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE* and create a file *input\_fit\_o2.txt* with the following structure:
 
-# |      ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
-:---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
-| CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
+| \# |      ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
+| | CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
 
 where each line represents a galaxy with the following properties:
 
