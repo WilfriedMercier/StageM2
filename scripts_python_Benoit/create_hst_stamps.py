@@ -371,8 +371,9 @@ def main():
     groups = ['CGr114', 'CGr23', 'CGr26', 'CGr28', 'CGr30',
               'CGr32', 'CGr34', 'CGr51', 'CGr61', 'CGr79',
               'CGr84', 'CGr84-N']
+    groups = [groups[7]]
     factor = 1e4
-    szg = 3.
+    szg = 3.0
 #    szs = 1.
     for group in groups:
         pathgr = path + group + '/'
