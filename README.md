@@ -143,30 +143,37 @@ where `filename` should be in this case the same file as the input file used for
 
 ## Fitting a model to the data
 
-To fit a model to the data, the maps must have been automatically, and then manually, cleaned. Once this is done, move to the corresponding CGr* group folder in *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE* and create a file *input\_fit\_o2.txt* with the following structure:
+To fit a model to the data, the maps must have been automatically, and then manually, cleaned. Once this is done, move to the corresponding CGr* group folder in *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE* and either create a file *input\_fit\_o2.txt* with the following structure:
 
 | \# |      ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
 | | CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
 
-where each line represents a galaxy with the following properties:
+or directly copy this file from the [PSF_data/](https://github.com/WilfriedMercier/StageM2/tree/master/PSF_data) folder into this one and then modify it. In this file, each line represents a galaxy with the following properties:
 
 Table column | Description | How to determine ?
 :---: | :---: | :---
 ID | The galaxy folder name (within the o2 folder). | 
-X | x-position of the centre of the galaxy.  | Determined from the hst stamp image (see next section) but a conversion factor must be applied since hst stamps are larger than MUSE images (generally 200x200 px instead of 36x36 px). 
-Y | y-position of the centre.  | Derived in the same way as X.
-PA | Position angle of the morphological major axis (with respect to North). | Sometimes given by Zurich in the catalogs.
-INC | Inclination of the galaxy (taken such that sin(INC) = ellipticity) | Sometimes derived from Zurich entries in the catalogs.
+X | x-position of the centre of the galaxy in the MUSE image (given in pixels)  | Determined from the hst stamp image (see next section) but a conversion factor must be applied since hst stamps are larger than MUSE images (generally 200x200 px instead of 36x36 px). 
+Y | y-position of the centre in the MUSE image (given in pixels).  | Derived in the same way as `X`.
+PA | Position angle of the morphological major axis (with respect to North) given in the range [-90°, 90°]. | Sometimes given by Zurich in the catalogs.
+INC | Inclination of the galaxy (taken such that sin(INC) = ellipticity) given in degrees.| Sometimes derived from Zurich entries in the catalogs.
 psfx | Spatial PSF in pixels | Since this is wavelength and group dependent, the `computeGroupFWHM` function in *stage2.py* can be used to derive its value. This requires to give the observed wavelength of the spectral feature (rest frame wavelength x (1+z)) as well as the group number. 
 psfz | LSF FWHM in km/s | Found in the *_o2* file in *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)*.
 
 __Notes__:
 
 - the other parameters should not be modified
-- X and Y position of the centre are fixed parameters and must therefore be tightly constrained
+- `X`, `Y` and `INC` are fixed parameters and must therefore be tightly constrained
 
-When the input file containing the information for all the galaxies you want to fit a model to is made, either copy in the current folder and run in IDL the *batch\_kin\_analysis.pro* program found in the *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)* folder or run the following lines directly in IDL:
+When the input file containing the information for all the galaxies you want to fit a model to is made, either copy in the current folder the *fitModel.pro* program (found in [PSF_data/](https://github.com/WilfriedMercier/StageM2/tree/master/PSF_data)) and run it in IDL with the two following lines
+
+```idl
+.run fitModel
+fitModel
+```
+
+or directly copy and run the following lines in IDL:
 
 ```idl
 fito=2
@@ -185,6 +192,14 @@ If everything went fine, this should have created model files (*modd*, *modhr* a
 - *CGr\*\_parameters\_red_slp\_xyi\_mclean5.0.txt*
 - *CGr\*\_parameters\_residual\_slp\_xyi\_mclean5.0.txt*
 - *CGr\*\_o2\_vmax\_map_rlast\_mclean5.0.txt*
+
+## Producing recap files
+
+There is the possibility to create a recap file in the *outputs/MUSE/CGr\*/o2* folder which will gather all the kinematical information of the modelled galaxies into a single file.
+
+To do so, move into *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)* folder, specify for which groups you want to produce a recap file by changing `groups` variable in *kinemorpho_catalogs.py* and then run it.
+
+## Plotting the resulting model
 
 ## Making HST images of galaxies
 
@@ -209,5 +224,11 @@ __Note__: Column names must be exactly these ones.
 Such *.txt* files can either be made manually or can be automatically generated using *Create\_hst\_stamps\_input.ipynb*. 
 
 This notebook will use the *.vot* files in *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders which contain the selected galaxies in the corresponding cluster.
+
+# PSF_data folder
+
+This folder contains tabular data related to spatial FWHM variations with the wavelength of observation and with the given observed group. This information can be found in the *.ods* files. 
+
+Programs for model fitting, generating final maps and their associated input *.txt* example files are also given in this folder.
 
 
