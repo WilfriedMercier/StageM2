@@ -724,7 +724,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 col.ax.set_xticklabels(colorbarTicksLabels, size=colorbarTicksLabelsSize)
             
     if showLegend:
-        plt.legend(loc=locLegend, prop={'size': legendTextSize})
+        plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True)
         
     #Define Y limits if required
     if ylim[0] is not None:
