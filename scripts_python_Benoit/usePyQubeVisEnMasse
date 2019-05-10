@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#MERCIER Wilfried
+#Open MUSE cube and automatically cleaned velocity map
+
+#Get input file name
+fileName=$1
+
+for file in $(more $fileName)
+do
+   beginning=$(echo $file | awk -F'/' '{print $NF}')
+   cube=$file/"$beginning"_ssmooth_cube.fits
+   vel=$file/"$beginning"_ssmooth_vel_common_clean5.0.fits
+
+   echo "Opening $beginning."
+   PyQubeVis $cube $vel
+done
+
+
+exit 0
