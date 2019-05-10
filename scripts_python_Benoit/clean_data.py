@@ -310,9 +310,9 @@ def main():
     
     possibleNames = {'wholeList' : 'list_gal', 'testFile' : 'test', 'sizeCut' :'galsBelowSizeCut', 'wellResolved' : 'galsWellResolved',
                      'sizeCutAbove' : 'galsAboveSizeCut', 'SNRcut' : 'galsBelowSNRCut', 'SNRcutAbove' : 'galsAboveSNRCut',
-                     'tmp' : 'tmpp', 'test' : 'galsTraining', 'checkBS' : 'highSNRlowSize'}
+                     'tmp' : 'tmp', 'test' : 'galsTraining', 'checkBS' : 'highSNRlowSize', 'select':'SelectedGals'}
     
-    name        = possibleNames.get('checkBS')
+    name        = possibleNames.get('select')
     inname      = path + scripts + name
     outname     = path + scripts + name + '_clean_o2'
     outfilename = path + scripts + name + "_outputFolders"
