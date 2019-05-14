@@ -2,11 +2,83 @@
 \section{Sample selection}
 \label{sec:Sample_selection}
 
-The point of the analysis is to perform a joint study of the morphology and the kinematics of field galaxies in the COSMOS field using respectively HST ACS images and MUSE data. A set of Guaranteed Time Observations (GTO runs) was performed. Around a dozen MUSE fields were taken, focusing on galaxy clusters and groups in the COSMOS field. A Friend of Friends algorithm (FoF) was run previous to my arrival on the galaxies in the different clusters in order to separate them in two categories: cluster and field galaxies. \\
+\subsection{COSMOS field}
 
-Generally speaking, galaxies detected by MUSE are also detected with HST imaging because of its much better resolution (0.03" for HST and 0.15" for MUSE). Nevertheless, the MUSE pipeline allows in some cases the detection of sources in regions where there is no HST counterpart. In addition to that, studying the kinematics of the galaxies require them to be resolved enough in the MUSE OII flux maps, which means they must have both a size large enough and a mean Signal to Noise Ratio (SNR) high enough as well. Thus, it is mandatory to perform a selection in our sample of galaxies before performing any study on their parameters. \\
+\begin{table}[htbp]
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	Group & Ra\textsuperscript{2} (\degree) & Dec\textsuperscript{3} (\degree) & Observation  & Average & Total nb. of & Number of \\
+	
+	Number\textsuperscript{1} &  &  & time\textsuperscript{4} (hr) & seeing\textsuperscript{5} (") & galaxies\textsuperscript{6} & field galaxies\textsuperscript{7} \\	
+	
+	\hline
+	2 & 2 & 2 & 2 & 2 & 2 & 2 \\
+	\hline
+	\end{tabular}
+\caption[Main characteristics of the observed MUSE fields]{\label{table:MUSEfieldsProp}Main characteristics of the observed MUSE fields, 1. MUSE group number, 2. Group centre's right ascension, 3. Group centre's declination, 4. Duration of observations, 5. Average seeing during observation, 6. Total number of detected galaxies within MUSE FoV, 7. Number of field galaxies found by the FoF algorithm.}
+\end{table}
 
-The total number of galaxies detected with MUSE in the COSMOS field is around . The data returned by the MUSE pipeline which was run on the galaxies was cross-matched with the information given in \shortciteA{laigle_cosmos2015_2016} catalogue, which is the most complete one for the COSMOS field. Thus, for each MUSE field, a table containing all the information for each galaxy was built.\\
+The point of the analysis is to perform a joint study of the morphology and the kinematics of field galaxies in the COSMOS field using respectively HST ACS images and MUSE data. 
 
-As a first step before the selection, we combined all the data from the different MUSE fields into two master catalogs, the first one with
+To this end, a set of 9 galaxy groups in the COSMOS field was selected. The choice of the COSMOS field for this analysis was made because of the large number of multi-band photometric data available for the galaxies in this field and the presence of rich (large number of member galaxies) galaxy groups.\\
 
+Guaranteed Time Observation (GTO) runs centred on those groups were performed from which 12 different MUSE Fields of View (FoV) of $SI{y \times y}{arcsec^2} $ were obtained. Each group corresponds to one FoV, except for the group number 32. Since it is larger than the others, three different observations were carried out around it with a slight overlapping (mosaic view) between them. The main characteristics of the observed FoVs, including the position of their centre, the number of observing time hours, the average seeing during the observation, the total number of galaxies and the number of field galaxies detected by the FoF algorithm are listed in Table\,\ref{table:MUSEfieldsProp}.
+
+These groups were primarily chosen for their position within the COSMOS field. This ensured them to have a large set of corresponding photometric data available from \shortciteA{laigle2016} catalogue for most of the galaxies. Nevertheless, since blind source detections within the data cubes were performed on these FoVs, we should expect a small fraction of galaxies to be detected in MUSE cubes but not in the HST images.\\
+
+Generally speaking, galaxies detected by MUSE are also detected in HST images because of the Hubble Space Telescope's (HST) much better resolution (\SI{0.03}{arcsec/px} for HST and $\sim \SI{0.2}{arcsec/px}$ for MUSE). Nevertheless, the MUSE pipeline allows in some cases the detection of sources in regions where there is no HST counterpart. Two sources can even be separated in areas smaller than the PSF based on their different spectral features, though this happens not often \shortcite{sourceDetectionMUSE}.
+
+\subsection{Prior information on the galaxies}
+
+This internship was planned to be similar in many aspects to what has been doing Epinat B. PhD student Valentina Abridg in LAM, Marseille for her PhD. Her work consisted in studying the morphology and the kinematics of the galaxies within the structures observed by MUSE. The galaxies she was working on were therefore found in the same FoVs but belonged to groups and clusters when those I used were labelled as field galaxies around these structures. 
+
+To differentiate between group and field galaxies, prior to my arrival, a Friend of Friends algorithm (FoF) was run on the galaxies in each FoV in order to separate them into two categories: group and field galaxies.
+
+Additionnaly, GalFit had been run on the cluster galaxies by Valentina and we therefore already had morphological information for them.
+Unlike other software such as SExtractor or GIM2D which fit a one-component model (Sérsic index as a free parameter) onto the images, the morphological model which was used in this case used a combination of a disk component (Sérsic index $n=1$) and a spherically symmetric bulge component ($n=4$). 
+
+Hence, we already had the following morphological parameters for the cluster galaxies only: ellipticity and PA (from the disk component), bulge and disk total magnitudes and the half-light radii for both components\footnote{Note this means the value of GalFit half-light radii can be quite different from that given by SExtractor or GIMD2D as shall be discussed in later sections. }
+
+
+\subsection{Selection criteria}
+
+\subsubsection{Morphological information}
+
+The total number of galaxies detected by MUSE in the COSMOS field is around $1000$. Roughly half of them belong to clusters and the other half are labelled as field galaxies. Among these galaxies, not all of them are useful to our study. Some may be too close to the edge of detection, others be too noisy with a low Signal to Noise Ratio (SNR), or too small to perform any relevant kinematical modelling. It is thus mandatory to apply a selection on our data set of field galaxies, first to save time for the analysis, but also to reduce errors which might increase if we have too poorly resolved data.
+
+The second point is that we would like to perform a joint study of the morphology and the kinematics of these galaxies. The tools and the models for the kinematical modelling were already developed and are the same as those used by Valentina in her work. On the other hand, fitting morphological models with software such as GalFit or SExtractor require additional time. Hopefully for us, morphological modelling was already performed on the galaxies in the COSMOS field, so we could focus on the kinematical part. \\
+
+Morphological information for all galaxies in the COSMOS field can be found in various catalogues\footnote{\url{https://irsa.ipac.caltech.edu/data/COSMOS/tables/morphology/}}. To start with, we decided to use the two most complete catalogues we could find, that of Tasca (maybe citation) and Cassata (maybe citation as well). Both catalogues contain morphological information including the central position of the galaxy, its half-light radius, concentration and asymmetry parameters, ellipticity, PA, and many more for roughly $232 000$ galaxies. 
+
+To associate the already present data from \shortciteA{laigle_cosmos2015_2016} within our catalogue with theirs, we cross-matched our data with each catalogue separately and then with both using the right ascension $\alpha$ and declination $\delta$ of the centre of the galaxies, allowing for a maximum separation between the MUSE source and the closest source within Cassata's and Tasca's catalogues of $\SI{1}{arcsec}$ maximum. However, we should note that the centre position of the MUSE galaxies correspond to that of the corresponding source in \shortciteA{laigle_cosmos2015_2016} and should therefore be quite close to the value of the cross-matched galaxy since their photometry modelling was performed on the same data. \\
+
+We performed this cross-matching for both field and cluster galaxies. The reason for cross-matching cluster galaxies when we are only interested in those in the field will be discussed in the following section.
+
+\subsection{SNR and size selection criteria}
+
+Since we are interested in keeping well resolved field galaxies, we need to apply relevant criteria in order to select the right galaxies. The most obvious parameter we can use to make our selection is the size of the galaxy, though we must be certain before using it that the value given in our cross-matched catalogue reflects accurately enough the "true" size of the galaxy. This checking is performed and discussed in the next section.
+
+Following the earlier work done in \shortciteA{Bacon2015} and \shortciteA{Bacon2017}, the MUSE Point Spread Function (PSF), that is the pattern we obtain when we observe a point-like source with MUSE, is most well described by a \shortciteA{MoffatProfile} profile
+
+\begin{equation}
+	I_{\rm{PSF}}(r) = I_0 (1 + (r/\alpha)^2 ) ^{- \beta}
+\end{equation}
+where $r$ is the radial distance to the centre and $\alpha$, $\beta$ are two seeing dependant parameters. In our case we are interested in the Full Width at Half Maximum (FWHM) since it is directly related to the seeing conditions and it gives us information about the minimum spatial extent within which data will be mixed up.
+The FWHM can be easily derived from the equation $I_{\rm{PSF}} ( \rm{FWHM}/2) = I_0 /2$, from which we get the following relation
+
+\begin{equation}
+	\rm{FWHM} = 2 \alpha \sqrt{2^{1/\beta} - 1 }
+\end{equation}
+
+According to the aforementioned articles the value of $\beta$ should remain roughly constant and we would expect from differential image motion theory (insert this paper here when read 10.1086/342683) that the FWHM  would linearly decrease with wavelength. Thus, if we want to derive the FWHM at a given wavelength and in a given field (since the seeing conditions will vary with the date of observation) we need to derive the linear relation between the FWHM and the wavelength in each field.
+
+The measure of $\alpha$, and therefore the FWHM, was done by Valentina on at least two stars by FoV. Because they belong to our galaxy, we can consider that they have a null redshift, so that the wavelength of observation and emission are the same.
+
+ A Moffat profile was fitted on their OII $\lambda \SI{3727}{\angstrom}$ and $\rm{H\beta}$ $\SI{4861}{\angstrom}$ flux maps, giving us at least two measures of the FWHM . Though a more rigorous modelling of the wavelength variation of the PSF FWHM including both more data points and potentially higher order terms is mandatory for future analysis, we decided to stick to this values in the present work, keeping in mind the large uncertainties which will affect the velocity dispersion maps in the modelling section. A representation of the FWHM variation with wavelength for the 12 observations (9 fields, 3 observed twice)
+is shown in Fig.\,\ref{fig:FWHM_var_lambda}.
+
+
+
+
+
+ 
