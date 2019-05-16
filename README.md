@@ -4,6 +4,7 @@ Name| Langage | Description
 :---: | :---: | :---
 *Analyze\_field\_galaxies.ipynb* | Jupyter notebook | Notebook in which the kinematical and morphological properties of the field galaxies within our sample are analyzed.
 *Analyze\_cluster\_galaxies.ipynb* | Jupyter notebook | Looks at the difference in the morphological properties of the selected cluster galaxies between GalFit and Cassata/Tasca catalogs.
+*Check\_morphology.ipynb* | Jupyter notebook | This is the notebook within which morphological and kinematical information of the selected galaxies are investigated.
 *Check\_RA\_RA2000\_Dec\_Dec2000.ipynb* | Jupyter notebook | Notebook which checks that (RA, DEC) wihtin the master .vot files are identical to the given (RA2000, DEC2000).
 *Convert\_tbl\_to\_vot.ipynb* | Jupyter notebook | Notebook which converts *.tbl* files into *.vot* files for TopCat.
 *extraction\_gals\_test.ipynb* | Jupyter notebook | A notebook to test astropy and numpy functionnalities on structured arrays, masked arrays and data from .vot files.
@@ -225,7 +226,7 @@ Such *.txt* files can either be made manually or can be automatically generated 
 
 This notebook will use the *.vot* files in *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders which contain the selected galaxies in the corresponding cluster.
 
-# PSF_data folder
+# [PSF_data folder](https://github.com/WilfriedMercier/StageM2/tree/master/PSF_data)
 
 This folder contains tabular data related to spatial FWHM variations with the wavelength of observation and with the given observed group. This information can be found in the *.ods* files. 
 
