@@ -99,7 +99,7 @@ def convertCoords(coordinates, inSize=(200.0, 200.0), outSize=(31.0, 31.0), conv
 
 def computeGroupFWHM(wavelength, groups, verbose=True):
     '''
-    Computes the FWHM at a given observed wavelength assuming a linearly decreasing relation for the FWHM with wavelength (calibrated on OII and OIII) stars measurements for each group in the COSMOS field.
+    Computes the FWHM at a given observed wavelength assuming a linearly decreasing relation for the FWHM with wavelength (calibrated on OII and OIII measurements at different redshifts) stars measurements for each group in the COSMOS field.
     
     Input
     -----
@@ -113,8 +113,8 @@ def computeGroupFWHM(wavelength, groups, verbose=True):
     Returns a list of tuples with the group and the computed FWHM.
     '''
     
-    #structure is as folows : number of the group, o2 FWHM, o3hb FWHM
-    listGroups = {'23' : [3.97, 3.29], '26' : [3.16, 2.9], '28' : [3.18, 3.13],
+    #structure is as folows : number of the group, o2 FWHM, o3hb FWHM, median redshift of the group
+    listGroups = {'23' : [3.97, 3.29, 0.], '26' : [3.16, 2.9], '28' : [3.18, 3.13],
                   '32-M1' : [2.46, 1.9], '32-M2' : [2.52, 2.31], '32-M3' : [2.625, 2.465],
                   '51' : [3.425, 2.95], '61' : [3.2, 3.02], '79' : [2.895, 2.285], 
                   '84-N' : [2.49, 2.21], '30_d' : [2.995, 2.68], '30_bs' : [2.745, 2.45],
@@ -511,7 +511,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 colorbarOrientation='vertical', colorbarLabel=None, colorbarTicks=None, colorbarTicksLabels=None,
                 colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24,
                 outputName=None, overwrite=False, tightLayout=True, 
-                fillstyle='full', unfilledFlag=False, alpha=1.0):
+                fillstyle='full', unfilledFlag=False, alpha=1.0,
+                noCheck=False):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     This function has been developed to be used with numpy arrays or list of numpy arrays (structured or not). Working with astropy tables or any other kind of data structure might or might not work depending on its complexity and behaviour. 
@@ -565,6 +566,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         position where to place the legend
     marker : string, char, list of both for many plots
         the marker to use for the data
+    noCheck : boolean
+        whether to check the given parameters all have the relevant shape or not
     numPlot : int (3 digits)
         the subplot number
     outputName : str
@@ -622,6 +625,11 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         datay = [datay]
         
     #If we have only one marker/color/zorder/linestyle/label/plotFlag, transform them to a list of the relevant length
+    if not noCheck:
+        try:
+            np.shape(linestyle)[0]
+        except:
+            linestyle = [linestyle]*len(datax)
     try:
         np.shape(color)[0]
     except:
@@ -634,10 +642,6 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         np.shape(zorder)[0]
     except:
         zorder = [zorder]*len(datax)
-    try:
-        np.shape(linestyle)[0]
-    except:
-        linestyle = [linestyle]*len(datax)
     try:
         np.shape(plotFlag)[0]
     except:
