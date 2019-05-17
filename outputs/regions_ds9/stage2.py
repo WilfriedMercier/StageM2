@@ -113,12 +113,13 @@ def computeGroupFWHM(wavelength, groups, verbose=True):
     Returns a list of tuples with the group and the computed FWHM.
     '''
     
-    #structure is as folows : number of the group, o2 FWHM, o3hb FWHM, median redshift of the group
-    listGroups = {'23' : [3.97, 3.29, 0.], '26' : [3.16, 2.9], '28' : [3.18, 3.13],
-                  '32-M1' : [2.46, 1.9], '32-M2' : [2.52, 2.31], '32-M3' : [2.625, 2.465],
-                  '51' : [3.425, 2.95], '61' : [3.2, 3.02], '79' : [2.895, 2.285], 
-                  '84-N' : [2.49, 2.21], '30_d' : [2.995, 2.68], '30_bs' : [2.745, 2.45],
-                  '84' : [2.835, 2.715], '34_d' : [2.89, 2.695], '34_bs' : [3.3, 3]}
+    #structure is as folows : number of the group, o2 FWHM, o3hb FWHM, mean redshift of the group
+    listGroups = {'23' : [3.97, 3.29, 0.850458], '26' : [3.16, 2.9, 0.439973], '28' : [3.18, 3.13, 0.950289],
+                  '32-M1' : [2.46, 1.9, 0.753319], '32-M2' : [2.52, 2.31, 0.753319], '32-M3' : [2.625, 2.465, 0.753319],
+                  '51' : [3.425, 2.95, 0.386245], '61' : [3.2, 3.02, 0.364009], '79' : [2.895, 2.285, 0.780482], 
+                  '84-N' : [2.49, 2.21, 0.727755], '30_d' : [2.995, 2.68, 0.809828], '30_bs' : [2.745, 2.45, 0.809828],
+                  '84' : [2.835, 2.715, 0.731648], '34_d' : [2.89, 2.695, 0.857549], '34_bs' : [3.3, 3, 0.85754],
+                  '114' : [np.nan, np.nan, 0.598849]}
     
     #lines wavelengths in Anstrom
     OIIlambda   = 3729 
@@ -147,12 +148,14 @@ def computeGroupFWHM(wavelength, groups, verbose=True):
             listGroups[name]
         except KeyError:
             exit("Given group %s is not correct. Possible values are %s" %(name, listGroups.keys()))
-    
+            
     outputList = []
     for wv, gr in zip(wavelength, groups):
+        #lines wavelength are rest-frame wavelengths, but FWHM measurements were made at a certain redshift
+        #A factor of (1+z) must be applied to deltaLambda and OII lambda
         grVals = listGroups[gr]
-        slope  = (grVals[1] - grVals[0])/deltaLambda
-        offset = grVals[0] - slope*OIIlambda
+        slope  = (grVals[1] - grVals[0])/(deltaLambda*(1+grVals[2]))
+        offset = grVals[0] - slope*OIIlambda*(1+grVals[2])
         
         FWHM = slope*wv+offset
         outputList.append((gr, FWHM))
@@ -512,7 +515,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24,
                 outputName=None, overwrite=False, tightLayout=True, 
                 fillstyle='full', unfilledFlag=False, alpha=1.0,
-                noCheck=False):
+                noCheck=False, legendNcols=1):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     This function has been developed to be used with numpy arrays or list of numpy arrays (structured or not). Working with astropy tables or any other kind of data structure might or might not work depending on its complexity and behaviour. 
@@ -558,6 +561,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         whether to hide the y ticks or not
     label : string
         legend label for the data
+    legendNcols : int
+        number of columns in the legend
     legendTextSize : int
         size for the legend
     linestyle : string, list of strings for many plots
@@ -728,7 +733,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 col.ax.set_xticklabels(colorbarTicksLabels, size=colorbarTicksLabelsSize)
             
     if showLegend:
-        plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True)
+        plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True, ncol=legendNcols)
         
     #Define Y limits if required
     if ylim[0] is not None:
