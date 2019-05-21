@@ -197,6 +197,7 @@ The morphological types given in Tasca's and Zurich's catalogues are compared ag
 Considering the recommendation of Tasca to use its Int class and since we find a good agreement between Cassata's morphological type and those given by Tasca, we decided to use and to stick to Cassata's class throughout this work whenever we needed to separate galaxies between elliptical/disk-like/irregulars. This choice also ensured us to have the largest sample possible with a coherent classification as Cassata's catalogue is the one with the largest number of HST counterparts of MUSE galaxies in the COSMOS field. Because of the incompatible results between Zurich's and Cassata's/Tasca's types, we decided to put aside these values and not use them, though this shall require further investigation in future work to assess the origin of these discrepancies.
 
 \subsubsection{Comparing half-light radii}
+\label{sec:comp_radii}
 
 \begin{figure}[htbp]
 	\centering
@@ -260,32 +261,44 @@ If we decide to split the galaxies into two categories, ellipticals and disks/ir
 	\label{fig:FWHM_var_lambda}
 \end{figure}
 
-Since we are interested in keeping well resolved field galaxies, we need to apply relevant criteria in order to select the right galaxies. The most obvious parameter we can use to make our selection is the size of the galaxy, though we must be certain before using it that the value given in our cross-matched catalogue reflects accurately enough the "true" size of the galaxy. This checking is performed and discussed in the next section.
+Since we are interested in keeping well resolved field galaxies, we need to apply relevant criteria in order to select the right galaxies. The most obvious parameter we can use to make our selection is the size of the galaxy. We already checked  in Section\,\ref{sec:comp_radii} biases which might arise and their origins, and we corrected them whenever possible. Thus, we only need to define a size criterion to select our sample. \\
 
 Following the earlier work done in \shortciteA{Bacon2015} and \shortciteA{Bacon2017}, the MUSE Point Spread Function (PSF), that is the pattern we obtain when we observe a point-like source with MUSE, is most well described by a \shortciteA{MoffatProfile} profile
 
 \begin{equation}
 	I_{\rm{PSF}}(r) = I_0 (1 + (r/\alpha)^2 ) ^{- \beta}
+	\label{eq:PSF}
 \end{equation}
-where $r$ is the radial distance to the centre and $\alpha$, $\beta$ are two seeing dependant parameters. In our case we are interested in the Full Width at Half Maximum (FWHM) since it is directly related to the seeing conditions and it gives us information about the minimum spatial extent within which data will be mixed up.
-The FWHM can be easily derived from the equation $I_{\rm{PSF}} ( \rm{FWHM}/2) = I_0 /2$, from which we get the following relation
+where $r$ is the radial distance to the centre and $\alpha$, $\beta$ are two seeing dependant parameters. In our case, we are interested in the Full Width at Half Maximum (FWHM) since it is directly related to the seeing conditions (it is also sometimes called seeing) and since it gives us information about the minimum spatial extent within which we are starting to loose information.
+The FWHM can be easily derived from the equality $I_{\rm{PSF}} ( \rm{FWHM}/2) = I_0 /2$ using Eq.\,\ref{eq:PSF}, from which we get the following relation
 
 \begin{equation}
 	\rm{FWHM} = 2 \alpha \sqrt{2^{1/\beta} - 1 }
+	\label{eq:FWHM}
 \end{equation}
 
-According to the aforementioned articles the value of $\beta$ should remain roughly constant and we would expect from differential image motion theory (insert this paper here when read 10.1086/342683) that the FWHM  would linearly decrease with wavelength. Thus, if we want to derive the FWHM at a given wavelength and in a given field (since the seeing conditions will vary with the date of observation) we need to derive the linear relation between the FWHM and the wavelength in each field.
+According to the aforementioned articles the value of $\beta$ is expected to remain roughly constant and, additionally, we would expect from differential image motion theory (insert this paper here when read 10.1086/342683) that the FWHM to linearly decrease with wavelength. 
 
-The measure of $\alpha$, and therefore the FWHM, was obtained by Valentina on at least two stars by FoV. Because they belong to our galaxy, we can consider that they have a null redshift, so that the wavelength of observation and emission are the same.
-
- A Moffat profile was fitted on their OII $\lambda \SI{3727}{\angstrom}$ and OIII $\SI{5007}{\angstrom}$ flux maps, giving us at least two measures of the FWHM . Though a more rigorous modelling of the wavelength variation of the PSF FWHM including both more data points and potentially higher order terms is mandatory for future analysis, we decided to stick to this values in the present work, keeping in mind the large uncertainties which will affect the velocity dispersion maps in the modelling section. A representation of the FWHM variation with wavelength for 13 out of 16 observations is shown in Fig.\,\ref{fig:FWHM_var_lambda}. We have missing values of the FWHM for groups CGr34 (2 observations, 1 deep and 1 best-seeing) and CGr114. There appear to have a strong variations given the time of observation, up to $\SI{0.7}{arcsec}$. \\
- 
-Having computed the PSF FWHM  linear relation with wavelength for each FoV, we are now able to derive the relevant value of the FWHM for galaxies at any redshift. Indeed, since all our observations are limited to the OII $\lambda \SI{3727}{\angstrom}, \SI{3729}{\angstrom}$ doublet, we can derive the wavelength of observation for each galaxy given its redshift with the usual relation
+All galaxies are observed via their OII doublet at the same rest-frame wavelength. But, given that they are all field galaxies located at different redshift $z$, we actually observe them at wavelengths covering the entire MUSE spectrum, that is we have the usual relation
 
 \begin{equation}
 	\lambda_{\rm{obs}} = \lambda_{\rm{em}} ( 1 + z )
 \end{equation}
-where $z$ is the redshift or the galaxy and $\lambda_{\rm{em}}$, $\lambda_{\rm{obs}}$ respectively the emitted (rest-frame) and observed wavelengths, and we can use this value to find the FWHM.\\
+where $\lambda_{\rm{em}}$, $\lambda_{\rm{obs}}$ are respectively the emitted (rest-frame) and observed wavelengths. Therefore, there is not only one $\rm{FWHM}$ value per FoV (the $\rm{FWHM}$ will also vary with FoVs as seeing conditions change from date to date), but one per galaxy, which we can derive if we know the two parameters (slope and offset) which characterise the linear evolution of the $\rm{FWHM}$ with wavelength. To derive this relation, we need at least two measures of the $\rm{FWHM}$ at two different wavelengths per FoV. Assuming seeing conditions are similar within the FoV (no spatial dependence), we can use the same linear relation per FoV to compute the $\rm{FWHM}$ for the OII wavelength at the redshift of the galaxy. \\
+
+As discussed above, $beta$ should remain constant, which means the $\rm{FWHM}$ is entirely described by the parameter $\alpha$ through Eq.\,\ref{eq:FWHM}. The measure of $\alpha$ had already been done by Valentina on at least two stars per FoV. Because they belong to our galaxy, we can consider that they have a null redshift, so that the wavelength of observation and emission are the same. 
+
+For all the stars, a Moffat profile was fitted on two wavelength ranges:
+
+\begin{itemize}
+	\item 
+\end{itemize}
+
+A Moffat profile was fitted on their OII $\lambda \SI{3727}{\angstrom}$ and OIII $\SI{5007}{\angstrom}$ flux maps, giving us at least two measures of the FWHM . Though a more rigorous modelling of the wavelength variation of the PSF FWHM including both more data points and potentially higher order terms is mandatory for future analysis, we decided to stick to this values in the present work, keeping in mind the large uncertainties which will affect the velocity dispersion maps in the modelling section. A representation of the FWHM variation with wavelength for 13 out of 16 observations is shown in Fig.\,\ref{fig:FWHM_var_lambda}. We have missing values of the FWHM for groups CGr34 (2 observations, 1 deep and 1 best-seeing) and CGr114. There appear to have a strong variations given the time of observation, up to $\SI{0.7}{arcsec}$. \\
+ 
+Having computed the PSF FWHM  linear relation with wavelength for each FoV, we are now able to derive the relevant value of the FWHM for galaxies at any redshift. Indeed, since all our observations are limited to the OII $\lambda \SI{3727}{\angstrom}, \SI{3729}{\angstrom}$ doublet, we can derive the wavelength of observation for each galaxy given its redshift with the usual relation
+
+
 
 Considering that the FWHM is a measure of how spread a point-like source is in our images, and since we are interested in working with resolved enough galaxies in order to better constrain their kinematics, we would like galaxies to have a characteristic size at least above the FWHM. The only size which is given in the morphological catalogues is the half-light radius derived from optical images. 
 
