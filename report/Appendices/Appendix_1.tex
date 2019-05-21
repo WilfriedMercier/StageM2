@@ -1,4 +1,44 @@
 \clearpage
-\section{Appendix}
-\label{app:A}
-...
+\section{Details about morphological classification}
+\label{appendix:classification}
+
+We provide in this section a summary of the morphological parameters used by Cassata, Tasca and Zurich for their morphological classification which we used and compared in the present work.
+
+\subsection{Non-parametric values}
+
+Usual galaxy classification methods rely on the same parameters. Some may use all of them when others only concentrate on a few. We give here a description of the main parameters used for this kind of classification.
+
+\subsubsection{Concentration}
+
+The first parameter is the concentration. Two quite different definitions exist, the former using flux levels and the latter isophotes. The oldest definition of the concentration comes from \shortciteA{Kent1985}. In his paper, he describes it as the log of the ratio between the radii enclosing $80\%$ and $20\%$ of the "total" luminosity (respectively $r_{80}$ and $r_{20}$)
+
+\begin{equation}
+	C = 5 \log \frac{r_{80}}{r_{20}}
+	\label{eq:concentration_Kent_form}
+\end{equation}
+
+The concentration parameter can vary in theory from $1$ to infinity. The parameter $C$ as defined in Eq.\,\ref{eq:concentration_Kent_form} should be interpreted cautiously as many definitions of the "total" luminosity (sometimes also called total flux) are used. Some authors who have performed a morphological modelling might call total luminosity the integrated flux up to infinity of their best fit model. Others might use the flux within some fixed aperture (generally a multiplicative factor of the Petrosian radius $r_{\rm{p}}$), such as $2 \, r_{\rm{p}}$ in \shortciteA{Bershady2000}, or $1.5 \, r_{\rm{p}}$ in \shortciteA{Lotz2004}. \\
+
+Another definition comes from \shortciteA{Abraham1994}. In this case, second order moments of the image are computed in order to find an outer elliptical aperture with an area similar to that of the galaxy up to some isophotal limit (generally $2\sigma$). From this ellipse, the semi-major axis can be obtained. A second semi-major axis $30\%$ smaller is derived and an inner ellipse with the same shape is defined. The concentration parameter is then computed as the ratio between the flux within the outer and the inner apertures
+
+\begin{equation}
+	C = \frac{\sum_{(i, j) \in \rm{\mathcal{E}_{in}}} I(i, j)}{\sum_{(i, j) \in \rm{\mathcal{E}_{out}}} I(i, j)}
+	\label{eq:concentration_abraham_form}
+\end{equation}
+where $\rm{\mathcal{E}_{in}}$ and $\rm{\mathcal{E}_{out}}$ are respectively the inner and outer ellipses. This definition therefore yields a concentration parameter $C$ between $0$ and $1$.
+
+\subsubsection{Asymmetry}
+
+The asymmetry parameter defines how symmetric/asymmetric a galaxy is. A related parameter was first introduced by \shortciteA{Schade1995} in order to classify galaxies as being symmetric or not, though its definition differed by using a combination of original and residual maps in its computation.
+
+The most common definition of the asymmetry $A$ comes from \shortciteA{Abraham1996}. The map is rotated by $\SI{180}{\degree}$ and is subtracted to the original map. The asymmetry parameter is then computed as half the ratio between the total integrated intensity amplitude in the self-subtracted map and the total intensity amplitude in the original map. Using an absolute value will add a positive term in $A$ from background signal. To get rid of it, the same calculation is performed for an aperture of the same size with only background signal and this value is subtracted from the previous one, i.e.
+
+\begin{equation}
+	A = \frac{\sum_{i , j} \left | I(i,j) - I_{180} (i , j) \right | }{2 \sum_{i, j} \left | I(i,j) \right |} - B_{180}
+\end{equation}
+where $I_{180}$ designates the rotated map and $B_{180}$ is the average asymmetry of the background. This definition, though commonly used, is sometimes replaced by a similar one where square brackets are used instead of absolute values. For instance, that is the case in \shortciteA{Conselice1997}. Nevertheless, both definitions yield values of $A$ between $0$ (completely symmetrical) and $1$ (completely asymmetrical).
+
+The value of $A$ can be quite sensitive to the choice of the centre. Methods for finding the best centre position include using the brightest point in a smoothed map or iterating over $X$ and $Y$ till $A$ is minimised.
+
+\subsubsection{Gini coefficient}
+
