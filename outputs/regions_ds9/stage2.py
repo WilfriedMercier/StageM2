@@ -372,12 +372,12 @@ def checkDupplicates(master, names=None):
     return
 
 
-def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYlabel=False, hideYticks=False,
+def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYlabel=False, hideYticks=False, hideXticks=False,
                 placeYaxisOnRight=False, xlabel="", ylabel='', color='black',
                 label='', zorder=0, textsize=24, showLegend=False, legendTextSize=24,
                 xlim=[None, None], locLegend='best', tickSize=24, title='', titlesize=24,
                 outputName=None, overwrite=False, tightLayout=True, integralIsOne=None,
-                align='mid', histtype='stepfilled', alpha=1.0, cumulative=False):
+                align='mid', histtype='stepfilled', alpha=1.0, cumulative=False, legendNcols=1, hatch=None):
 
     """
     Function which plots on a highly configurable subplot grid 1D histograms. A list of data can be given to have multiple histograms on the same subplot.
@@ -396,8 +396,12 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
         whether to plot the cumulative distribution (where each bin equals the sum of the values in the previous bins up to this one) or the histogram
     data: numpy array, list of numpy arrays
         the data
+    hatch : char
+        the hatching pattern
     hideXlabel : boolean
         whether to hide the x label or not
+    hideXticks : boolean
+        whether to hide the x ticks or not
     hideYlabel : boolean
         whether to hide the y label or not
     hideYticks : boolean
@@ -408,6 +412,8 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
         whether to normalize the integral of the histogram
     label : string
         legend label for the data
+    legendNcols : int
+        number of columns in the legend
     legendTextSize : int
         size for the legend
     locLegend : string, int
@@ -456,6 +462,8 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
         ax1.axes.get_xaxis().set_ticklabels([])
     else:
         plt.xlabel(xlabel, size=textsize)    
+    if hideXticks:
+        ax1.axes.get_xaxis().set_ticklabels([])
     if hideYticks:
         ax1.axes.get_yaxis().set_ticklabels([])
     if not hideYlabel:    
@@ -477,10 +485,12 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
         
     n, bns, ptchs = plt.hist(data, bins=bins, range=rang, density=integralIsOne, weights=weights, color=color,
                              align=align, histtype=histtype, label=label, zorder=zorder, alpha=alpha,
-                             cumulative=cumulative)
+                             cumulative=cumulative, hatch=hatch)
+    
+    #set hatching pattern if there is one
     
     if showLegend:
-        plt.legend(loc=locLegend, prop={'size': legendTextSize})
+        plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True, ncol=legendNcols)
         
     if outputName is not None:
         #If we do not want to overwrite the file
@@ -503,7 +513,7 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
             
         plt.savefig(outputName, bbox_inches=bbox_inches)
         
-    return ax1, n, bns
+    return ax1, n, bns, ptchs
 
                 
 def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideYticks=False,
