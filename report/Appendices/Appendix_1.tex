@@ -22,7 +22,7 @@ The concentration parameter can vary in theory from $1$ to infinity. The paramet
 Another definition comes from \shortciteA{Abraham1994}. In this case, second order moments of the image are computed in order to find an outer elliptical aperture with an area similar to that of the galaxy up to some isophotal limit (generally $2\sigma$). From this ellipse, the semi-major axis can be obtained. A second semi-major axis $30\%$ smaller is derived and an inner ellipse with the same shape is defined. The concentration parameter is then computed as the ratio between the flux within the outer and the inner apertures
 
 \begin{equation}
-	C = \frac{\sum_{(i, j) \in \rm{\mathcal{E}_{in}}} I(i, j)}{\sum_{(i, j) \in \rm{\mathcal{E}_{out}}} I(i, j)}
+	C = \frac{\sum_{(x, y) \in \rm{\mathcal{E}_{in}}} I(x, y)}{\sum_{(x, y) \in \rm{\mathcal{E}_{out}}} I(x, y)}
 	\label{eq:concentration_abraham_form}
 \end{equation}
 where $\rm{\mathcal{E}_{in}}$ and $\rm{\mathcal{E}_{out}}$ are respectively the inner and outer ellipses. This definition therefore yields a concentration parameter $C$ between $0$ and $1$.
@@ -36,7 +36,7 @@ The most common definition of the asymmetry $A$ comes from \shortciteA{Abraham19
 \begin{equation}
 	A = \frac{\sum_{i , j} \left | I(i,j) - I_{180} (i , j) \right | }{2 \sum_{i, j} \left | I(i,j) \right |} - B_{180}
 \end{equation}
-where $I_{180}$ designates the rotated map and $B_{180}$ is the average asymmetry of the background. This definition, though commonly used, is sometimes replaced by a similar one where square brackets are used instead of absolute values. For instance, that is the case in \shortciteA{Conselice1997}. Nevertheless, both definitions yield values of $A$ between $0$ (completely symmetrical) and $1$ (completely asymmetrical).
+where $I_{180}$ designates the rotated map and $B_{180}$ is the average asymmetry of the background. This definition, though commonly used, is sometimes replaced by a similar one where square brackets are used instead of absolute values. This is for instance the case in \shortciteA{Conselice1997}. Nevertheless, both definitions yield values of $A$ between $0$ (completely symmetrical) and $1$ (completely asymmetrical).
 
 The value of $A$ can be quite sensitive to the choice of the centre. Methods for finding the best centre position include using the brightest point in a smoothed map or iterating over $X$ and $Y$ till $A$ is minimised.
 

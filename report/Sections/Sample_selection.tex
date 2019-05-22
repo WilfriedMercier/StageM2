@@ -134,7 +134,7 @@ However, as this will be showed in the following sections, it turned out that th
 
 In addition to that, we already had morphological information from GALFIT fits on $\sim 500$ group galaxies, and we had strong confidence in the given morphological values. Therefore, we chose to compare the data in the three morphological catalogues based on \shortciteA{laigle_cosmos2015_2016} with that of GALFIT.
 
-\subsubsection{Comparing total magnitudes}
+\subsubsection{Total magnitudes}
 
 \begin{figure}[htbp]
 	\includegraphics[width=\linewidth]{../Plots/catalogMag_against_GalfitMag_corrected.pdf}
@@ -196,7 +196,7 @@ The morphological types given in Tasca's and Zurich's catalogues are compared ag
 
 Considering the recommendation of Tasca to use its Int class and since we find a good agreement between Cassata's morphological type and those given by Tasca, we decided to use and to stick to Cassata's class throughout this work whenever we needed to separate galaxies between elliptical/disk-like/irregulars. This choice also ensured us to have the largest sample possible with a coherent classification as Cassata's catalogue is the one with the largest number of HST counterparts of MUSE galaxies in the COSMOS field. Because of the incompatible results between Zurich's and Cassata's/Tasca's types, we decided to put aside these values and not use them, though this shall require further investigation in future work to assess the origin of these discrepancies.
 
-\subsubsection{Comparing half-light radii}
+\subsubsection{Half-light radii}
 \label{sec:comp_radii}
 
 \begin{figure}[htbp]
@@ -250,9 +250,11 @@ If we decide to split the galaxies into two categories, ellipticals and disks/ir
 
 
 
-\subsection{SNR and size selection criteria}
+\subsection{SNR and size selection}
+\label{sec:cut}
 
 \subsubsection{Size selection}
+\label{sec:cut_size}
 
 \begin{figure}[t]
 	\centering
@@ -269,7 +271,7 @@ Following the earlier work done in \shortciteA{Bacon2015} and \shortciteA{Bacon2
 	I_{\rm{PSF}}(r) = I_0 (1 + (r/\alpha)^2 ) ^{- \beta}
 	\label{eq:PSF}
 \end{equation}
-where $r$ is the radial distance to the centre and $\alpha$, $\beta$ are two seeing dependant parameters. In our case, we are interested in the Full Width at Half Maximum (FWHM) since it is directly related to the seeing conditions (it is also sometimes called seeing) and since it gives us information about the minimum spatial extent within which we are starting to loose information.
+where $r$ is the radial distance to the centre and $\alpha$, $\beta$ are two seeing dependant parameters. In our case, we are interested in the Full Width at Half Maximum (FWHM) since it is directly related to the seeing conditions and since it gives us information about the minimum spatial extent within which we start to loose information.
 The FWHM can be easily derived from the equality $I_{\rm{PSF}} ( \rm{FWHM}/2) = I_0 /2$ using Eq.\,\ref{eq:PSF}, from which we get the following relation
 
 \begin{equation}
@@ -277,66 +279,88 @@ The FWHM can be easily derived from the equality $I_{\rm{PSF}} ( \rm{FWHM}/2) = 
 	\label{eq:FWHM}
 \end{equation}
 
-According to the aforementioned articles the value of $\beta$ is expected to remain roughly constant and, additionally, we would expect from differential image motion theory (insert this paper here when read 10.1086/342683) that the FWHM to linearly decrease with wavelength. 
+According to the aforementioned articles the value of $\beta$ is expected to remain roughly constant and, additionally, we would expect from differential image motion theory (insert this paper here when read 10.1086/342683) the FWHM to linearly decrease with wavelength. 
 
-All galaxies are observed via their OII doublet at the same rest-frame wavelength. But, given that they are all field galaxies located at different redshift $z$, we actually observe them at wavelengths covering the entire MUSE spectrum, that is we have the usual relation
+All galaxies are observed via their OII doublet at the same rest-frame wavelength. But, given that they are all field galaxies located at a different redshift $z$, we actually observe them at wavelengths covering the entire MUSE spectrum, that is we have the usual relation
 
 \begin{equation}
 	\lambda_{\rm{obs}} = \lambda_{\rm{em}} ( 1 + z )
 \end{equation}
 where $\lambda_{\rm{em}}$, $\lambda_{\rm{obs}}$ are respectively the emitted (rest-frame) and observed wavelengths. Therefore, there is not only one $\rm{FWHM}$ value per FoV (the $\rm{FWHM}$ will also vary with FoVs as seeing conditions change from date to date), but one per galaxy, which we can derive if we know the two parameters (slope and offset) which characterise the linear evolution of the $\rm{FWHM}$ with wavelength. To derive this relation, we need at least two measures of the $\rm{FWHM}$ at two different wavelengths per FoV. Assuming seeing conditions are similar within the FoV (no spatial dependence), we can use the same linear relation per FoV to compute the $\rm{FWHM}$ for the OII wavelength at the redshift of the galaxy. \\
 
-As discussed above, $beta$ should remain constant, which means the $\rm{FWHM}$ is entirely described by the parameter $\alpha$ through Eq.\,\ref{eq:FWHM}. The measure of $\alpha$ had already been done by Valentina on at least two stars per FoV. Because they belong to our galaxy, we can consider that they have a null redshift, so that the wavelength of observation and emission are the same. 
-
-For all the stars, a Moffat profile was fitted on two wavelength ranges:
-
-\begin{itemize}
-	\item 
-\end{itemize}
-
-A Moffat profile was fitted on their OII $\lambda \SI{3727}{\angstrom}$ and OIII $\SI{5007}{\angstrom}$ flux maps, giving us at least two measures of the FWHM . Though a more rigorous modelling of the wavelength variation of the PSF FWHM including both more data points and potentially higher order terms is mandatory for future analysis, we decided to stick to this values in the present work, keeping in mind the large uncertainties which will affect the velocity dispersion maps in the modelling section. A representation of the FWHM variation with wavelength for 13 out of 16 observations is shown in Fig.\,\ref{fig:FWHM_var_lambda}. We have missing values of the FWHM for groups CGr34 (2 observations, 1 deep and 1 best-seeing) and CGr114. There appear to have a strong variations given the time of observation, up to $\SI{0.7}{arcsec}$. \\
- 
-Having computed the PSF FWHM  linear relation with wavelength for each FoV, we are now able to derive the relevant value of the FWHM for galaxies at any redshift. Indeed, since all our observations are limited to the OII $\lambda \SI{3727}{\angstrom}, \SI{3729}{\angstrom}$ doublet, we can derive the wavelength of observation for each galaxy given its redshift with the usual relation
+As discussed above, $\beta$ should remain constant, which means the $\rm{FWHM}$ is entirely described by the parameter $\alpha$ through Eq.\,\ref{eq:FWHM}. The measure of $\alpha$ had already been done by Valentina on at least two stars per FoV. For each star, two measures of $\alpha$ were computed by fitting a Moffat profile onto their image at OII and OII wavelength(it is also sometimes called seeing)s at the redshift of the observed group (see Table \ref{table:MUSEfieldsProp}).
 
 
+Though a more rigorous modelling of the wavelength variation of the PSF $\rm{FWHM}$ including both more data points and potentially higher order terms is mandatory for future analysis, we decided to stick to this values in the present work, keeping in mind the large uncertainties which will affect the velocity dispersion maps in the modelling section. A representation of the $\rm{FWHM}$ variation with wavelength for 13 out of 16 observations is shown in Fig.\,\ref{fig:FWHM_var_lambda}. We have missing values of the $\rm{FWHM}$ for groups CGr34 (2 observations, 1 deep and 1 best-seeing) and CGr114. Most FoVs have $\rm{FWHM}$ values below $\SI{0.7}{"}$ which is not surprising given that it was one of the constraints of the observations. CGr23 is the only FoV to have its $\rm{FWHM}$ above $\SI{0.7}{"}$ for almost every wavelength.  \\
 
-Considering that the FWHM is a measure of how spread a point-like source is in our images, and since we are interested in working with resolved enough galaxies in order to better constrain their kinematics, we would like galaxies to have a characteristic size at least above the FWHM. The only size which is given in the morphological catalogues is the half-light radius derived from optical images. 
+Considering that the $\rm{FWHM}$ is a measure of how spread a point-like source is, and since we are interested in working with resolved enough galaxies in order to better constrain their kinematics, we would like galaxies to have a characteristic size at least above the $\rm{FWHM}$. Given that for almost all the FoVs we have an upper limit on the $\rm{FWHM}$ of about $\SI{0.7}{"}$, we decided to use this upper limit as our size selection criterion
 
-According to \shortciteA{Swinbank2017} who compared the half-light radius of the nebular OII emission in MUSE images with that of their HST counterpart in ACS \textit{I} or WFC \textit{H}-band, the OII half-light radius seems to scale with the HST radius as 
+\begin{equation}
+	R_{1/2} \geq \SI{0.35}{"} \approx \rm{FWHM}/2
+\end{equation}
+
+Moreover, according to \shortciteA{Swinbank2017} who compared the half-light radius of the nebular OII emission in MUSE images with that of their HST counterpart in ACS \textit{I} or WFC \textit{H}-band, the OII half-light radius seems to scale with the HST radius as 
 
 \begin{equation}
 	R_{1/2}^{\rm{OII}} = (1.18 \pm 0.03) R_{1/2}^{\rm{HST}}
 \end{equation}
 
-Thus, choosing the FWHM as a lower limit for the morphological radius in our sample should get rid ourselves of most of unresolved galaxies without removing too many "good" galaxies. This is checked in the next sections.
+Thus, we expect the galaxies in the MUSE images to be larger than their HST counterparts, which means our choice of lower limit for the morphological radius in our sample should eliminate most of the unresolved galaxies. Though, we also risk to eliminate resolved galaxies in our selection.
 
 \subsubsection{SNR selection}
+\label{sec:cut_SNR}
 
-The other information we can use to select our sample is the Signal to Noise Ratio (SNR), which tells us how well our galaxy is detached from the background. The SNR is generally derived as the ratio between the source's signal and the background level. The noisier an image, the lower the SNR is, which explains the need of a good data reduction pipeline.
+The other information we can use to select our sample is the Signal to Noise Ratio ($\rm{SNR}$), which tells us how well our galaxy is detached from the background. The $\rm{SNR}$ is generally derived as the ratio between the source's signal and the background level. The noisier an image, the lower the SNR is.s.
 
-As described in later sections, the galaxies must be automatically and then manually cleaned before fitting a kinematical model on the velocity maps in order to remove any noise dominated pixel which might compromise the fit. One of the criteria used by the routine to decide whether a pixel belongs to the galaxy or is noise-dominated is a lower limit on SNR (typically $5$). Thus, if we want to have enough detection in our cleaned maps to perform the kinematical modelling, we must select galaxies with a strong enough SNR.
+As explained in later sections, the galaxies must be automatically and then manually cleaned before fitting a kinematical model on the velocity maps in order to remove any pixel dominated by noise which might compromise the fit. One of the criteria used by the routine to decide whether a pixel belongs to the galaxy is a lower limit on the $\rm{SNR}$ of pixel (typically $5$). Thus, if we want to have enough detection in our cleaned maps to perform the kinematical modelling, we must select galaxies with a strong enough SNR.
 
-In our case, \textsc{CAMEL}\footnote{\url{https://bitbucket.org/bepinat/camel/src/master/}} software, described in \shortciteA{Epinat2012}, was used on the integrated spectrum in order to derive spectral features of the galaxies. We used the OII flux and its error to derive the SNR as
+In our case, \textsc{CAMEL}\footnote{\url{https://bitbucket.org/bepinat/camel/src/master/}} software, described in \shortciteA{Epinat2012}, was run on the integrated spectrum of the galaxies in order to derive their spectral features. From the parameters returned by CAMEL, we used the OII flux and its error to derive the SNR as
 
 \begin{equation}
 	\rm{SNR} = \frac{\rm{OII \,\, flux}}{\rm{OII \,\, flux \,\, error}}
 \end{equation}
 
-This represents the OII SNR computed from the integrated galaxy spectrum using pixels within the smaller data cube centred around the galaxy. Since the typical SNR value used by the routine to clean the maps is around $5$, we decided as a first step to choose an SNR lower limit of $10$, allowing us to keep galaxies with strong enough detection after the automatic cleaning.
+This is the OII $\rm{SNR}$ from the integrated galaxy spectrum computed using pixels within data cubes restricted around the galaxy. Since the typical SNR value used by the routine to clean the maps is around $5$, we decided as a first step to choose an SNR lower limit of $10$, allowing us to keep galaxies with strong enough detection after the automatic cleaning is performed.
 
-\subsubsection{Selection criteria}
+\subsection{Characterisation of the sample}
 
-To summarize, we decided to apply the two following cuts (lower limits):
+\subsubsection{Selecting galaxies}
 
-\begin{itemize}
-	\item $R_{1/2 , \rm{lim}} \approx \rm{FWHM} = \SI{0.7}{arcsec}$
-	\item $\rm{SNR_{lim}} = 10$
-\end{itemize}
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/SNR_vs_R_halfLight_arcsec}.pdf}
+	\caption[Selected sample]{Full sample of $261$ field galaxies with our selection box over-plotted (hatched area). Galaxies with $5 \leq \rm{SNR} \leq 15$ and $0.25" \leq R_{1/2} \leq 0.45"$ (bounds plotted as dashed lines) were visually inspected to check how many resolved galaxies we might have loosed. Selection criteria from Sec.\,\ref{sec:cut} are also plotted as solid red lines. No specific trend appear with redshift.}
+	\label{fig:sample_selection}
+\end{figure}
 
-It should be emphasized that these selection criteria should be used in combination rather than alone. Indeed, having a potentially large galaxy does not prevent us from having a low SNR per pixel, resulting in a too small cleaned galaxy for the kinematical modelling. In the same way, a high SNR could be obtained for a small galaxy, and we expect them to appear much larger in MUSE images because of beam smearing effects.
+We decided to visually inspect galaxies around the $\rm{SNR}$ and the size cuts to quantify
+\begin{enumerate*}[label={(\alph*)}]
+	\item how many resolved galaxies would be lost if we applied the criteria given in Sec.\,\ref{sec:cut_size} and \ref{sec:cut_SNR} (false negative)
+	\item how many unresolved galaxies would be selected in our sample (false positive).
+\end{enumerate*}
+To do so, we defined four boxes: $5 \leq \rm{SNR} \leq 10$, $10 \le \rm{SNR} \leq 15$, $0.25" \leq R_{1/2} \leq 0.35"$ and $0.35" \le R_{1/2} \leq 0.45"$ containing respectively $46$, $20$, $58$ and $49$ galaxies. We then ran the automatic cleaning routine on all the galaxies in these boxes. After visually inspecting their size in the cleaned maps, we classified them as resolved or not. These boxes and the $\rm{SNR}$, half-light radius and redshift of the full sample of field galaxies before selection are shown in Fig.\ref{fig:sample_selection}. \\
 
+Among the $261$ field galaxies, $103$ fall into the limits imposed in Sec.\,\ref{sec:cut}. We find that roughly $26\%$ of the galaxies below the cuts are actually false negatives and that $15\%$ above them are false positives. Since this classification is purely visual, slightly relaxing the constraints on when a galaxy is resolved or not allow these values to vary by roughly $10\%$. Hence, it seems our choice of lower bounds for the $\rm{SNR}$ and the half-light radius is fine, though in future works we might increase our sample by a factor of $\sim 1.5$.
 
+\subsubsection{Redshift distribution}
 
+\begin{wrapfigure}{r}{.5\linewidth}
+	\centering
+	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/cumulative_hist_redshift}.pdf}
+	\caption[Redshift distribution]{Redshift distribution of the total sample (grey), selected (green) and unselected (blue) galaxies. Redshift bins of size $0.1$ have been used. Top: density plot as a function of redshift. Bottom: cumulative distribution. We lack most of the galaxies at redshift $1.4$. Other redshift bins do not loose to many galaxies with respect to the unselected ones except maybe at $z \approx 0.5 $.}
+	\label{fig:redshift_distribution}
+\end{wrapfigure}
+
+The choice of the OII $\lambda 3729, \SI{3729}{\angstrom}$ doublet for the kinematical analysis was due in part to the large range of redshift it provided given the MUSE wavelength range. We therefore had in our catalogue galaxies spanning a redshift range from $0.3$ to about $1.4$. As show in Fig.\,\ref{fig:redshift_distribution}, after our selection we loose the majority of the most distant galaxies as well as a significant fraction of galaxies with z around $0.3$, $0.5$ and $0.75$. Globally, we are selecting less galaxies per redshift bin than we are putting aside. The average and median redshifts are $0.749$ and $0.719$ for the selected galaxies, $0.809$ and $0.750$ for the unselected ones. Thus, our sample remains consistent in terms of redshift even after performing the $\rm{SNR}$ and size selections.
+
+\subsubsection{Mass-SFR relation}
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/SFR_vs_mass_withoutFAST}.pdf}
+	\caption[SFR-mass relation]{SFR-mass relation for the selected (filled circles) and the unselected (open circles) galaxies. Left: SFR extracted from the morphological catalogues. Right: the redshift corrected SFR as given in Eq.\,\ref{eq:SFR_corrected_redshift}. We obtain the usual main sequence of galaxies as a linear relation between SFR and mass (in log-log space), as well as quenched galaxies on the lower right part of the plane which are removed when performing the selection.}
+	\label{fig:sfr_vs_mass}
+\end{figure}
 
 
  
