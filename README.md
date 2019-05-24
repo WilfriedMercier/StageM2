@@ -11,8 +11,9 @@ Name| Langage | Description
 *extraction\_gals\_whole.ipynb* | Jupyter notebook | Main program which builds up master catalogs from those in *[data/catalogues/](https://github.com/WilfriedMercier/StageM2/tree/master/data/catalogues)* by unifying the fields names and their data type which change from one file to another.
 *NewCatalogWithCorrectedRadius.ipynb* | Notebook | Correct Cassata radius bias and write into a VOtable file the new catalog with corrected radius (either corrected Cassata radius or Zurich one if available)
 *Plot_differences\_between\_catalogs.ipynb* | Jupyter notebook | Contains all the different plots comparing GalFit properties such as radius and b/a with Cassata, Tasca and Zurich catalogs.
-*Selecting\_field\_Gals.ipynb* | Jupyter notebook | File within which the SFR = f(Mass) is inversitgated and galaxies from MUSE are selected according to the graphs from *Plot\_differences\_between\_catalogs.ipynb* and in *[Plots](https://github.com/WilfriedMercier/StageM2/tree/master/Plots)* folder.
 *stage2.py* | Python | Library with useful functions for the internship, namely computing and applying masks on many arrays in two lines, plotting nice and highly configurable graphs with one command, finding occurences of some value in many arrays, etc.
+*Selecting\_field\_Gals.ipynb* | Jupyter notebook | File within which the SFR = f(Mass) is inversitgated and galaxies from MUSE are selected according to the graphs from *Plot\_differences\_between\_catalogs.ipynb* and in *[Plots](https://github.com/WilfriedMercier/StageM2/tree/master/Plots)* folder.
+
 
 # *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)*
 
@@ -20,14 +21,17 @@ Name| Langage | Description
 
 Name| Langage | Description
 :---: | :---: | :---
+*build\_folder\_structure* | Bash | Twofold program. Firstly, builds a tree structure in the given folder (default is *[../outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE*) based on the MUSE file structure found in *[../data](https://github.com/WilfriedMercier/StageM2/tree/master/data)*. Secondly, generate a file (default name is *list\_output\_folders*) with the newly created folders. If the structure already exists, nothing is created or overwritten.
 *checkGalsAfter* | Bash | Open the maps of all the cleaned galaxies listed in a file with PyQubeVis.
 *checkGalsBefore* | Bash | Open the maps of all the galaxies before they were cleaned (galaxies listed in the input file for the cleaning program) with PyQubeVis
-*create\_hst\_stamps.py* | Python | This is used to create the close up hst images of the galaxies. *.txt* input files with information with respect to the selected galaxies must be created before.
-*Create\_hst\_stamps\_input.ipynb* | Jupyter notebook | This notebook automatically builds up the input *.txt* files used by *create\_hst\_stamps.py* to make the close up hst images of the selected galaxies. It relies on the *.vot* files within the *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders
-*createSymLinks\_to\_ouputfolders* | Bash | Create symbolic links in the galaxies outputfolders to the original *.fits* files for kinematic modelling.
-*build\_folder\_structure* | Bash | Twofold program. Firstly, builds a tree structure in the given folder (default is *[../outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE*) based on the MUSE file structure found in *[../data](https://github.com/WilfriedMercier/StageM2/tree/master/data)*. Secondly, generate a file (default name is *list\_output\_folders*) with the newly created folders. If the structure already exists, nothing is created or overwritten.
 *clean\_data.py* | Python | Program which cleans MUSE data using a threshold in velocity dispersion, SNR and potentially a manually applied mask.
+*create\_hst\_stamps.py* | Python | This is used to create the close up hst images of the galaxies. *.txt* input files with galaxy information must be made beforehand either manually or with *Create\_hst\_stamps\_input.ipynb*. They can be found in *[data/hst](https://github.com/WilfriedMercier/StageM2/tree/master/data/hst)/CGr\$**.
+*Create\_hst\_stamps\_input.ipynb* | Notebook | This notebook automatically constructs the input *.txt* files used by *create\_hst\_stamps.py* to make the close up hst images of the selected galaxies. It relies on the *.vot* files within *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\**.
+*createSymLinks\_to\_ouputfolders* | Bash | Create symbolic links in the galaxies outputfolders to the original *.fits* files for the kinematical modelling.
+*kinemorpho_catalogs.py* | Python | Used to generate the recap files with the kinematical and morphological information of the modelled galaxies
+*Generate\_kinematical\_input.ipynb* | Notebook | This notebook gathers morphological information of the selected galaxies from different files and combine them into objects of a class named groupStructure. These objects are then used to easily create input files such as *input\_fit\_o2.txt* or *maps\_input\_o2.txt*.
 *generate\_list\_gal* | Bash | Look for all the galaxies in a given folder (default is *[../data](https://github.com/WilfriedMercier/StageM2/tree/master/data)*). Galaxies must have a *.config* file in their folder in order to be listed. The outputfile (default file name is *list_gal*) contains in the first column the full names (path+name) of the galaxies, and their redshift in the second column.
+*usePyQubeVisEnMasse* | Bash | This opens one after another the cube file and the automatically cleaned velocity map (assuming a threshold in SNR of 5, this can be changed directly in the code) in a single PyQubeVis session. This is meant to help to manually clean the maps.
 
 ## Preliminary
 
@@ -95,9 +99,11 @@ __Note__: two ouput files are created in addition to the cleaned maps. Those fil
 
 ### Manual cleaning
 
-To manually clean the remaining pixels which do not belong to the galaxy, move to the relevant output folder and open the cube file with PyQubeVis and then the automatically cleaned velocity map from the software menu. 
+To manually clean the remaining pixels which do not belong to the galaxy there are two options
 
-Once the map has been manually cleaned, save it as *clean.fits* in the same folder as the cleaned maps and the symbolic links. 
+1. Move to the relevant output folder and open the cube file with PyQubeVis and then the automatically cleaned velocity map from the software menu. Once the map has been manually cleaned, save it as *clean.fits* in the same folder as the cleaned maps and the symbolic links. 
+
+2. Run the program `wilfried:~/ST2$ ./usePyQubeVisEnMasse outputFolderFile` where `outputFolderFile` is the file made by *clean\_data.py* containing the folders where the cleaned galaxies are. This will open a new PyQubeVis session with the data cube and the automatically cleaned velocity map one after another. Thus, every time the session will be closed (after the manual cleaning and saving as *clean.fits*) a new session with the following galaxy will be opened.
 
 To apply the modifications to all the maps, move back to *[scripts\_python\_Benoit](https://github.com/WilfriedMercier/StageM2/tree/master/scripts_python_Benoit)* and re-run *clean_data.py* without making any modifications. This will overwrite the previous cleaned maps, taking into account the information given in the *clean.fits* map.
 
