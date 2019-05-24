@@ -150,13 +150,15 @@ where `filename` should be in this case the same file as the input file used for
 
 ## Fitting a model to the data
 
-To fit a model to the data, the maps must have been automatically, and then manually, cleaned. Once this is done, move to the corresponding CGr* group folder in *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE* and either create a file *input\_fit\_o2.txt* with the following structure:
+### Manually generating the input file
+
+Once the maps have been manually cleaned, move to the corresponding CGr* group folder in *[outputs/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs)MUSE* and either manually create a file named *input\_fit\_o2.txt* with the following structure:
 
 | \# |      ID     |   X     |   Y |      PA     | INC     | vs    | vm    | d  | sig | psfx  | psfz | smooth
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: 
 | | CGr51\_28\_o2  |  16.16 |   15.81 |  0.0 |   45 |   0.0  |   80 |  2.0  |   0 |  2.45  | 51.6 |   2
 
-or directly copy this file from the [PSF_data/](https://github.com/WilfriedMercier/StageM2/tree/master/PSF_data) folder into this one and then modify it. In this file, each line represents a galaxy with the following properties:
+In this file, each line represents a galaxy with the following properties:
 
 Table column | Description | How to determine ?
 :---: | :---: | :---
@@ -173,7 +175,15 @@ __Notes__:
 - the other parameters should not be modified
 - `X`, `Y` and `INC` are fixed parameters and must therefore be tightly constrained
 
-When the input file containing the information for all the galaxies you want to fit a model to is made, either copy in the current folder the *fitModel.pro* program (found in [PSF_data/](https://github.com/WilfriedMercier/StageM2/tree/master/PSF_data)) and run it in IDL with the two following lines
+### Automatically generating the input file
+
+If you have selected the galaxies regardless of their group, you can easily generate the input files for all the groups with *Generate\_kinematical\_input.ipynb*. 
+
+This notebook uses a class named groupStructure which gathers the location and the morphological information (including PSF and LSF FWHMs) of all the galaxies in the same group. Therefore, to each group corresponds an object with all the galaxy information which is then used to easily create the input file for each group.
+
+### Fitting the model
+
+Once the input file is made and if the program for the model fitting is not present, you can either copy in the current folder fitModel.pro (found in [PSF_data/](https://github.com/WilfriedMercier/StageM2/tree/master/PSF_data)) and run it in IDL with the two following lines
 
 ```idl
 .run fitModel
