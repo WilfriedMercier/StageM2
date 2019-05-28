@@ -173,10 +173,11 @@ def recap_kinem_params(path, basename='hdfs_v*', model='slp', suff1='_xyi', suff
     gals = glob.glob(path + basename)
     gals.sort()
     f = open(path + 'recap_kinematics_parameters_2_' + model + suff1 + suff2 + '.txt', 'w')
-    line = '%38s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s \n'%('ID', 'X', 'DX', 'Y', 'DY', 'VS', 'DVS', 'PA', 'DPA','INC','DINC', 'VC', 'DVC', 'RC', 'DRC', 'SIG', 'DSIG', 'CHI2', 'DOF', 'MEANRESV', 'MEDRESV', 'STDRESV', 'MINRESV', 'MAXRESV', 'MEANRESD', 'MEDRESD', 'STDRESD', 'MINRESD', 'MAXRESD', 'RLAST', 'RLASTSYM')
+    line = '%-18s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %6s %5s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s %8s \n'%('ID', 'X', 'DX', 'Y', 'DY', 'VS', 'DVS', 'PA', 'DPA','INC','DINC', 'VC', 'DVC', 'RC', 'DRC', 'SIG', 'DSIG', 'CHI2', 'DOF', 'MEANRESV', 'MEDRESV', 'STDRESV', 'MINRESV', 'MAXRESV', 'MEANRESD', 'MEDRESD', 'STDRESD', 'MINRESD', 'MAXRESD', 'RLAST', 'RLASTSYM')
     
     f.write(line)
     for gal in gals:
+        
         filen = gal + '/' + gal.split('/')[-1] + '_parameters_red_' + model + suff1 + suff2 + '.txt'
         filen2 = gal + '/' + gal.split('/')[-1] + '_parameters_residual_' + model + suff1 + suff2 + '.txt'
         filen3 = gal + '/' + gal.split('/')[-1] + '_vmax_map_rlast' + suff2 + '.txt'
@@ -184,7 +185,7 @@ def recap_kinem_params(path, basename='hdfs_v*', model='slp', suff1='_xyi', suff
         
         print(filen, "\n", filen2, "\n", filen3, "\n", cube)
 #        print("gal", gal, "\n", gal.split('/')[-1], "\n", filen, "\n", filen2, "\n", filen3, "\n", cube)
-        line = '%38s '%(gal.split('/')[-1])
+        line = '%-18s '%(gal.split('/')[-1])
         try:
             data = np.genfromtxt(filen, names=True, usecols=(0,1,2,3,4,5,6,7))
             data1 = np.genfromtxt(filen, names=True, usecols=(8,9), skip_footer=True)
@@ -576,252 +577,15 @@ def extract_lines(cat_zurich, cat_group, outname, radius=1.5):
 def main():
     '''
     '''
-    
-    #-------#
-    #  UDF  #
-    #-------#
-    
-    #udfcat = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/mosaic_c042_e030_withz_o2_forkineanalysis_withMERGED.fits'
-    #outcat = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/camel/o2/input_fit_o2.txt'
-    #filedir = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/camel/o2/'
-    
-    #convert_udfcat_kincat(udfcat, outcat, filedir)
-    
-    #model = 'slp'
-    #paths = ['/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/camel/o2/']
-    #for path in paths:
-        #recap_kinem_params(path, basename='udf_mos_c042_e030_*', model=model, suff1='_xyi', suff2='_mclean5.0')
-    
-    #---------#
-    #  UDF10  #
-    #---------#
-    
-    #udfcat = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/mosaic_c042_e030_withz_o2_forkineanalysis_withMERGED.fits'
-    #outcat = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/camel/udf10/o2/input_fit_o2.txt'
-    #filedir = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/camel/udf10/o2/'
-    
-    #convert_udfcat_kincat(udfcat, outcat, filedir, prefix='udf10_c042_e031_')
-    
-#    model = 'slp'
-#    paths = ['/media/bepinat/WD2To/data/Instruments/MUSE/analyse/UDF/data/camel/udf10/o2/']
-#    for path in paths:
-#        recap_kinem_params(path, basename='udf10_c042_e031_*', model=model, suff1='_xyi', suff2='_clean5.0')
-
-    #--------#
-    #  HDFS  #
-    #--------#
-    
-    #galfile = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psf1/31_f814_comb_galfit.txt'
-    #result = read_galfit_output(galfile)
-    
-    #galfile = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psf1/31_f814_comb_galfit.log'
-    #result = read_galfit_log(galfile)
-    
-    #path = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psfmoffat/'
-    #recap_morpho_params(path, basename='_f814_comb.log')
-    
-    #path = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psfmoffat_bulgefree/'
-    #recap_morpho_params(path, basename='_f814_comb.log')
-    
-    #path = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psfstack/'
-    #recap_morpho_params(path, basename='_f814_comb.log')
-    
-    #path = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psfstack_bulgefree/'
-    #recap_morpho_params(path, basename='_f814_comb.log')
-    
-    #path = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psftinytim/'
-    #recap_morpho_params(path, basename='_f814_comb.log')
-    
-    #path = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psftinytim_bulgefree/'
-    #recap_morpho_params(path, basename='_f814_comb.log')
-    
-    #path = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psfmoffattrujillo_bulgefree/'
-    #recap_morpho_params(path, basename='_f814_comb.log')
-    
-    #filen = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/tables/inclinations_comparison.txt'
-    #inclination_histo(filen)
-    
-    #pathm = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/Commissioning/morpho/morpho_f814_psfmoffat/'
-    #pathk = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/Commissioning/v031c/han2/'
-    #res = convert_morphocat_kincat(pathm, pathk)
-    #pathk = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/Commissioning/v031c/o3hb/'
-    #res = convert_morphocat_kincat(pathm, pathk)
-    #pathk = '/media/bepinat/WD2To/data/Instruments/MUSE/analyse/Commissioning/v031c/o2/'
-    #res = convert_morphocat_kincat(pathm, pathk)
-    
-    #model = 'slp'
-    #paths = ['/home/bepinat/Instruments/MUSE/analyse/Commissioning/v031c/o2/', '/home/bepinat/Instruments/MUSE/analyse/Commissioning/v031c/o3hb/', '/home/bepinat/Instruments/MUSE/analyse/Commissioning/v031c/han2/']
-    #for path in paths:
-        #recap_kinem_params(path, basename='hdfs_v*', model=model)
-    
-    #morphof = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/tables/recap_morpho_params.txt'
-    #kinemf = '/home/bepinat/Instruments/MUSE/analyse/Commissioning/tables/recap_kinematics_parameters_best.txt'
-    #compare_pa(morphof, kinemf)
-    
-    #---------------------------------------------------------#
-    # Groups Snapsots and Deep fields with right nomenclature #
-    #---------------------------------------------------------#
-##    path = '/home/vabril/MUSE/Groups_Snapshots/'
-##    pathmorpho = '/home/vabril/MUSE/Groups_Snapshots/morphology/'
-#    
-##    new paths for deep fields with right nomenclature and additional objects included
-#    path = '/home/vabril/MUSE/Groups_Deep/'
-#    pathmorpho = '/home/vabril/MUSE/Groups_Deep/morphology/'
-##    pathmorpho = '/home/vabril/MUSE/Emission_region_CGr32-M1/galaxy_473/Morpho_modeling/'
-#    
-#    #groups = ['84-North']
-#    #groups = ['23','26', '28', '61', '79','32-M1', '32-M2', '32-M3']
-#    groups = ['32-M1']
-#    #groups = ['32-M3'] #'79','32-M1', '32-M2', '32-M3'
-#    #groups = ['30','34','84','114' ]
-#    #groups = ['84',] 
-#    
-#    #section for one galaxy (not listed)
-#    
-##    pathm = pathmorpho
-##    pathk = '/home/vabril/MUSE/Emission_region_CGr32-M1/galaxy_473/o2/'
-##    pathgr = pathmorpho
-#    
-##    recap_morpho_params(pathgr, basename='_comb.log', outname='')
-##    res = convert_morphocat_kincat(pathm, pathk)
-##    print(res)
-#    
-#    for group in groups:
-#        pathgr = pathmorpho + 'HST_CGr'+ group + '/'
-#        #pathgr = pathmorpho + 'HST_CGr'+ group + '/CGr84_z0.68/'
-#        #pathgr = pathmorpho + 'HST_CGr'+ group +'/CGr'+group+'A/'
-#        #pathgr = pathmorpho + 'HST_CGr'+ group +'/CGr'+group+'B/'
-#        
-#        #recap_morpho_params(pathgr, basename='_comb.log', outname='CGr'+group+'A') #outname='CGr'+group+'B',  #outname='CGr'+group , outname='CGr'+group+'A'
-#        recap_morpho_params(pathgr, basename='_comb.log', outname='')
-#
-#        gr = group.split('_')[0]
-#        #pathm = pathmorpho + 'HST_CGr' + gr  +'/CGr'+group+'A/'  # A or B for group 84-North
-#        
-#        pathm = pathmorpho + 'HST_CGr' + gr + '/'
-#        #pathm = pathmorpho + 'HST_CGr' + gr + '/CGr84_z0.68/'
-##        pathk = path + 'CGr' + group + '/o2/'
-#        #pathk = path + 'CGr' + group + '_best_seeing/o2/'
-#        pathk = path + 'CGr' + group + '_deep/o2/'
-#        #pathk = path + 'CGr' + group + '_mid_deep/CGr84_mdeep_A/o2/' #A/ or B/ for the two structures in field CGr84
-#        #pathk = path + 'CGr' + group + '_snshot/o2/'
-##        pathk = path + 'CGr' + group + 'B' + '/o2/' # A or B for group 84-North
-#        
-#        
-#        res = convert_morphocat_kincat(pathm, pathk)
-#        
-##        pathk = path + 'CGr' + group + '/o3hb/'
-#        #pathk = path + 'CGr' + group + '_best_seeing/o3hb/'
-#        pathk = path + 'CGr' + group + '_deep/o3hb/'
-##        pathk = path + 'CGr' + group + '_mid_deep/CGr84_mdeep_A/o3hb/'
-#        #pathk = path + 'CGr' + group + '_snshot/o3hb/'
-##        pathk = path + 'CGr' + group + 'B' + '/o3hb/' # A or B for group 84-North
-#        
-#        res = convert_morphocat_kincat(pathm, pathk)
-##        pathk = path + 'CGr' + group + '/n2ha/'
-##        res = convert_morphocat_kincat(pathm, pathk)
-##        pathk = path + 'CGr' + group + '/s2/'
-##        res = convert_morphocat_kincat(pathm, pathk)
-#
-#        print(pathm, pathk)
-    
-    ##--------#
-    ## Groups #
-    ##--------#
-##    path = '/media/bepinat/WD2To/data/Instruments/MUSE/groups/morpho/acs_mosaic_2.0_'
-##    pathkin = '/media/bepinat/WD2To/data/Instruments/MUSE/groups/kinematics/'
-#    
-#    path = '/home/vabril/MUSE/groups/morpho/acs_mosaic_2.0_'
-#    pathkin = '/home/vabril/MUSE/groups/kinematics/'
-#    #groups = ['gr28_shallow', 'gr32', 'gr83', 'gr116', 'gr28_best_seeing', 'gr28_deep']
-#    groups = ['gr32', 'gr32_bs', 'gr83', 'gr116', 'gr28_best_seeing','gr28_shallow']
-#    #groups = ['gr32_middeep', 'gr83_middeep', 'gr28_deep']
-#    #groups = ['gr28_deep']
-#    #groups = ['gr28_best_seeing', 'gr28_deep']
-#    for group in groups:
-#        #pathgr = path + group + '/'
-#        
-#        #recap_morpho_params(pathgr, basename='_f814_comb.log', outname='')
-#        
-#        gr = group.split('_')[0]
-#        
-#        pathgr = path + gr + '/'
-#        recap_morpho_params(pathgr, basename='_f814_comb2.log', outname='')
-#        pathm = path + gr + '/'
-#        pathk = pathkin + group + '/o2/'
-#        res = convert_morphocat_kincat(pathm, pathk)
-#        pathk = pathkin + group + '/o3hb/'
-#        res = convert_morphocat_kincat(pathm, pathk)
-        
-        ###################
-        # PSF pour le GTO #
-        ###################
-        
-#        path_psf = pathkin + group + '/psf_gto/'
-#        gr = group.split('_')[0]
-#        ipath = gr + '*5000/*'
-#        recap_morphopsf_params(path_psf, basename='_sky_g.log', ipath=ipath, outname='_5000_g')
-#        #recap_morphopsf_params(path_psf, basename='_sky_mg.log', ipath=ipath, outname='_5000_mg')
-#        recap_morphopsf_params(path_psf, basename='_sky_m.log', ipath=ipath, outname='_5000_m')
-#        ipath = gr + '*7000/*'
-#        recap_morphopsf_params(path_psf, basename='_sky_g.log', ipath=ipath, outname='_7000_g')
-#        #recap_morphopsf_params(path_psf, basename='_sky_mg.log', ipath=ipath, outname='_7000_mg')
-#        recap_morphopsf_params(path_psf, basename='_sky_m.log', ipath=ipath, outname='_7000_m')
-#        ipath = gr + '*9000/*'
-#        recap_morphopsf_params(path_psf, basename='_sky_g.log', ipath=ipath, outname='_9000_g')
-#        #recap_morphopsf_params(path_psf, basename='_sky_mg.log', ipath=ipath, outname='_9000_mg')
-#        recap_morphopsf_params(path_psf, basename='_sky_m.log', ipath=ipath, outname='_9000_m')
-#        
-        ###################################
-        ## PSF pour l'analyse cinématique #
-        ##################################
-#    pathkin = '/home/vabril/MUSE/Groups_Snapshots/'
-#    pathkin = '/home/vabril/MUSE/Emission_region_CGr32-M1/galaxy_473/o2/'
-#    pathkin = '/home/vabril/MUSE/groups/kinematics/'
-     
-    #groups = ['23','26', '28', '51', '61', '79','32-M1', '32-M2', '32-M3','84-NorthA','84-NorthB']
-    #groups = ['23', '61']   #Activate the options for calculating the psf for n2ha and o2 bands
-    #groups = ['26', '28',  '79','32-M1', '32-M2', '32-M3','84-NorthA'] 
-
-    #groups = ['gr32_middeep','gr83_middeep', 'gr28_deep']
-    #groups = ['gr32', 'gr83', 'gr116', 'gr28_best_seeing','gr28_shallow']
-#    groups = ['51'] 
 
     pathkin = '/home/wilfried/ST2/outputs/MUSE/'
     groups = ['114_s', '23_s', '26_s', '28_s', '30_bs', '30_d', '32-M1_d', '32-M2_d',
               '32-M3_d', '34_bs', '34_d', '51_s', '61_s', '79_d', '84_d', '84-N_s']
-    groups = ['CGr' + i for i in groups]
+    groups = np.asarray(['CGr' + i for i in groups])
 
-    #Selecting galaxy
-    groups = [groups[11]]
+    #Selecting group for test
+    groups = groups[groups=='CGr23_s']
     for group in groups:
-#        #path_star = pathkin + group + '/stars/'
-#        path_star = pathkin + 'CGr' + group + '/stars/' # '/stars_A/' or '/stars_B/' for group 51
-#        #path_star = pathkin + 'CGr' + group + '_deep/stars/'
-#        #path_star = pathkin + 'CGr' + group + 'A/stars/' #Activate only for group 84-North
-#        #path_star = pathkin + 'CGr' + group +'/'+'CGr84_mdeep_A/stars/'
-#        
-#        gr = group.split('_')[0]
-#        print(gr)
-#        ipath = 'CGr'+ gr + '*o2/*'
-#        #ipath = gr + '*o2/*'
-#        recap_morphopsf_params(path_star, basename='_comb_sky_g.log', ipath=ipath, outname='_o2_g')
-#        recap_morphopsf_params(path_star, basename='_comb_sky_mg.log', ipath=ipath, outname='_o2_mg')
-#        recap_morphopsf_params(path_star, basename='_comb_sky_m.log', ipath=ipath, outname='_o2_m')
-#        ipath = 'CGr' +gr + '*o3hb/*'
-#        #ipath = gr + '*o3hb/*'
-#        recap_morphopsf_params(path_star, basename='_comb_sky_g.log', ipath=ipath, outname='_o3hb_g')
-#        recap_morphopsf_params(path_star, basename='_comb_sky_mg.log', ipath=ipath, outname='_o3hb_mg')
-#        recap_morphopsf_params(path_star, basename='_comb_sky_m.log', ipath=ipath, outname='_o3hb_m')
-#        
-#        ipath = 'CGr'+ gr + '*s2/*'
-#        recap_morphopsf_params(path_star, basename='_comb_sky_g.log', ipath=ipath, outname='_s2_g')
-#        recap_morphopsf_params(path_star, basename='_comb_sky_mg.log', ipath=ipath, outname='_s2_mg')
-#        recap_morphopsf_params(path_star, basename='_comb_sky_m.log', ipath=ipath, outname='_s2_m')
-#        ipath = 'CGr' +gr + '*n2ha/*'
-#        recap_morphopsf_params(path_star, basename='_comb_sky_g.log', ipath=ipath, outname='_n2ha_g')
-#        recap_morphopsf_params(path_star, basename='_comb_sky_mg.log', ipath=ipath, outname='_n2ha_mg')
-#        recap_morphopsf_params(path_star, basename='_comb_sky_m.log', ipath=ipath, outname='_n2ha_m')
 
         gr = group.split('_')[0].split('CGr')[1]
         supp = ''
@@ -835,40 +599,10 @@ def main():
             supp = 'orth'
 
         pathk = pathkin + group + '/o2/'
-        basename = 'CGr'+ gr + supp + '_' + '28' + '_o2'
+        basename = 'CGr'+ gr + supp + '*_o2'
 #        basename = 'CGr'+ gr + '*_*' #Activate for Group 51 Snapshots to include 51B and 51 A in the same output
         print(pathk, basename)
         recap_kinem_params(pathk, basename=basename)
-
-#        pathk = pathkin +'CGr'+ group + '/o3hb/'
-#        pathk = pathkin +'CGr'+ group + '_deep/o3hb/'
-        #pathk = pathkin +'CGr'+ group + '_mid_deep/CGr84_mdeep_A/o3hb/'
-#        recap_kinem_params(pathk, basename=basename)
-#        
-#        pathk = pathkin + 'CGr'+ group + '/s2/'
-#        basename = 'CGr'+ gr + '_*'
-#        recap_kinem_params(pathk, basename=basename)
-#        pathk = pathkin +'CGr'+ group + '/n2ha/'
-#        recap_kinem_params(pathk, basename=basename)
-#        
-#        gr = group.split('_')[0]
-#        pathk = pathkin + group + '/o2/'
-#        basename = gr + '_*'
-#        recap_kinem_params(pathk, basename=basename)
-#        pathk = pathkin +group+ '/o3hb/'
-#        recap_kinem_params(pathk, basename=basename)
-    
-    #path = '/media/bepinat/WD2To/data/Instruments/MUSE/groups/'
-    #morpho_file = 'catalogues_irsa/cosmos_morph_zurich_1.0_lisible.tbl'
-    #cat_zurich = ascii.read(path + morpho_file)
-    #radius = 1.5  # arcsec
-    #groups = ['gr28', 'gr32', 'gr83', 'gr116']
-    #for group in groups:
-        #group_file = 'morpho/C' + group.upper() + '_zmeasurement_reconciled.txt'
-        #cat_group = ascii.read(path + group_file)
-        #outname = path + 'catalogues_irsa/cosmos_morph_zurich_' + group + '.tbl'
-        #extract_lines(cat_zurich, cat_group, outname, radius=radius)
-
 
 
 
