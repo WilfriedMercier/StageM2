@@ -221,9 +221,10 @@ For each group, a new file will be made in the o2 folder.  The groups names for 
 The idl routine producing the maps relies on a single input file named *maps\_input\_o2.txt* which is found in each group directory. This file has the following structure
 
 | \# | name | ID | morpho\_image | opt1 |  line |  opt2 |   x |       y |    pa      | i |    vs  | zpsf     | z     | r12   | psf | | | |  | 
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-:  | :-: | :-: | :-: | :-: | :-:
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-:  | :-: | :-: | :-: |
 | | CGr23\_13\_o2   | CGr23\_13 |   /home/wilfried/ST2/data/hst/CGr23/13\_CGr23.fits  | mclean5.0  | OII3729 |  xyi |  15.0 |  15.0 |  -104.2  | 52 |   0.0 |  52.7 |  0.677 |  1.0 |  0.831 |  0  | RDPRMS  | 0 |  0
 | | CGr23\_19\_o2 |  CGr23\_19 |  /home/wilfried/ST2/data/hst/CGr23/19\_CGr23.fits |  mclean5.0 |  OII3729 |  xyi |  16.5  | 15.0 |  9.1 |   59 | 0.0 |  43.1 |  0.953  | 1.0 |  0.772 |  0 |  RDPRMS  | 0 |  0
+| ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 | | CGr23\_25\_o2 |  CGr23\_25 |  /home/wilfried/ST2/data/hst/CGr23/25\_CGr23.fits |  mclean5.0 |  OII3729 |  xyi |  15.0 |  15.0 |  235.5 |   57 |   0.0 |  52.7 |  0.677 |  1.0 |  0.831 |  0 |  RDPRMS |  0 |   0
 
 where `name` is the galaxy folder name, `ID` is the name which will appear on the maps, `morpho_image` is the location of the HST morphological close up image, `opt1` is the suffixe of the files, `line` is the name of the emission line used, `opt2` is the fixed parameters (x, y centre coordinates, i for inclination, etc), `x` and `y` are the galaxy centre coordinates in pixels in the MUSE image,  `pa` is the kinematical PA, `i` is the inclination, `zpsf` is the LSF FWHM in km/s, `z` is the redshift and `psf` is the PSF FWHM in arcsec. Other columns always keep these values. 
