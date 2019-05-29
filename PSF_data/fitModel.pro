@@ -1,7 +1,6 @@
 pro fitModel
    ;This will fit a kinematic model based on OII MUSE observations
-
-    fito=2
+   fito=2
    version='1.0'
    model='slp'
    options='_mclean5.0'
