@@ -97,7 +97,7 @@ def convertCoords(coordinates, inSize=(200.0, 200.0), outSize=(31.0, 31.0), conv
             coordinates[num][key] *= outSize[pos]/inSize[pos]*conversionFactor
     return coordinates
 
-def computeGroupFWHM(wavelength, groups, verbose=True):
+def computeGroupFWHM(wavelength, groups, verbose=True, model='Moffat'):
     '''
     Computes the FWHM at a given observed wavelength assuming a linearly decreasing relation for the FWHM with wavelength (calibrated on OII and OIII measurements at different redshifts) stars measurements for each group in the COSMOS field.
     
@@ -105,6 +105,8 @@ def computeGroupFWHM(wavelength, groups, verbose=True):
     -----
     groups : string or list of strings
         the group for each desired wavelength
+    model : string
+        the model to use, either Moffat or Gaussian
     verbose : boolean
         whether to print a message on screen with the computed FWHM or not
     wavelength : integer
@@ -114,12 +116,22 @@ def computeGroupFWHM(wavelength, groups, verbose=True):
     '''
     
     #structure is as folows : number of the group, o2 FWHM, o3hb FWHM, mean redshift of the group
-    listGroups = {'23' : [3.97, 3.29, 0.850458], '26' : [3.16, 2.9, 0.439973], '28' : [3.18, 3.13, 0.950289],
-                  '32-M1' : [2.46, 1.9, 0.753319], '32-M2' : [2.52, 2.31, 0.753319], '32-M3' : [2.625, 2.465, 0.753319],
-                  '51' : [3.425, 2.95, 0.386245], '61' : [3.2, 3.02, 0.364009], '79' : [2.895, 2.285, 0.780482], 
-                  '84-N' : [2.49, 2.21, 0.727755], '30_d' : [2.995, 2.68, 0.809828], '30_bs' : [2.745, 2.45, 0.809828],
-                  '84' : [2.835, 2.715, 0.731648], '34_d' : [2.89, 2.695, 0.857549], '34_bs' : [3.3, 3, 0.85754],
-                  '114' : [np.nan, np.nan, 0.598849]}
+    if model == 'Moffat':
+        listGroups = {'23' : [3.97, 3.29, 0.850458], '26' : [3.16, 2.9, 0.439973], '28' : [3.18, 3.13, 0.950289],
+                      '32-M1' : [2.46, 1.9, 0.753319], '32-M2' : [2.52, 2.31, 0.753319], '32-M3' : [2.625, 2.465, 0.753319],
+                      '51' : [3.425, 2.95, 0.386245], '61' : [3.2, 3.02, 0.364009], '79' : [2.895, 2.285, 0.780482], 
+                      '84-N' : [2.49, 2.21, 0.727755], '30_d' : [2.995, 2.68, 0.809828], '30_bs' : [2.745, 2.45, 0.809828],
+                      '84' : [2.835, 2.715, 0.731648], '34_d' : [2.89, 2.695, 0.857549], '34_bs' : [np.nan, np.nan, 0.85754],
+                      '114' : [3.115, 2.81, 0.598849]}
+    elif model == "Gaussian":
+        listGroups = {'23' : [4.28, 3.65, 0.850458], '26' : [3.68, 3.34, 0.439973], '28' : [3.62, 3.26, 0.950289],
+                      '32-M1' : [2.975	2.58,  0.753319], '32-M2' : [3.16	2.54, 0.753319], '32-M3' : [3.61	3.3, 0.753319],
+                      '51' : [3.75, 3.28, 0.386245], '61' : [3.915	3.34, 0.364009], '79' : [3.29	2.695, 0.780482],
+                      '84-N' : [2.89	2.58, 0.727755], '30_d' : [3.485	3.11, 0.809828], '30_bs' : [3.185	2.815, 0.809828],
+                      '84' : [3.24	3.055, 0.731648], '34_d' : [3.31	2.995, 0.857549], '34_bs' : [3.3	3.003, 0.85754],
+                      '114' : [3.705	3.315, 0.598849]}
+    else:
+        raise Exception("Model %s not recognised. Available values are %s" %(model, ["Moffat", "Gaussian"]))
     
     #lines wavelengths in Anstrom
     OIIlambda   = 3729 
