@@ -1,0 +1,54 @@
+\clearpage
+\section{Kinematical modelling}
+\label{sec:kinematical_modelling}
+
+\subsection{Cleaning}
+
+Before trying to fit a model onto the velocity maps to derive the kinematical parameters of our galaxies, we need to remove any pixel which might be dominated by the noise. Such a cleaning is generally done by keeping pixels whose [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet emission line is visually identifiable with respect to the continuum. This quite subjective procedure can be objectified by considering the SNR of each pixel, which is computed in the MUSE pipeline, and by keeping those whose value is above a certain threshold which we chose to be $5$.
+
+However, in some cases, we expect to find a strong continuum emission which we may over-interpret as a spectral feature such as [OII]. Continuum emission comes from various physical processes, most being independent from the others, which implies a larger dispersion in the pixels spectra than in the [OII] case. The dispersion threshold above which we consider pixels are noise dominated will depend on the galaxy redshift. Indeed, considering Gaussian line profiles, we find the spectral dispersion as a function of the LSF $\rm{FWHM}$ of the line by solving $\exp \left \lbrace - ( \rm{FWHM}/2)^2 / (2 \sigma^2 ) \right \rbrace = 1/2$, i.e.
+
+\begin{equation}
+	\sigma (z) = \frac{\rm{FWHM}}{2 \sqrt{2 \log 2}}
+\end{equation}
+
+We can explicitly express the redshift dependence by defining an equivalent velocity dispersion $\sigma_{\rm{v}}$ as
+
+\begin{equation}
+	\frac{\sigma}{\lambda_{\rm{em}} (1+z)} = \frac{\sigma_{\rm{v}}}{c}
+\end{equation}
+
+This value defines the usual velocity dispersion we expect to measure from the emission line of a galaxy at redshift $z$. As the Universe expands ($z$ going from $\infty$ to $0$), its bulk motion takes over the local movement of matter, reducing the observed dispersion. We decided to choose a velocity dispersion threshold of $0.8 \sigma_{\rm{v}}$ for all the galaxies throughout this work.
+
+The cleaning was automatically performed with a routine using both thresholds defined above. Cleaned maps were produced and the velocity maps were visually inspected. Isolated pixels were removed even if they had a clearly visible [OII] doublet. Twelve galaxies were unresolved and $3$ were too close to the edges which resulted in missing data. Relaxing the $\rm{SNR}$ threshold to $3$ and removing any pixels on the edges of the galaxies with too weak [OII] emission lines allowed us to recover $6$ galaxies out of $12$. In the case of resolved galaxies, we also inspected their [OII] doublet near the edges and we removed any pixel whose velocity seemed inconsistent with that of its neighbours (a single negative value around positives ones for instance). 
+
+\subsection{Kinematical parametrisation}
+
+The velocity maps we had from the MUSE pipeline only give us information on a fraction of the velocity. Indeed, the velocity of a given pixel is computed using the well known Doppler effect which will redshift pixels going away from us and blueshift those approaching, i.e.
+
+\begin{equation}
+	\frac{\lambda_{\rm{obs}} - \lambda_{\rm{em}}}{\lambda_{\rm{em}}} = \frac{v}{c}
+\end{equation}
+with $v$ positive if it recedes from us and negative if it approaches. Special relativistic effects being negligible in this case, it means the only measure we have is the radial component of the gas velocity within the pixels. Depending on the basis we choose to decompose our velocity vector, this component will be written differently. In our case, we will use the coordinate system defined in \shortciteA{Epinat2008}. Using cylindrical coordinates relative to the galactic plane, we can write the observed projected radial component as 
+
+\begin{equation}
+	V_{\rm{obs}} ( R, \theta , i, V_{\rm{sys}} , \rm{PA} ) = V_{\rm{sys}} + \left ( V_{\rm{rot}} (R) \cos \theta + V_{\rm{exp}} (R) \sin \theta \right ) \sin i + V_z (R) \cos i
+	\label{eq:v_obs}
+\end{equation}
+where $V_{\rm{obs}}$, $V_{\rm{sys}}$, $V_{\rm{rot}}$, $V_{\rm{exp}}$ and $V_z$ are the observed,  systematic, rotational, expansion and vertical components of the velocity respectively. In practice, spectroscopic measurements give us $\Delta V_{\rm{obs}} = V_{\rm{obs}} - V_{\rm{sys}}$. In Eq.\,\ref{eq:v_obs}, the dependence on the major axis (kinematical) position angle is implicit as $\theta$ is defined as the angle in the galactic plane starting from the major axis. Thus, $\theta = 0 \degree$ ($90 \degree$) when we measure the velocity of a point on the major (minor) axis. The dependence of $V_{\rm{obs}}$ with the radial distance $R$ to the centre of the galaxy also makes implicit its dependence on the galaxy centre position.
+
+A representation and the definitions of the coordinate system, angles and vector decomposition can be found in Appendix \ref{appendix:coordinates}. Both $R$, $\theta$ and the galaxy centre $(x_{\rm{c}} , y_{\rm{c}})$ can be derived from the images, but the inclination of the galaxy must be know in advance. As it will be explained later, models poorly converge when the inclination is let free to vary. Hence, it must be used as a fixed input. More importantly, assuming the rotation curve along the major axis reaches a maximum rotational velocity or at least a plateau, as should be the case in dark matter dominated galaxies (ref here), we see from Eq.\,\ref{eq:v_obs} that the maximum rotational velocity will scale as
+
+\begin{equation}
+	V_{\rm{obs}}^{\rm{max}} (R_{\rm{max}}, i) = V_{\rm{rot}} (R_{\rm{max}}) \sin i
+\end{equation}
+where $R_{\rm{max}}$ represents the radius at which the maximum velocity or the plateau is reached. Thus, just by looking at the rotation curve and by measuring its maximum value, we cannot raise the degeneracy between the inclination, which will lower the velocity, and the real one . This explains the care taken in checking prior information we had on the $b/a$ ratio from which is computed the galaxy inclination.
+
+
+\subsection{Model}
+\label{subsec:model}
+
+Given the smooth cleaned velocity maps, we can deduce the kinematical parameters of our galaxies by fitting 2D velocity models. Many can be used, but we describe here the one we utilised in this work. 
+We used a parametric model relying on the assumption of a thin disk. This is no longer the case when galaxies are seen nearly edge-on ($75 \degree \lesssim i \lesssim 90 \degree$) due to the increasing depth leading to higher values of opacity. The second assumption is that we can actually model our galaxies with a rotation curve and so that we do not have non-rotational bulk motions. In our case, we assume we have smooth velocity fields with no bar, no arms and no clumps such as HII regions. Nevertheless, based on previous morpho-kinematical studies (ref here), we might expect to find a significant fraction of our galaxies to be dispersion dominated, some with highly perturbed morphologies due to merging in some cases.
+In our model, $4$ morphological and $1$ kinematical parameters are used. The inclination of the galaxy, its centre right ascension and declination and the $PA$ of the major axis must be given as fixed values. The kinematical parameter corresponds to the systematic velocity, that is the radial component of the velocity due to the expansion of the Universe.
+
