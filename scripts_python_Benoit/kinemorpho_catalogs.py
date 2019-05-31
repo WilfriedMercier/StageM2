@@ -584,7 +584,8 @@ def main():
     groups = np.asarray(['CGr' + i for i in groups])
 
     #Selecting group for test
-    groups = groups[groups=='CGr23_s']
+    #groups = groups[groups=='CGr23_s']
+    groups = groups[groups=='CGr84-N_s']
     for group in groups:
 
         gr = group.split('_')[0].split('CGr')[1]
