@@ -177,7 +177,7 @@ def recap_kinem_params(path, basename='hdfs_v*', model='slp', suff1='_xyi', suff
     
     f.write(line)
     for gal in gals:
-        
+    
         filen = gal + '/' + gal.split('/')[-1] + '_parameters_red_' + model + suff1 + suff2 + '.txt'
         filen2 = gal + '/' + gal.split('/')[-1] + '_parameters_residual_' + model + suff1 + suff2 + '.txt'
         filen3 = gal + '/' + gal.split('/')[-1] + '_vmax_map_rlast' + suff2 + '.txt'
@@ -585,16 +585,17 @@ def main():
 
     #Selecting group for test
     #groups = groups[groups=='CGr23_s']
-    groups = groups[groups=='CGr84-N_s']
+    #groups = groups[groups=='CGr84-N_s']
+    groups = groups[groups=='CGr34_d']
     for group in groups:
 
         gr = group.split('_')[0].split('CGr')[1]
         supp = ''
-        if group in ['CGr30_d', 'CGr32-M1_d', 'CGr32-M2_d', 'CGr32-M3_d', 'CGr34_d', 'CGr79_d']:
+        if group in ['CGr30_d', 'CGr32-M1_d', 'CGr32-M2_d', 'CGr32-M3_d', 'CGr79_d']:
             supp = '_deep'
         elif group in ['CGr34_bs', 'CGr30_bs']:
             supp = '_bs'
-        elif group == 'CGr84_d':
+        elif group in ['CGr84_d', 'CGr34_d']:
             supp = '_mdeep'
         elif group == 'CGr84-N_s':
             supp = 'orth'
