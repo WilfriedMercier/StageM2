@@ -586,7 +586,7 @@ def main():
     #Selecting group for test
     #groups = groups[groups=='CGr23_s']
     #groups = groups[groups=='CGr84-N_s']
-    groups = groups[groups=='CGr34_d']
+    #groups = groups[groups=='CGr34_d']
     for group in groups:
 
         gr = group.split('_')[0].split('CGr')[1]
