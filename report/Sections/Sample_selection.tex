@@ -136,7 +136,7 @@ In addition to that, we already had GALFIT morphological information on $\sim 50
 
 \begin{figure}[htbp]
 	\includegraphics[width=\linewidth]{../Plots/catalogMag_against_GalfitMag_corrected.pdf}
-	\caption[Comparison between magnitudes]{Comparison between the morphological catalogues magnitudes and that of GALFIT for cluster galaxies. Magnitudes from the catalogues agree well between each other. Left: compared with GALFIT disk magnitude only. The slope is too high and a few points are scattered far from the line. Right: compared with the total GALFIT magnitude as defined in Eq.\,\ref{eq:tot_mag_final_version}. We find a good linear relation with \textcolor{red}{poor scatter}.}
+	\caption[Comparison between magnitudes]{Comparison between the morphological catalogues magnitudes and that of GALFIT for cluster galaxies. Magnitudes from the catalogues agree well between each other. Left: compared with GALFIT disk magnitude only. The slope is too high and a few points are scattered far from the line. Right: compared with the total GALFIT magnitude as defined in Eq.\,\ref{eq:tot_mag_final_version}. We find a linear relation with a scatter of about $\SI{1.6}{mag}$.}
 	\label{fig:comp_mags}
 \end{figure}
 
@@ -199,16 +199,16 @@ Considering the recommendation of Tasca to use its Int class and since we find a
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=\linewidth]{{../Plots/plotsWithColourCoding/relErr_against_GalFit1.5LightRadius_colourCoded_CassataType}.pdf}
-	\caption[Comparison between half-light radii]{Comparison between half-light radii from the morphological catalogues and the radius of GALFIT disk component. The relative error is shown for the three catalogues (from top to bottom, Zurich, Cassata and Tasca). Points have been colour coded according to their classification given in Cassata's catalogue (Irr for irregular, Sp for spiral/disk, E for ellipticals). Left: the full range is plotted. Right: a zoom on the points with $R_{1/2}^{\rm{GF}} \geq \SI{5}{px}$. The last plot on the bottom combines the information within the three plots on the left.}
-	\label{fig:comp_radii}
+	\includegraphics[width=\linewidth]{{../Plots/plotsWithColourCoding/relErr_against_galFit1.5LightRadius_colourCoded_matchAllTypes_TwoGalFitRadii}.pdf}
+	\caption[Radii comparison between catalogues and GALFIT using bulb and disk]{Relative error on the half-light radius between the catalogues and GALFIT. Points have been colour coded according to their classification given in Cassata's catalogue (Irr for irregular, Sp for spiral/disk, E for ellipticals). Top: GALFIT disk radius is used for all the points. We observe an underestimation of the catalogues radius with respect to that of GALFIT for elliptical galaxies. Bottom: same plot with GALFIT bulb radius used for elliptical galaxies. In this case, we find an overestimation of the radius.}
+	\label{fig:comp_radii_with_bulge_or_disk_radius}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=\linewidth]{{../Plots/plotsWithColourCoding/relErr_against_galFit1.5LightRadius_colourCoded_matchAllTypes_TwoGalFitRadii}.pdf}
-	\caption[Comparison between radii against disk/bulge radius]{Comparison between catalogues radii and that of GALFIT. This figure is similar to Fig.\,\ref{fig:comp_radii} but we use GALFIT bulb radius for elliptical galaxies. The catalogues appear to overestimate the elliptical galaxies radii when using GALFIT bulge radius.}
-	\label{fig:comp_radii_with_bulge_or_disk_radius}
+	\includegraphics[width=\linewidth]{{../Plots/plotsWithColourCoding/relErr_against_GalFit1.5LightRadius_colourCoded_CassataType}.pdf}
+	\caption[Radii comparison per catalogue]{Comparison between half-light radii from the morphological catalogues and the radius of GALFIT disk component. This plot is similar to Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} top plot but each catalogue was separated in its own subplot. Left: full range of relative error. Right: a zoom on the points with $R_{1/2}^{\rm{GF}} \geq \SI{5}{px}$.}
+	\label{fig:comp_radii}
 \end{figure}
 
 One of the most important parameters we have to check before the selection is the half-light radius of our galaxies. Indeed, if we underestimate it, we might remove from our sample resolved galaxies and therefore reduce our statistics. On the other hand, overestimating it would give us too many unresolved galaxies for which we would spend time performing the cleaning routine without being able to perform their kinematical analysis in the end.
@@ -327,7 +327,7 @@ This is the [OII] $\rm{SNR}$ from the integrated galaxy spectrum computed using 
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/SNR_vs_R_halfLight_arcsec}.pdf}
-	\caption[Selected sample]{Full sample of $261$ field galaxies with our selection box over-plotted (hatched area). Galaxies with $5 \leq \rm{SNR} \leq 15$ and $0.25" \leq R_{1/2} \leq 0.45"$ (bounds plotted as dashed lines) were visually inspected to check how many resolved galaxies we might have loosed. Selection criteria from Sec.\,\ref{sec:cut} are also plotted as solid red lines. No specific trend appear with redshift.}
+	\caption[Selected sample]{Full sample of $261$ field galaxies with our selection box over-plotted (hatched area). Galaxies with $5 \leq \rm{SNR} \leq 15$ and $0.25" \leq R_{1/2} \leq 0.45"$ (bounds plotted as dashed lines) were visually inspected to check how many resolved galaxies we might have lost. Selection criteria from Sec.\,\ref{sec:cut} are also plotted as solid red lines. No specific trend appear with redshift.}
 	\label{fig:sample_selection}
 \end{figure}
 
