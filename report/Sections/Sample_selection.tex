@@ -16,7 +16,7 @@
 	
 	ID\textsuperscript{1} & J2000 (\degree) & J2000 (\degree) & (hr) & seeing\textsuperscript{5} (") & galaxies\textsuperscript{6} & galaxies\textsuperscript{7} \\	
 	
-	\hline
+	
 	\hline
 	CGr32 & NaN & NaN & $3 \times 4.35$ & $0.51$ - $0.58$ & NaN & NaN \\
 	\hline
@@ -161,12 +161,12 @@ The same comparison was done on field galaxies, except we did not have GALFIT ma
 \subsubsection{Morphological type classification}
 \label{subsubsec:classification}
 
-\begin{figure}[htbp]
+\begin{wrapfigure}{r}{.6\linewidth}
 	\centering
 	\includegraphics[width=\linewidth]{{../Plots/comparisonClassTypes}.pdf}
-	\caption[Morphological types comparison]{Comparison between morphological types given in Tasca and Zurich catalogues against that of Cassata. The three classifications of Tasca are those described in Section\,\ref{subsubsec:classification}. Galaxies are labelled as follows: E for ellipticals, Sp for spirals/disks-like, Irr for irregulars. The percentage of galaxies falling into the given classes is indicated in red and the method compared with Cassata's is shown on the top left corner of each plot. We find good agreement between Tasca and Cassata types but not between Cassata and Zurich.}
+	\caption[Morphological types comparison]{Comparison between morphological types given in Tasca and Zurich catalogues against that of Cassata. Galaxies are labelled as follows: E for ellipticals, Sp for spirals/disks-like, Irr for irregulars. The percentage of galaxies falling into the given classes is indicated in red and the method compared with Cassata's is shown on the top left corner of each plot. We find good agreement between Tasca and Cassata types but not between Cassata and Zurich.}
 	\label{fig:morpho_comp}
-\end{figure}
+\end{wrapfigure}
 
 We might expect to have some discrepancies in our data because of the models used between GALFIT and SExtractor/GIM2D. A way to check this effect is to study how these differences scale with the morphological type of the galaxies. For instance, if we use the disk half-light radius of GALFIT to compare with that of SExtractor, we might expect to have some scatter in our relation for the elliptical galaxies as the disk component is not the best one to describe them.\\
 
@@ -201,22 +201,30 @@ Considering the recommendation of Tasca to use its Int class and since we find a
 	\label{fig:comp_radii}
 \end{figure}
 
-One of the most important parameters we have to check before the selection is the half-light radius of our galaxies. Indeed, if we underestimate it, we might remove from our sample resolved galaxies and therefore reduce our statistics. On the other hand, overestimating it would give us too many unresolved galaxies for which we would spend time performing the cleaning routine without being able to perform their kinematical analysis in the end.
- 
-Hence, it is mandatory to thoroughly check the values of the half-light radius from the three catalogues against that of GALFIT, and understand the origin of any discrepancies if there happens to be some. \\
+Perhaps the most important parameter we have to check is the half-light radius. Indeed, if we underestimate it, we might remove from our sample resolved galaxies and therefore reduce our statistics. On the other hand, overestimating it would give us too many unresolved galaxies for which we would spend time removing noise dominated pixels without being able to perform their kinematical analysis in the end. Hence, it is mandatory to thoroughly check the values of the half-light radius from the three catalogues against that of GALFIT, and understand the origin of any discrepancies if there happens to be some. \\
 
-We found a quite large disagreement between our GALFIT half-light radius and those given in the morphological catalogues, as well as among them. This is illustrated in Fig.\,\ref{fig:comp_radii} where the half-light radii in the catalogues are compared against that of GALFIT. Galaxies are colour coded according to the classification given in Cassata's catalogue. We checked that using Tasca's classifications as described in Sec.\,\ref{subsubsec:classification} did not change our conclusions. In these plots, we decided to use for the x-axis the half-light radius of the GALFIT disk component for all the galaxies, even though we might expect the ellipticals to be better described by their GALFIT bulge half-light radius.
+We found a quite large disagreement between GALFIT half-light radius and those given in the morphological catalogues, as well as between them. This is illustrated in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} and \ref{fig:comp_radii} where half-light radii in the catalogues are compared against that of GALFIT. Galaxies are colour coded according to the classification given in Cassata's catalogue. We checked that using Tasca's classifications as described in Sec.\,\ref{subsubsec:classification} did not change our conclusions. In these plots, we decided to use for the x-axis the half-light radius of the GALFIT disk component $R_{1/2 , \rm{d}}^{\rm{GF}}$ for all the galaxies, even though we might expect the ellipticals to be better described by their GALFIT bulge half-light radius. This choice is further discussed below.\\
 
-The catalogues radii seem to be overestimated with respect to that of GALFIT for low $R_{1/2 , \rm{d}}^{\rm{GF}}$. This was expected as catalogues half-light radii are computed using SExtractor. Since it does not take into account the PSF in its fitting routine, we expect the PSF to dominate more for galaxies with small angular sizes. On the contrary, GALFIT does take into account the PSF in its calculations and therefore we expect the half-light radius of GALFIT to be smaller than SExtractor's when reaching low values of $R_{1/2 , \rm{d}}^{\rm{GF}}$. 
+The catalogues radii seem to be overestimated with respect to that of GALFIT for low $R_{1/2 , \rm{d}}^{\rm{GF}}$. These are computed with SExtractor and, given that it does not take into account the PSF in its fitting routine, we expect the PSF to dominate for galaxies with small angular sizes. On the contrary, GALFIT does take into account the PSF in its calculation, and therefore we expect its half-light radius to decrease with lower values of $R_{1/2 , \rm{d}}^{\rm{GF}}$. 
 
-When focussing on galaxies with a GALFIT radius larger than the HST-ACS PSF $\rm{FWHM}$ which is around $\sim \SI{0.15}{"}$ ($4 - \SI{5}{px}$), we observe a global underestimation for all the catalogues, up to roughly 50\%. This scatter is mainly due to elliptical galaxies. On the contrary, radii of disk-like galaxies have the least scatter and biais, especially the values given in Zurich's catalogue. This different behaviour between elliptical and disk-like galaxies might be explained, as mentioned above, by the fact we are using the half-light radius of GALFIT disk component to asses the reliability of the elliptical galaxies half-light radii from the catalogues. This is probably not the best choice, and a better may be to use the bulge component, which better describes the light profile of an elliptical galaxy, and its half-light radius to study elliptical galaxies.\\
+When focussing on galaxies with a GALFIT radius larger than the HST-ACS PSF $\rm{FWHM}$ which is around $\SI{0.15}{"}$ ($4 - \SI{5}{px}$), we observe a global underestimation for all the catalogues, up to roughly 50\%. This scatter is mainly due to elliptical galaxies. On the contrary, radii of disk-like galaxies have the least scatter and biais, especially the values given in Zurich's catalogue. This different behaviour between elliptical and disk-like galaxies might be explained, as mentioned above, by the fact we are using the half-light radius of GALFIT disk component to asses the reliability of the elliptical galaxies radii give in the catalogues. A better choice may be to use the bulge component, which better describes the light profile of an elliptical galaxy, and its half-light radius for this population.\\
 
-If we decide to split the galaxies into two categories, ellipticals and disks/irregulars, and if we use for the first category $R_{1/2 , b}^{\rm{GF}}$, and for the second $R_{1/2 , d}^{\rm{GF}}$ we find that elliptical galaxies half-light radii in the catalogues are now overestimated as shown in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius}. This result, and the underestimated values when using the disk radius for the elliptical galaxies, indicates us that elliptical galaxies seem to be neither dominated (in terms of radius) by the disk component, nor by the bulge in the GALFIT model. It is thus necessary to directly compute an overall half-light radius by integrating the galaxies light profile given in Eq.\,\ref{eq:GALFIT_light_profile} \\
+If we decide to split the galaxies into two categories, ellipticals and disks/irregulars, and if we use for the first category the bulge radius $R_{1/2 , \rm{b}}^{\rm{GF}}$, and for the second $R_{1/2 , \rm{d}}^{\rm{GF}}$, we find that elliptical galaxies half-light radii from the catalogues are now overestimated as shown in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} lower panel. These results suggest that elliptical galaxies in this sample are neither dominated (in terms of radius) by the disk component, nor by the bulge in the GALFIT model. Even though we did not push further the analysis on this discrepancy, we still mention that the next step should be to directly compute the half-light radius of the GALFIT model by integrating Eq.\,\ref{eq:GALFIT_light_profile} up to half its total luminosity.
 
 
-CONCLURE SUR QUEL PARAMETRE UTILISER ET QUELLE CORRECTION APPORTER.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/correctedRadiusLinearRegression}.pdf}
+	\caption[Bias before/after correction]{Biais and scatter before and after applying the correction mentioned in the paragraph. Left: half-light radius relative error as a function of Cassata's radius. Right: scaling between Cassata's and GALFIT radii. The scatter around $\SI{0.2}{px}$ is not significantly changed after the bias correction.}
+	\label{fig:correction_biais_radius}
+\end{figure}
 
+Based on Fig.\,\ref{fig:comp_radii}, we decided to use the galaxies half-light radii given in Zurich catalogue, keeping in mind that we might have a non-negligible fraction of elliptical galaxies for which their value may be underestimated. However, this is the catalogue with least HST counterparts. Thus, in order to increase our sample, we also chose to select additional galaxies found in Cassata's catalogue but not in Zurich's. As it seems that Cassata's radius is more bias than Zurich's, we fitted a linear relation onto the relative error data, which translates as
 
+\begin{equation}
+	R_{1/2}^{\rm{Corrected}} = R_{1/2}^{\rm{Cassata}} \left ( 1 + \beta + \alpha R_{1/2}^{\rm{Cassata}} \right ) ^{-1}
+\end{equation}
+where $R_{1/2}^{\rm{Corrected}}$ is the new half-light radius after the bias correction and $\alpha$, $\beta$ the parameters of our fit. Based on previous arguments, we only fitted galaxies for which $R_{1/2}^{\rm{GF}} > \SI{5}{px}$. Once a best fit solution was found, we slightly adjusted it by applying weights on ellipticals in order to limit their impact on disk-like galaxies radii which appeared to be too much overestimated. We found $\alpha = 1.95 \times 10^{-3}$ and $\beta = -0.349$.
 
 
 
@@ -246,7 +254,7 @@ CONCLURE SUR QUEL PARAMETRE UTILISER ET QUELLE CORRECTION APPORTER.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\linewidth]{../Plots/FWHM_variation_with_lambda.pdf}
+	\includegraphics[width=0.7\linewidth]{../Plots/FWHM_variation_with_lambda.pdf}
 	\caption[PSF FWHM variation with wavelength.]{PSF FWHM variation with wavelength for the 13 FoVs as measured by Valentina. At least two values of the FWHM were derived from stars in the FoVs by fitting a Moffat distribution to their light profile. We assumed a linear evolution with wavelength. Strong fluctuations appear depending on the observed FoV.}
 	\label{fig:FWHM_var_lambda}
 \end{figure}
@@ -316,7 +324,7 @@ This is the [OII] $\rm{SNR}$ from the integrated galaxy spectrum computed using 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/SNR_vs_R_halfLight_arcsec}.pdf}
+	\includegraphics[width=0.7\linewidth]{{../Plots/Selection_plots/SNR_vs_R_halfLight_arcsec}.pdf}
 	\caption[Selected sample]{Full sample of $261$ field galaxies with our selection box over-plotted (hatched area). Galaxies with $5 \leq \rm{SNR} \leq 15$ and $0.25" \leq R_{1/2} \leq 0.45"$ (bounds plotted as dashed lines) were visually inspected to check how many resolved galaxies we might have lost. Selection criteria from Sec.\,\ref{sec:cut} are also plotted as solid red lines. No specific trend appear with redshift.}
 	\label{fig:sample_selection}
 \end{figure}
