@@ -224,12 +224,31 @@ Based on Fig.\,\ref{fig:comp_radii}, we decided to use the galaxies half-light r
 \begin{equation}
 	R_{1/2}^{\rm{Corrected}} = R_{1/2}^{\rm{Cassata}} \left ( 1 + \beta + \alpha R_{1/2}^{\rm{Cassata}} \right ) ^{-1}
 \end{equation}
-where $R_{1/2}^{\rm{Corrected}}$ is the new half-light radius after the bias correction and $\alpha$, $\beta$ the parameters of our fit. Based on previous arguments, we only fitted galaxies for which $R_{1/2}^{\rm{GF}} > \SI{5}{px}$. Once a best fit solution was found, we slightly adjusted it by applying weights on ellipticals in order to limit their impact on disk-like galaxies radii which appeared to be too much overestimated. We found $\alpha = 1.95 \times 10^{-3}$ and $\beta = -0.349$.
+where $R_{1/2}^{\rm{Corrected}}$ is the new half-light radius after the bias correction and $\alpha$, $\beta$ the parameters of our fit. Based on previous arguments, we only fitted galaxies for which $R_{1/2}^{\rm{GF}} > \SI{5}{px}$. Once a best fit solution was found, we slightly adjusted it by applying weights on ellipticals in order to limit their impact on disk-like galaxies radii which appeared to be too much overestimated. We found $\alpha = 1.95 \times 10^{-3}$ and $\beta = -0.349$, which gives us $176$ field galaxies with a radius either from Zurich or from the corrected value of Cassata.
 
 
+\subsubsection{Ellipticity}
 
+\begin{figure}[H]
+	\centering
+	\begin{minipage}[c]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{{../Plots/checkMorpho/check_b_a}.pdf}
+		\subcaption{Axes ratio from Zurich and Cassata for the $176$ field galaxies. There is an overall good agreement between the catalogues and between Zurich and GIM2D. We find a similar dispersion for SExtractor and GIM2D of about $0.1$. No specific trend is found with the galaxies size.}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[c]{0.49\linewidth}
+		\includegraphics[width=\linewidth]{{../Plots/checkMorpho/check_b_a_GF}.pdf}
+		\subcaption{GALFIT axes ratio against that of Cassata for galaxies in structures. Globally, the axes ratio in the catalogue seems to be underestimated. If we separate the galaxies as disk or bulge dominated according to the most luminous component, we find that most of the scatter comes from elliptical galaxies.}
+	\end{minipage}
+	\caption[Ellipticity comparison]{Comparison between Cassata, Zurich and GALFIT $b/a$ axes ratio. Zurich catalogue gives two values computed with SExtractor and GIM2D, and Cassata only with SExtractor. Error bars are only available for a few GIM2D and GALFIT values.}
+	\label{fig:check_ellipticity}
+\end{figure}
 
-
+As mentioned in previous sections, the ellipticity is a critical parameter which is used to compute a value for the inclination of the galaxies. This is derived from the $b/a$ ratio given in the catalogues, so we can compare it as a proxy for the ellipticity. This is illustrated in Fig.\,\ref{fig:check_ellipticity} 
+\begin{enumerate*}[label={(\alph*)}]
+	\item where the axes ratio is compared for field galaxies for which we could assign a radius as described in Section \ref{sec:comp_radii}
+	\item GALFIT $b/a$ is compared with that of Cassata for structure galaxies.
+\end{enumerate*}
 
 
 
