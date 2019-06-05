@@ -743,6 +743,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         
     if np.any(np.logical_not(plotFlag)) and showColorbar:
         col = plt.colorbar(sct, orientation=colorbarOrientation)
+        col.ax.tick_params(labelsize=colorbarTicksLabelsSize)
         
         if colorbarLabel is not None:
             col.set_label(colorbarLabel, size=colorbarLabelSize)
