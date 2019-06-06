@@ -36,6 +36,14 @@
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 
+%page formatting packages
+\usepackage{afterpage}
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+
 % set APA citation style
 \usepackage{apacite}
 \usepackage[numbib,notlof,notlot,nottoc]{tocbibind}
@@ -48,8 +56,8 @@
 \title{Evolution of galaxy dynamics over the last 10 Gyrs with MUSE/VLT}
 
 \newcommand{\thesisdate}{April 22, 2019}
-\newcommand{\thesisauthor}{Mercier Wilfried} %input name
-\newcommand{\thesistype}{Master Thesis} % Set either to Bachelor or Master
+\newcommand{\thesisauthor}{Mercier Wilfried}
+\newcommand{\thesistype}{Master Thesis}
 \newcommand{\supervisor}{Contini Thierry}
 \newcommand{\cosupervisor}{Epinat Benoît}
 
@@ -81,9 +89,9 @@
 \tableofcontents
 \clearpage
 \listoffigures
-\clearpage
 \listoftables
 \clearpage
+\afterpage{\blankpage}
 
 \pagenumbering{arabic}
 
@@ -120,8 +128,11 @@
 \appendix
 \renewcommand*{\thesection}{\Alph{section}}\textbf{}
 
-% APPENDIX A
+% APPENDIX on morphological classification
 \input{Appendices/Appendix_1.tex}
+
+% APPENDIX on PSF variation with wavelength
+\input{Appendices/Appendix_2.tex}
 
 
 \end{document}

@@ -2,25 +2,9 @@
 \section{Kinematical modelling}
 \label{sec:kinematical_modelling}
 
-\subsection{Cleaning}
+\subsection{Manual cleaning}
 
-Before trying to fit a model onto the velocity maps to derive the kinematical parameters of our galaxies, we need to remove any pixel which might be dominated by the noise. Such a cleaning is generally done by keeping pixels whose [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet emission line is visually identifiable with respect to the continuum. This quite subjective procedure can be objectified by considering the SNR of each pixel, which is computed in the MUSE pipeline, and by keeping those whose value is above a certain threshold which we chose to be $5$.
-
-However, in some cases, we expect to find a strong continuum emission which we may over-interpret as a spectral feature such as [OII]. Continuum emission comes from various physical processes, most being independent from the others, which implies a larger dispersion in the pixels spectra than in the [OII] case. The dispersion threshold above which we consider pixels are noise dominated will depend on the galaxy redshift. Indeed, considering Gaussian line profiles, we find the spectral dispersion as a function of the LSF $\rm{FWHM}$ of the line by solving $\exp \left \lbrace - ( \rm{FWHM}/2)^2 / (2 \sigma^2 ) \right \rbrace = 1/2$, i.e.
-
-\begin{equation}
-	\sigma (z) = \frac{\rm{FWHM}}{2 \sqrt{2 \log 2}}
-\end{equation}
-
-We can explicitly express the redshift dependence by defining an equivalent velocity dispersion $\sigma_{\rm{v}}$ as
-
-\begin{equation}
-	\frac{\sigma}{\lambda_{\rm{em}} (1+z)} = \frac{\sigma_{\rm{v}}}{c}
-\end{equation}
-
-This value defines the usual velocity dispersion we expect to measure from the emission line of a galaxy at redshift $z$. As the Universe expands ($z$ going from $\infty$ to $0$), its bulk motion takes over the local movement of matter, reducing the observed dispersion. We decided to choose a velocity dispersion threshold of $0.8 \sigma_{\rm{v}}$ for all the galaxies throughout this work.
-
-The cleaning was automatically performed with a routine using both thresholds defined above. Cleaned maps were produced and the velocity maps were visually inspected. Isolated pixels were removed even if they had a clearly visible [OII] doublet. Twelve galaxies were unresolved and $3$ were too close to the edges which resulted in missing data. Relaxing the $\rm{SNR}$ threshold to $3$ and removing any pixels on the edges of the galaxies with too weak [OII] emission lines allowed us to recover $6$ galaxies out of $12$. In the case of resolved galaxies, we also inspected their [OII] doublet near the edges and we removed any pixel whose velocity seemed inconsistent with that of its neighbours (a single negative value around positives ones for instance). 
+For every selected galaxy, we ran the automatic cleaning routine as described in Section \ref{sec:selecting_galaxies}. Cleaned maps were produced and the velocity maps were visually inspected. Isolated pixels were removed even if they had a clearly visible [OII] doublet. We also inspected their [OII] doublet near the edges and we removed any pixel whose velocity seemed inconsistent with that of its neighbours (a single negative value around positives ones for instance). Twelve galaxies were unresolved and $3$ were too close to the edges of the MUSE fields which resulted in missing data. Relaxing the $\rm{SNR}$ threshold in the automatic routine to $3$ allowed us to recover $6$ galaxies out of $12$. 
 
 \subsection{Kinematical parametrisation}
 
