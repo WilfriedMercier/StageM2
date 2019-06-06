@@ -371,7 +371,7 @@ def main():
     groups = ['CGr114', 'CGr23', 'CGr26', 'CGr28', 'CGr30',
               'CGr32', 'CGr34', 'CGr51', 'CGr61', 'CGr79',
               'CGr84', 'CGr84-N']
-    groups = [groups[7]]
+    #groups = [groups[7]]
     factor = 1e4
     szg = 3.0
 #    szs = 1.
@@ -380,6 +380,7 @@ def main():
 #        pathpsf = path + 'acs_mosaic_2.0_' + group + '/psf/'
         image_file = pathgr + 'HST_' + group + '.fits'
         gal_list = pathgr + 'catalog_field_galaxies_' + group + '.txt'
+        print(gal_list)
         #star_list = path + group + '_starcatalog.txt'
         extract_stamps_groups(image_file, gal_list, pathout=pathgr, size=szg, factor=factor)
         #extract_stamps_groups(image_file, star_list, pathout=pathpsf, size=szs, factor=factor)
