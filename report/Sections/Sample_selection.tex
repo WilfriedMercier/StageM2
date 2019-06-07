@@ -18,38 +18,38 @@
 	
 	
 	\hline
-	CGr32 & NaN & NaN & $3 \times 4.35$ & $0.51$ - $0.58$ & NaN & NaN \\
+	CGr32 & NaN & NaN & $3 \times 4.35$ & $0.51$ - $0.58$ & $277$ & $113$ \\
 	\hline
-	CGr34\_d & $149.87766$ & $2.502331$ & $5.25$ & $0.63$ & NaN & NaN \\
+	CGr34\_d & $149.87766$ & $2.502331$ & $5.25$ & $0.63$ & $74$ & $46$ \\
 	\hline
-	CGr34\_bs & $149.87766$ & $2.502331$ & $4.75$ & NaN & NaN & NaN \\
+	CGr34\_bs & $149.87766$ & $2.502331$ & $4.75$ & NaN & $74$ & $46$ \\
 	\hline
-	CGr30\_d & $150.144225$ & $2.065971$ & $9.75$ & $0.67$ & NaN & NaN \\
+	CGr30\_d & $150.144225$ & $2.065971$ & $9.75$ & $0.67$ & $124$ & $65$ \\
 	\hline
-	CGr30\_bs & $150.144225$ & $2.065971$ & $6.25$ & NaN & NaN & NaN \\
+	CGr30\_bs & $150.144225$ & $2.065971$ & $6.25$ & NaN & $124$ & $65$ \\
 	\hline
-	CGr84 & $150.057219$ & $2.599744$ & $5.25$ & $0.59$ & NaN & NaN \\
+	CGr84 & $150.057219$ & $2.599744$ & $5.25$ & $0.59$ & $92$ & $51$ \\
 	\hline
-	CGr84-N & NaN & NaN & $1$ & $0.51$ & NaN & NaN \\
+	CGr84-N & NaN & NaN & $1$ & $0.51$ & $81$ & $38$ \\
 	\hline
-	CGr114 & $149.994285$ & $2.258044$ & $2.2$ & $0.68$ & NaN & NaN \\
+	CGr114 & $149.994285$ & $2.258044$ & $2.2$ & $0.68$ & $64$ & $45$ \\
 	\hline
-	CGr79 & $149.820686$ & $1.821825$ & $4.35$ & $0.60$ & NaN & NaN \\
+	CGr79 & $149.820686$ & $1.821825$ & $4.35$ & $0.60$ & $65$ & $37$ \\
 	\hline
-	CGr28 & $150.218094$ & $1.812667$ & $1$ & $0.62$ & NaN & NaN \\
+	CGr28 & $150.218094$ & $1.812667$ & $1$ & $0.62$ & $49$ & $29$ \\
 	\hline
-	CGr26 & $150.492767$ & $2.069139$ & $1$ & $0.59$ & NaN & NaN \\
+	CGr26 & $150.492767$ & $2.069139$ & $1$ & $0.59$ & $46$ & $31$ \\
 	\hline
-	CGr61 & $149.728741$ & $1.915987$ & $1$ & $0.64$ & NaN & NaN \\
+	CGr61 & $149.728741$ & $1.915987$ & $1$ & $0.64$ & $43$ & $29$ \\
 	\hline
-	CGr51 & $149.982756$ & $1.801899$ & $1$ & $0.6-0.7$ & NaN & NaN \\
+	CGr51 & $149.982756$ & $1.801899$ & $1$ & $0.6-0.7$ & $44$ & $29$ \\
 	\hline
-	CGr23 & $149.790782$ & $2.162648$ & $1$ & $0.68$ & NaN & NaN \\
+	CGr23 & $149.790782$ & $2.162648$ & $1$ & $0.68$ & $51$ & $32$ \\
 	\hline
 	
 	\end{tabular}
 	
-	\caption[Main characteristics of the observed MUSE fields]{\label{table:MUSEfieldsProp}Main characteristics of the observed MUSE fields. Groups ending with \_d correspond to deep observations (full stacked OBs) and with \_bs correspond to best-seeing observations (only OBs with a seeing below $\SI{0.7}{"}$). The seeing is given for the [OII] wavelength at the group's redshift. 1. MUSE group number, 2. Group centre's right ascension, 3. Group centre's declination, 4. Duration of observations, 5. Average seeing during observation, 6. Total number of detected galaxies within MUSE FoV, 7. Number of field galaxies found by the FoF algorithm.}
+	\caption[Main characteristics of the observed MUSE fields]{\label{table:MUSEfieldsProp}Main characteristics of the observed MUSE fields. Groups ending with \_d correspond to deep observations (full stacked OBs) and with \_bs correspond to best-seeing observations (only OBs with a seeing below $\SI{0.7}{"}$). The seeing is given for the [OII] wavelength at the group's average redshift. 1. MUSE group number, 2. Group centre's right ascension, 3. Group centre's declination, 4. Length of observations, 5. Average seeing during observation, 6. Total number of detected galaxies within MUSE FoV, 7. Number of field galaxies found by the FoF algorithm.}
 \end{table}
 
 The point of the analysis is to perform a joint study of the morphology and the kinematics of field galaxies in the COSMOS area \shortcite{Scoville2007} using respectively HST ACS images and MUSE data. To this end, a set of $12$ galaxy structures (groups or clusters) was selected. The choice of the COSMOS area for this analysis was made because of the large number of multi-band photometric data available for the galaxies in this field and the presence of rich galaxy groups.\\
@@ -282,7 +282,7 @@ The first parameter we can think of to make our selection is the size of the gal
 
 The PSF Full Width at Half Maximum ($\rm{FWHM}$) is directly related to the seeing conditions, and it can be easily derived from the relation $I_{\rm{PSF}} ( \rm{FWHM}/2) = I_0 /2$. Since it gives us information about the minimum spatial extent within which we start to loose information, we could use it as a starting point for our selection criterion. Moreover, we will need a reliable measure of the $\rm{FWHM}$ for each galaxy when performing the kinematical modelling. Indeed, according to the aforementioned articles the value of the $\rm{FWHM}$ is expected to linearly decrease with wavelength. All galaxies are observed via their [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet at the same rest-frame wavelength. But, given that they are all field galaxies located at a different redshift $z$, we actually observe them at wavelengths covering the entire MUSE spectrum, that is we have the usual relation $\lambda_{\rm{obs}} = \lambda_{\rm{em}} ( 1 + z )$, where $\lambda_{\rm{em}}$, $\lambda_{\rm{obs}}$ are the emitted (rest-frame) and observed wavelengths respectively. Therefore, there is not just one $\rm{FWHM}$ value per field, but one per galaxy. \\
 
-To derive this value, we need to compute the linear decrease with wavelength in each field by measuring the $\rm{FWHM}$ of stars for at least two different wavelengths. Assuming seeing conditions are similar within a field (no spatial dependence), we can use the same linear relation per MUSE field to compute the $\rm{FWHM}$ for the [OII] wavelength at the redshift of the galaxies. These measures had already been done by B. Epinat and V. Abril-Melgajero on at least two stars per field. \\
+To derive this value, we need to compute the linear evolution in each field by measuring the $\rm{FWHM}$ of stars for at least two different wavelengths. Assuming seeing conditions are similar within a field (no spatial dependence), we can use the same relation per MUSE field to compute the $\rm{FWHM}$ for the [OII] wavelength at the redshift of the galaxies. These measures had already been done by B. Epinat and V. Abril-Melgajero on at least two stars per field. \\
 
 Though a more rigorous modelling of the wavelength variation of the PSF $\rm{FWHM}$ including both more data points and potentially higher order terms is mandatory for future analysis, we decided to stick to this values in the present work, keeping in mind the uncertainties which will affect the velocity dispersion maps in the modelling section. A representation of the $\rm{FWHM}$ variation with wavelength for the 16 observations is shown in Fig.\,\ref{fig:FWHM_var_lambda}. Most MUSE fields have $\rm{FWHM}$ values below $\SI{0.7}{"}$ which is not surprising given that it was one of the constraints of the observations. CGr23 is the only FoV to have its $\rm{FWHM}$ above $\SI{0.7}{"}$ for almost every wavelength. Only galaxies further than $z \approx 1.11$. In Table.\,\ref{table:MUSEfieldsProp}, the seeing is the average over the OBs for the [OII] doublet at the redshift of the group which is around $1.17$. Hence the value below $\SI{0.7}{"}$. \\
 
@@ -321,19 +321,19 @@ We decided to visually inspect galaxies around the $\rm{SNR}$ and the size cuts 
 \end{enumerate*}
 To do so, we defined four boxes: $5 \leq \rm{SNR} \leq 10$, $10 \le \rm{SNR} \leq 15$, $0.25" \leq R_{1/2} \leq 0.35"$ and $0.35" \le R_{1/2} \leq 0.45"$ containing $46$, $20$, $58$ and $49$ galaxies respectively. \\
 
-We then ran an automatic cleaning routine for all the galaxies in these boxes. This algorithm removes any pixel which either has its $\rm{SNR}$ below $5$ or a velocity dispersion above a certain percentage $\gamma$ of the velocity dispersion $\sigma_{\rm{v}}$, computed from the Line Spread Function (LSF) $\rm{FWHM}$. The LSF corresponds to the spectral equivalent of an image PSF, and tells us how much the instrument will broaden an infinitely thin line out. False detection of nebular emission induced by noise will tend to generate broader lines, so choosing a high percentage of the velocity dispersion as an upper threshold should remove most noise dominated pixels. 
-
-According to \shortcite{Bacon2017} and \shortcite{Guerou2017} who measured the LSF variation with wavelength in the Hubble Ultra Deep Field (HUDF) and Hubble Deep Field South (HDFS) and who showed that it was stable through time, we computed the LSF $\rm{FWHM}$ as
+We then ran an automatic cleaning routine for all the galaxies in these boxes. This algorithm removes any pixel which either has its $\rm{SNR}$ below $5$ or a dispersion below a certain percentage $\gamma$ of the velocity dispersion $\sigma_{\rm{v}}$ computed from the Line Spread Function (LSF) $\rm{FWHM}$. The LSF corresponds to the spectral equivalent of an image PSF, and tells us how much the instrument will broaden out an infinitely thin line. According to \shortcite{Bacon2017} and \shortcite{Guerou2017} who measured the LSF variation with wavelength in the Hubble Ultra Deep Field (HUDF) and Hubble Deep Field South (HDFS) and who showed that it was stable through time, we computed the LSF $\rm{FWHM}$ as
 
 \begin{equation}
 	\rm{FWHM} = a \lambda^2 + b \lambda + c
 \end{equation}
-with $a = 5.866 \times 10^{-8} \si{\per\angstrom}$, $b = - 9.187$, $c = \SI{6.040}{\angstrom}$ and $\lambda$ the observed wavelength. Thus, the LSF $\rm{FWHM}$ will be depend on the redshift of the galaxy as well. It is related to the velocity dispersion via
+with $a = 5.866 \times 10^{-8} \si{\per\angstrom}$, $b = - 9.187$, $c = \SI{6.040}{\angstrom}$ and $\lambda$ the observed wavelength. Thus, the LSF $\rm{FWHM}$ will depend upon the redshift of the galaxy as well. It is related to the velocity dispersion via
 
 \begin{equation}
 	\frac{\sigma_{\rm{v}}}{c} = \frac{\sigma}{\lambda_{\rm{em}} (1+z)}
 \end{equation}
-where $\sigma = \rm{FWHM} \left (2 \sqrt{2 \log 2} \right )^{-1}$ is the spectral dispersion of the line profile. We found that $\gamma = 0.8$ was a good choice, suppressing most irrelevant pixels without removing those with a clear detection signal.\\
+where $\sigma = \rm{FWHM} \left (2 \sqrt{2 \log 2} \right )^{-1}$ is the spectral dispersion due to the LSF. \\
+
+The choice to keep pixels with a velocity dispersion above $\gamma \sigma_{\rm{v}}$ was motivated by the fact that sky lines from OH molecules in the atmosphere can generate false [OII] emission lines. Sky subtraction during the data reduction can also add new lines in the MUSE images. However, these are always found to have a width below the LSF $\rm{FWHM}$. So any pixel with a false detection will be removed with this choice. The percentage $\gamma$, which we chose to be $80\%$, is meant to not remove pixels with real detection which might have thin lines. \\
 
 After visually inspecting their sizes in the cleaned maps, we classified them as resolved or not. These boxes, the $\rm{SNR}$, half-light radius and redshift of the full sample of field galaxies before selection are shown in Fig.\ref{fig:sample_selection}. Among the $261$ field galaxies, $103$ fall into the limits imposed in Sec.\,\ref{sec:cut}. We find that roughly $26\%$ of the galaxies below the cuts are actually false negatives and that $15\%$ above them are false positives. Since this classification is purely visual, slightly relaxing the constraints on to whether a galaxy is resolved enough or not allow these values to vary by roughly $10\%$. Our criteria for the selection therefore seem fine, though in future works we might increase our sample by a factor of $\sim 1.5$ by visually inspected each galaxy separately.
 
