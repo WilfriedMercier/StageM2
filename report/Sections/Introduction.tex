@@ -35,10 +35,10 @@ Star formation only occurs when there is enough gas supplies to locally gather i
 
 
 
-\subsection{Photometry and spectroscopy}
+\subsection{Observation techniques in astronomy}
 \label{subsec:diffPhotSpec}
 
-\subsubsection{Differences between spectroscopy and photometry}
+\subsubsection{Spectroscopy and photometry}
 \label{subsubsec:photo_data}
 
 Studying the formation and evolution of galaxies requires large datasets of objects at low and high redshifts. The two types of observation which can be carried out to answer these questions are photometry and spectroscopy. These methods originally yielded different information on the properties of galaxies such as their light distribution, their morphology or the kinematics.
@@ -72,20 +72,16 @@ Depending on the author, only a single Sérsic profile with a freely varying Sé
 
 Galaxies spectra can have a noisy continuum emission which can make difficult the detection of specific lines. In general, astronomers look at spectral features such as Balmer or Lyman lines, or doublets to improve the confidence in their detection. However, spectroscopes only work in a certain spectral domain, and therefore any line falling out the instrumental range cannot be detected. When a certain component in a galaxy is observed, this requirement translates in terms of redshift through the equation $\lambda_{\rm{obs}} = \lambda_{\rm{em}} ( 1+ z)$. Thus, this implies that galaxies can only be detected in a certain redshift interval. \\
 
-The detection of a line is done through line fitting on a continuum subtracted spectrum. In general, an algorithm finds the redshift of a galaxy by identifying recognisable spectral features and measuring their wavelength offset from their expected rest-frame wavelength. 
-
-Generally, this is done by fitting a Gaussian shaped profile onto each line one after another
-
-Many algorithms exist with slight variations but,, visible lines are fitted one after another with . Since all of the emission lines of a given object are redshifted by the same amount, it is possible, based on the relative positions of the different detected lines, to know from which species it comes from and therefore to deduce the redshift of the object. In some cases, it is even possible to detect sources whose spectra are blended on the line of sight. Once the lines are detected, these can be studied individually to derive useful spectral parameters. For instance, measuring the total flux and determining how it compares to the continuum level allows one to derive a Signal to Noise Ratio ($\rm{SNR}$), which can in turn be used when performing statistics on the data. \\
-
-In theory, lines should be intrinsically infinitely thin, but in practice they have a certain width which is directly related to the properties of the emitting species and the physical processes at work in its environment. Assuming Local Thermodynamical Equilibrium (LTE) conditions are met, local variations of velocity due to temperature fluctuations will result in a Gaussian thermal Doppler profile. Turbulent motion will add another Gaussian term because of the variations of the mean velocity of the particles on the line of sight. On the other hand, natural and collision-driven widening of the rays both produce Lorentzian line profiles. In practice, all these processes occur at the same time but with different strength. This results in a ray which is made of a convolution of Gaussian and Lorentzian shaped profiles, which is known as a Voigt profile. \\
-
-For some surveys of the sky such as the Sloan Digital Sky Survey (SDSS), photometric data is available in multiple bands. These surveys combine photometric and spectroscopic data, though the spectral resolution in this case is very low because of the few bands used and their wavelength range. For some objects, spectroscopic follow ups are performed, so that we have both precise photometric and spectroscopic data. However, these kind of surveys with follow ups, have two major flaws. First, it takes double time of observation for the same object as photometry and spectroscopy are performed with two different instruments. The other flaw is that there are only a handful of galaxies with spectroscopic follow ups since not all the objects can be observed. This induces to select objects based on astronomers' interests, which can in turn induces biases in the observed properties.
-
-\subsubsection{Spectroscopy}
+The detection of a line is done through line fitting on a continuum subtracted spectrum. In general, an algorithm finds the redshift of a galaxy by identifying recognisable spectral features and measuring their wavelength offset from their expected rest-frame wavelength. The higher the number of detected lines, the more confidence we have in the redshift. Once this is known, each line is fitted separately with a Gaussian shaped profile from which values of the flux and the dispersion are computed. The shape and dispersion of a line is due to many factors. For galaxies spectra, deviations to Gaussian profiles are not considered as these are negligible and not resolved yet. The dispersion is affected both by beam smearing effects and by the velocity dispersion of the particles on the line of sight. The former corresponds to a broadening of the intrinsic velocity dispersion because of the finite instrumental spectral resolution. On the other hand, the latter is the real dispersion in the particles velocity space because of local turbulent motion induced by energy injection, for instance from supernovae. \\
 
 
-\subsubsection{MUSE-VLT}
+\subsubsection{Long slit and early integral field spectroscopy}
 \label{subsubsec:MUSE-VLT}
+
+Before the advent of Integral Field Spectroscopy (IFS), which combines the advantages of both photometry and spectroscopy by providing a spectrum for every pixel in an image, early studies of the rotation curves of galaxies had been done with long slit spectroscopy. In this case, previously known galaxies from photometric surveys were observed with the slit of the spectrograph matching the morphological Position Angle ($\rm{PA}$) of the galaxy. This technique therefore assumed that the morphological and kinematical $\rm{PA}$ are identical, which recent studies might have proven wrong in some cases. The first resolved observation of this kind at high redshift was performed by \shortciteA{Vogt1996} with Keck Telescope. This shed the first light on the resemblance of the rotation curves between galaxies in our local Universe and those found up to $z \sim 1$. Studies of higher redshift galaxies ($2 \lesssim z \lesssim 3$) were done on star forming UV-selected Lyman Break Galaxies (LBG), whose flux drops in the U-band because of their redshifted Lyman break.  \\
+
+The very first 3D spectrographs observed one galaxy at a time because of the lack of a large Field of View (FoV) with good spatial resolution. In this sense, they were used as a spectroscopic follow up of already detected galaxies in photometric surveys. One of these spectographs was the instrument SINFONI \shortcite{Eisenhauer2003} mounted on the Very Large Telescope in Chile, working with both natural seeing and Adaptative Optics (AO). Its corresponding original survey SINS \shortcite{Schreiber2009} of $80$ objects observed from $2003$ to $2008$ was one of the first large kinematical IFS survey of its kind. In the following years, other surveys were carried at intermediate and high redshift. These include the OSIRIS survey \shortcite{Law2007} observed with OSIRIS IFS on Keck Telescope, 
+
+
 
 MUSE is an Integral Field Unit (IFU) mounted on the VLT in Chile which spans a $\SI{1}{\arcmin} \times \SI{1}{\arcmin}$ Field of View (FoV). Its wavelength range covers both the visual spectrum and the Near Infra-Red part (NIR), going from $\SI{4650}{\angstrom}$ to $\SI{9300}{\angstrom}$. This instrument was built with the main purpose of performing blind searches of sources in the field. The wavelength range is well suited to detect the OII doublet in the redshift range $0.4$, $1.4$.
