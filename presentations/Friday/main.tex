@@ -3,6 +3,10 @@
 \usepackage{verbatim}
 \usetheme{umu}
 
+\usepackage{enumitem}
+\usepackage{siunitx}
+\usepackage{xcolor}
+
 %%% Bibliography
 \usepackage[style=authoryear,backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
@@ -21,6 +25,7 @@
 \newcommand{\pdfnewline}{\texorpdfstring{\newline}{ }} 
 % Fill the vertical space in a slide (to put text at the bottom)
 \newcommand{\framefill}{\vskip0pt plus 1filll}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% YOUR PRESENTATION BELOW %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,45 +50,122 @@
 \end{frame}
 
 
-\section{IFS & MUSE}
-\begin{frame}
+\section{IFS \& MUSE}
+\begin{frame}{Integral Field Spectroscopy \& MUSE}
+
+	\begin{columns}[T]
+	
+		\begin{column}{0.4\linewidth}
+			\underline{IFS:}
+			\begin{itemize}[label=$\rhd$]
+				\item 3D cubes (2D spatial + 1D spectral)
+				\item photometry + kinematics
+			\end{itemize}					
+		
+		
+			\underline{MUSE:}
+			\begin{itemize}[label=$\rhd$]
+				\item $1 \times \SI{1}{arcmin\squared}$ FoV
+				\item $\SI{0.2}{arcsec}$ spatial sampling
+				\item spectral range $[\SI{4650}{\angstrom}, \SI{9300}{\angstrom}]$
+				\item seeing or AO observations
+			\end{itemize}
+		\end{column}
+
+		\begin{column}{0.6\linewidth}
+			\begin{figure}
+				\vspace{-15pt}
+				\includegraphics[width=\linewidth]{{graphics/MUSE}.jpg}
+				\caption{MUSE instrument. Credit: Ghaouti Hansali (CRAL)}
+			\end{figure}
+		\end{column}
+	\end{columns}
 
 \end{frame}
 
-\section{Our sample}
-\begin{frame}
-
+\section{Initial sample}
+\begin{frame}{Our sample}
+	\begin{columns}
+		\begin{column}{0.5\linewidth}	
+			\begin{figure}
+				\includegraphics[width=\linewidth]{{graphics/CGr30}.eps}
+				\caption{HST image of MUSE group CGr30}
+			\end{figure}
+		\end{column}
+		
+		\begin{column}{0.5\linewidth}
+			\begin{itemize}[label=$\rhd$]
+				\item $16$ MUSE fields in COSMOS area
+				\begin{itemize}[label=$\cdot$]
+					\item \textit{deep} and \textit{best\_seeing} observations
+					\item CGr32 split in $3$ parts
+				\end{itemize}
+				\item $\sim 500$ field galaxies with [OII] detection
+				\begin{itemize}[label=$\cdot$]
+					\item HST-ACS counterparts
+					\item $0.4 \leq z \leq 1.4$
+				\end{itemize}
+			\end{itemize}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \section{Checking a few parameters}
-\subsection{Radius}
-\begin{frame}
+\subsection{Half-light Radius}
+\begin{frame}{Checking a couple of parameters}
+	\framesubtitle{Half-light radius}
+	
+	\begin{figure}
+		\includegraphics[width=0.85\linewidth]{{graphics/relErr_against_GalFit1.5LightRadius_colourCoded_CassataType}.pdf}
+		\caption{spheroidal  \textcolor{OliveGreen}{disk-like}    \textcolor{magenta}{irregulars}}
+	\end{figure}
 
 \end{frame}
 
 \subsection{Ellipticity}
-\begin{frame}
+\begin{frame}{Checking a few parameters}
+	\framesubtitle{Ellipticity}
 
 \end{frame}
 
 \section{Characteristics of our sample}
 \subsection{Redshift distribution}
-\begin{frame}
+\begin{frame}{Characteristics of our sample}
+	\framesubtitle{Redshift distribution}
 
 \end{frame}
 
 \subsection{Mass-SFR relation}
-\begin{frame}
+\begin{frame}{Characteristics of our sample}
+	\framesubtitle{Mass-SFR relation}
 
 \end{frame}
 
 \section{Kinematical modelling}
 \subsection{Cleaning galaxies}
-\begin{frame}
+\begin{frame}{Kinematical modelling}
+	\framesubtitle{Cleaning galaxies}
 
 \end{frame}
 
+\subsection{Fitting a model}
+\begin{frame}{Kinematical modelling}
+	\framesubtitle{Fitting a model}
 
+\end{frame}
+
+\section{First results}
+\subsection{$V_{\rm{max}}/\sigma_{\rm{v}}$ distribution}
+\begin{frame}{First results}
+	\framesubtitle{$V_{\rm{max}}/\sigma_{\rm{v}}$ distribution}
+
+\end{frame}
+
+\subsection{Tully-Fisher relation}
+\begin{frame}{First results}
+	\framesubtitle{Tully-Fisher relation}
+
+\end{frame}
 
 \section{Before you start}
 \begin{frame}{Overleaf users}
@@ -164,25 +246,6 @@ Remember your training with Obi-Wan, and use the Force to make the perfect shot.
 
 \end{frame}
 
-\section{Enumerates, itemizes and description}
-
-\subsection{Enumerates and itemizes}
-
-\begin{frame}{Enumerates and itemizes}
-
-This is an example of \texttt{itemize}.
-\begin{itemize}
-	\item A long time ago in a galaxy far, far away...
-\end{itemize}
-And this is an example of \texttt{enumerate}.
-
-\begin{enumerate} 
-  \item Go to the Death Star.
-  \item Find the exhaust port.
-  \item Make the perfect shot.
-  \item Become a hero.
-\end{enumerate}
-\end{frame}
 
 \subsection{Description}
 
