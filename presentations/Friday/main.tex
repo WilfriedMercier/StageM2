@@ -153,20 +153,118 @@
 \subsection{Redshift distribution}
 \begin{frame}{Characteristics of our sample}
 	\framesubtitle{Redshift distribution}
+	\begin{columns}	
+		\begin{column}{0.5\linewidth}
+			\vspace{-10pt}		
+			\includegraphics[width=\linewidth]{{graphics/hist_redshift}.pdf}
+		\end{column}
+		
+		\begin{column}{0.5\linewidth}
+			\begin{itemize}[label=$\rhd$]				
+				\item sample of \textbf{103 galaxies} with $R_{\rm{1/2}} > \SI{0.35}{"}$ and $\rm{SNR} > 5$
+				\item we loose galaxies at $z \approx 1.4$
+				\item redshift distribution is not drastically changed
+			\end{itemize}
+		\end{column}
+	\end{columns}
 
 \end{frame}
 
 \subsection{Mass-SFR relation}
 \begin{frame}{Characteristics of our sample}
 	\framesubtitle{Mass-SFR relation}
-
+	\vspace{-3pt}
+	\includegraphics[width=\linewidth]{{graphics/SFR_vs_mass_withoutFAST}.pdf}
+		
+	\vspace{-5pt}
+	\begin{itemize}[label=$\rhd$]				
+		\item we recover the main sequence
+		\item massive quiescent galaxies are lost
+		\item redshift correction from [paper] does not improve the scatter
+	\end{itemize}
 \end{frame}
 
 \section{Kinematical modelling}
 \subsection{Cleaning galaxies}
 \begin{frame}{Kinematical modelling}
 	\framesubtitle{Cleaning galaxies}
+	\begin{columns}	
+		\begin{column}{0.6\linewidth}
+			\vspace{100pt}		
+			\centering
+			\includegraphics[width=0.5\linewidth]{{graphics/VelBefore}.eps}
+		\end{column}
 
+		\begin{column}{0.6\linewidth}
+			\vspace{100pt}		
+			\centering
+			\includegraphics[width=0.5\linewidth]{{graphics/VelAuto}.eps}
+		\end{column}
+	\end{columns}
+	
+	\begin{textblock*}{5cm}(8.5cm,6cm)
+		\includegraphics[width=0.6\linewidth]{{graphics/VelManual}.eps}
+	\end{textblock*}
+	
+	%horizontal arrow and text
+	\begin{textblock*}{5cm}(4.5cm,3cm)
+		\centering
+		\hspace{-10pt}
+		Automatic \\
+		\begin{tikzpicture}[thick]
+			\draw [black,   -latex      ] (0,7.0) -- (2.5,7.0) node [right] {};
+		\end{tikzpicture}
+	\end{textblock*}
+	
+	%vertical arrow
+	\begin{textblock*}{5cm}(7.7cm,4.2cm)
+		\centering
+		\begin{tikzpicture}[thick]
+			\draw [black,   -latex      ] (0,9.0) -- (0.0,7.0) node [right] {};
+		\end{tikzpicture}
+	\end{textblock*}
+	
+	%vertical text
+	\begin{textblock*}{5cm}(6.5cm,5.2cm)
+		\centering
+		Manual
+	\end{textblock*}
+	
+	%three spectra
+	\begin{textblock*}{7cm}(1cm,6.5cm)
+		\centering
+		\includegraphics[width=0.25\linewidth]{{graphics/BadSpectrum}.png}
+		\hfill
+		\includegraphics[width=0.25\linewidth]{{graphics/MediumSpectrum}.png}
+		\hfill
+		\includegraphics[width=0.25\linewidth]{{graphics/GoodSpectrum}.png}
+	\end{textblock*}	
+	
+	%arrow for bad spectrum
+	\begin{textblock*}{5cm}(-0.3cm, 4.3cm)
+		\centering
+		\begin{tikzpicture}[thick]
+			\draw [black,   -latex      ] (0,7.0) -- (0.5,9) node [right] {};
+		\end{tikzpicture}
+	\end{textblock*}
+	
+	%arrow for medium spectrum
+	\begin{textblock*}{5cm}(1cm, 3.9cm)
+		\centering
+		\begin{tikzpicture}[thick]
+			\draw [black,   -latex      ] (0.8,7.0) -- (0,10) node [right] {};
+		\end{tikzpicture}
+	\end{textblock*}
+	
+	%arrow for medium spectrum
+	\begin{textblock*}{5cm}(2.5cm, 3.3cm)
+		\centering
+		\begin{tikzpicture}[thick]
+			\draw [black,   -latex      ] (4.5,7.0) -- (1,10.5) node [right] {};
+		\end{tikzpicture}
+	\end{textblock*}
+	
+	
 \end{frame}
 
 \subsection{Fitting a model}
