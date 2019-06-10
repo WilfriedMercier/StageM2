@@ -314,6 +314,14 @@ Since the typical $\rm{SNR}$ value used by the routine we run to remove noise do
 \subsubsection{Selecting galaxies}
 \label{sec:selecting_galaxies}
 
+\begin{wrapfigure}{r}{.4\linewidth}
+	\centering
+	\vspace{-100pt}
+	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/cumulative_hist_redshift}.pdf}
+	\caption[Redshift distribution]{Redshift distribution of the total sample (grey), selected (green) and unselected (blue) galaxies. Redshift bins of size $0.1$ have been used. Top: density plot as a function of redshift. Bottom: cumulative distribution. We lack most of the galaxies at redshift $1.4$. Other redshift bins do not loose to many galaxies with respect to the unselected ones except maybe at $z \approx 0.5 $.}
+	\label{fig:redshift_distribution}
+\end{wrapfigure}
+
 We decided to visually inspect galaxies around the $\rm{SNR}$ and the size cuts to quantify
 \begin{enumerate*}[label={(\alph*)}]
 	\item how many resolved galaxies would be lost if we applied the criteria given in Sec.\,\ref{sec:cut_size} and \ref{sec:cut_SNR} (false negative)
@@ -337,18 +345,9 @@ The choice to keep pixels with a velocity dispersion above $\gamma \sigma_{\rm{v
 
 After visually inspecting their sizes in the cleaned maps, we classified them as resolved or not. These boxes, the $\rm{SNR}$, half-light radius and redshift of the full sample of field galaxies before selection are shown in Fig.\ref{fig:sample_selection}. Among the $261$ field galaxies, $103$ fall into the limits imposed in Sec.\,\ref{sec:cut}. We find that roughly $26\%$ of the galaxies below the cuts are actually false negatives and that $15\%$ above them are false positives. Since this classification is purely visual, slightly relaxing the constraints on to whether a galaxy is resolved enough or not allow these values to vary by roughly $10\%$. Our criteria for the selection therefore seem fine, though in future works we might increase our sample by a factor of $\sim 1.5$ by visually inspected each galaxy separately.
 
-
 \subsubsection{Redshift distribution}
 
-\begin{wrapfigure}{r}{.5\linewidth}
-	\centering
-	\vspace{-45pt}
-	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/cumulative_hist_redshift}.pdf}
-	\caption[Redshift distribution]{Redshift distribution of the total sample (grey), selected (green) and unselected (blue) galaxies. Redshift bins of size $0.1$ have been used. Top: density plot as a function of redshift. Bottom: cumulative distribution. We lack most of the galaxies at redshift $1.4$. Other redshift bins do not loose to many galaxies with respect to the unselected ones except maybe at $z \approx 0.5 $.}
-	\label{fig:redshift_distribution}
-\end{wrapfigure}
-
-The choice of the [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet for the kinematical analysis was due in part to the large range of redshift it covered given the MUSE spectrum. We therefore had in our catalogue galaxies spanning a redshift range from $0.3$ to about $1.4$. As show in Fig.\,\ref{fig:redshift_distribution}, after our selection we loose the majority of the most distant galaxies as well as a significant fraction of galaxies with $z$ around $0.3$, $0.5$ and $0.75$. Globally, we are selecting less galaxies per redshift bin than we are putting aside. The average and median redshifts are $0.749$ and $0.719$ for the selected galaxies, $0.809$ and $0.750$ for the unselected ones. Thus, our sample remains consistent in terms of redshift even after performing the $\rm{SNR}$ and size selections.
+The choice of the [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet for the kinematical analysis was due in part to the large range of redshift it covered given the MUSE spectrum. We therefore had in our catalogue galaxies spanning a redshift range from $0.3$ to about $1.4$. As show in Fig.\,\ref{fig:redshift_distribution}, after our selection we loose a significant fraction of galaxies with $z$ around $0.3$, $0.5$ and $0.75$ as well as the majority of the most distant galaxies. It is not surprising to loose galaxies at high redshift as these have the lowest angular sizes on the sky at a fixed physical length. Nevertheless, we are globally selecting less galaxies per redshift bin than we are putting aside. The average and median redshifts are $0.749$ and $0.719$ for the selected galaxies, $0.809$ and $0.750$ for the unselected ones. Thus, our sample remains consistent in terms of redshift even after the selection.
 
 
 \subsubsection{Mass-SFR relation}
@@ -359,6 +358,16 @@ The choice of the [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet for 
 	\caption[SFR-mass relation]{SFR-mass relation for selected (filled circles) and unselected (open circles) galaxies. Left: SFR extracted from the morphological catalogues. Right: the redshift corrected SFR as given in Eq.\,\ref{eq:SFR_corrected_redshift}. We obtain the usual main sequence of galaxies as a linear relation between SFR and mass (in log-log space), as well as quenched galaxies on the lower right part of the plane which are removed when performing the selection.}
 	\label{fig:sfr_vs_mass}
 \end{figure}
+
+Our sample spans 3 orders of magnitude both in mass and $\rm{SFR}$ in the ranges $10^{8.07} \leq M / \si{M_{\odot}} \leq  10^{11.1}$ and $10^{-1.40} \leq \rm{SFR} / ( \si{M_{\odot}. yr^{-1} }) \leq 10^{2.10}$. We can investigate where our sample lies in the mass-SFR diagram as shown in Fig.\,\ref{fig:sfr_vs_mass}. Star-forming galaxies are expected to lie on a diagonal line with some scatter in $\log M$-$\log \rm{SFR}$ space called the galaxies Main Sequence (MS) or the star-formation sequence. A few highly star-forming galaxies called Ultra Luminous InfraRed Galaxies (ULIRG/LIRG) are generally found above the main sequence. Some massive quiescent (low SFR values) galaxies can also be found below the MS. In our sample, we recover it after selecting the galaxies, but we loose the massive ones with low SFR values. This is probably due to the fact that we are selecting galaxies with a high enough [OII] surface brightness. Since [OII] flux comes from ionised regions which correlate with star formation, most quiescent galaxies are eliminated when observing, and the few large enough to be observed will have too low $\rm{SNR}$ values to be selected.  \\
+
+We also checked if there was any redshift evolution in the main sequence. We refer to \shortciteA{Boogaard2018} who derived a redshift evolution for their galaxies on the MS found roughly in the same redshift, mass and $\rm{SFR}$ intervals. They modelled the log of the $\rm{SFR}$ as a plane in $\log M$ - $\log (1 + z)$ space 
+
+\begin{equation}
+	\log_{10} \left ( \frac{\rm{SFR}}{\si{M_{\odot} . yr^{-1}}} \right ) = 0.83_{-0.06}^{+0.07} \log_{10} \left ( \frac{M}{\si{M_{\odot}}} \right ) - 0.83^{+0.05}_{-0.05} + 1.74_{-0.68}^{+0.66} \log_{10} \left ( \frac{1+z}{1+z_0} \right )
+	\label{eq:SFR_corrected_redshift}
+\end{equation}
+where $z_0$ acts as a normalisation factor which will scale the relation at this redshift. We chose the median redshift of the selected galaxies to apply the $\rm{SFR}$ correction shown in the right plot of Fig.\,\ref{fig:sfr_vs_mass}. Though we do not find a significant improvement in the scatter after the correction is applied.
 
 
 
