@@ -35,9 +35,9 @@
 \author[Mercier Wilfried]{
   \textbf{Author}: \hspace{33pt} Mercier Wilfried
   \pdfnewline
-  \textbf{Supervisor}: \hspace{14pt} Contini Thierry
+  \textbf{Supervisor}: \hspace{14pt} Contini Thierry (IRAP)
   \pdfnewline
-  \textbf{Co-Supervisor}: Epinat Benoit
+  \textbf{Co-Supervisor}: Epinat Benoit (LAM)
   }
 
 
@@ -77,28 +77,29 @@
 
 	\begin{columns}[T]
 	
-		\begin{column}{0.4\linewidth}
+		\begin{column}{0.5\linewidth}
 			\underline{IFS:}
 			\begin{itemize}[label=$\rhd$]
 				\item 3D cubes (2D spatial + 1D spectral)
 				\item photometry + kinematics
 			\end{itemize}					
 		
-		
+			\vspace{25pt}
 			\underline{MUSE:}
 			\begin{itemize}[label=$\rhd$]
 				\item $1 \times \SI{1}{arcmin\squared}$ FoV
 				\item $\SI{0.2}{arcsec}$ spatial sampling
 				\item spectral range $[\SI{4650}{\angstrom}, \SI{9300}{\angstrom}]$
-				\item seeing or AO observations
+				\item seeing-limited or AO observations
 			\end{itemize}
 		\end{column}
 
-		\begin{column}{0.6\linewidth}
+		\begin{column}{0.4\linewidth}
 			\begin{figure}
 				\vspace{-15pt}
-				\includegraphics[width=\linewidth]{{graphics/MUSE}.jpg}
-				\caption{MUSE instrument. Credit: Ghaouti Hansali (CRAL)}
+				\centering
+				\includegraphics[width=\linewidth]{{graphics/MUSE_tcontini2}.jpg}
+				\caption{MUSE instrument. Credit: Contini Thierry (IRAP)}
 			\end{figure}
 		\end{column}
 	\end{columns}
@@ -112,16 +113,18 @@
 		\begin{column}{0.5\linewidth}	
 			\begin{figure}
 				\includegraphics[width=\linewidth]{{graphics/CGr30}.eps}
-				\caption{HST image of MUSE group CGr30}
+				\caption{HST image of COSMOS group CGr30}
 			\end{figure}
 		\end{column}
 		
+		\hspace{-10pt}
 		\begin{column}{0.5\linewidth}
 			\begin{itemize}[label=$\rhd$]
 				\item $16$ MUSE fields in COSMOS area
+				\item exposures from $1$ to $\SI{10}{hr}$
+				\item seeing-limited ($\rm{FWHM} \lesssim \SI{0.7}{"}$) or AO ($\rm{FWHM} \lesssim \SI{0.5}{"}$)
 				\begin{itemize}[label=$\cdot$]
 					\item \textit{deep} and \textit{best\_seeing} observations
-					\item CGr32 split in $3$ parts
 				\end{itemize}
 				\item $\sim 500$ field galaxies with [OII] detection
 				\begin{itemize}[label=$\cdot$]
@@ -134,17 +137,61 @@
 \end{frame}
 
 
-\section{Checking a few parameters}
+\section{Checking morphological parameters}
+\subsection{A need for reliable morphological parameters}
+\begin{frame}{Checking a couple of parameters}
+	\framesubtitle{A need for reliable morphological parameters}
+
+	Morphological parameters are useful for
+	
+	\begin{itemize}[label=$\rhd$]
+		\item the morpho-kinematics comparison
+		\item \textbf{the kinematical model}
+	\end{itemize}
+
+	\vfill
+	
+	The two most important are
+	
+	\begin{itemize}[label=$\rhd$]
+		\item a size measure to select resolved galaxies
+		\begin{itemize}[label=$\cdot$]
+			\item half-light radius $R_{1/2}$
+		\end{itemize}
+		\item the ellipticity
+		\begin{itemize}[label=$\cdot$]
+			\item compute the inclination from $\cos i = 1 - e$
+			\item used as a fixed input for the kinematical model
+		\end{itemize}
+		
+	\end{itemize}
+
+\end{frame}
+
 \subsection{Half-light Radius}
 \begin{frame}{Checking a couple of parameters}
 	\framesubtitle{Half-light radius}
 	
-	\begin{figure}
-		\includegraphics[width=0.85\linewidth]{{graphics/relErr_against_GalFit1.5LightRadius_colourCoded_CassataType}.pdf}
-		\caption{spheroidal  \textcolor{OliveGreen}{disk-like}    \textcolor{magenta}{irregulars}}
-	\end{figure}
-
+	\begin{columns}
+		\hspace{-20pt}
+		\begin{column}{0.9\linewidth}
+			\begin{figure}
+				\includegraphics[width=0.85\linewidth]{{graphics/relErr_against_GalFit1.5LightRadius_colourCoded_CassataType}.pdf}
+				\caption{spheroidal  \textcolor{OliveGreen}{disk-like}    \textcolor{magenta}{irregulars}}
+			\end{figure}
+		\end{column}
+	
+		\hspace{-20pt}
+		\begin{column}{0.3\linewidth}	
+			GALFIT run by V. Abril-Melgajero (LAM) on structure galaxies
+			\begin{itemize}[label=$\rhd$]
+				\item GALFIT radius used as a reference
+			\end{itemize}
+		\end{column}
+	\end{columns}
 \end{frame}
+
+
 
 
 \subsection{Ellipticity}
@@ -200,9 +247,8 @@
 		
 	\vspace{-5pt}
 	\begin{itemize}[label=$\rhd$]				
-		\item we recover the main sequence
-		\item massive quiescent galaxies are lost
-		\item redshift correction from \cite{Boogaard et al. 2018} does not improve significantly the scatter
+		\item Most of our sample galaxies are on the main sequence
+		\item massive quiescent and low [OII] and very low mass galaxies are lost
 	\end{itemize}
 \end{frame}
 
