@@ -54,14 +54,19 @@ From 2D images we can derive morphological parameters such as the ellipticity $e
 
 This assumption is invalid in reality as galaxies have more complex morphologies with central bars, spiral arms, satellite galaxies for the largest ones and potential inflows and/or outflows. It is also incorrect when we study galaxies which have clear disturbed morphologies due to past interactions such as merging events.  \\
 
-In the past, measuring radii and ellipticity were generally done by with a curve of growth, consisting in deriving the size and ellipticity of ellipses at different isophote levels. Nowadays, it has become common to fit galaxy light profile models onto images and to recover the morphological parameters from the best fit. One of the most commonly used light profile is a Sérsic profile which we generally write as \shortcite{PetroRadandMag}\footnote{The original definition $I(r) \propto e^{(r/\alpha)^{1/n}}$ from \shortciteA{Sersic1963} was modified to Eq.\,\ref{eq:SersicProfile} because of the immeasurable values $\alpha$ took in practice.} 
+In the past, measuring radii and ellipticity were generally done by with a curve of growth, consisting in deriving the size and ellipticity of ellipses at different isophote levels. Nowadays, it has become common to fit galaxy light profile models onto images and to recover the morphological parameters from the best fit. One of the most commonly used light profile is a Sérsic profile which is generally written as \shortcite{PetroRadandMag}\footnote{The original definition $I(r) \propto e^{-(r/\alpha)^{1/n}}$ from \shortciteA{Sersic1963} was modified to Eq.\,\ref{eq:SersicProfile} because of the immeasurable values $\alpha$ took in practice.} 
 
 \begin{equation}
     \label{eq:SersicProfile}
     I(r) = I_{\rm{e}} e^{ - b_n \left ( \left  ( \frac{r}{R_{\rm{e}}}  \right )^{1/n} - 1 \right ) }
 \end{equation}
 
-where $r$ is the radial distance to the morphological centre of the galaxy, $n$ is referred as the Sérsic index of the galaxy, $R_e$ is the effective or half-light radius which encloses 50\% of the total luminosity of the galaxy, $I_e$ is the intensity at the position $R_e$ and $b_n$ is a term which ensures that $R_e$ does enclose half the total luminosity. By integrating Eq.\,\ref{eq:SersicProfile} up to infinity to recover the total luminosity $L_{\rm{tot}}$ and a second time to $R_{\rm{e}}$ so that it equals $L_{\rm{tot}}/2$, one can find the definition of $b_n$ to be such that $2 \gamma (2n, b_n) = \Gamma (2n)$, with $\gamma$ and $\Gamma$ respectively the incomplete and complete gamma functions.
+where $r$ is the radial distance to the morphological centre of the galaxy, $n$ is referred as the Sérsic index of the galaxy, $R_e$ is the effective or half-light radius which encloses 50\% of the total luminosity of the galaxy, $I_e$ is the intensity at the position $R_e$ and $b_n$ is a term which ensures that $R_e$ does enclose half the total luminosity. By integrating Eq.\,\ref{eq:SersicProfile} up to infinity to recover the total luminosity $L_{\rm{tot}}$ and a second time to $R_{\rm{e}}$ so that it equals $L_{\rm{tot}}/2$, one can find the definition of $b_n$ to be such that 
+
+\begin{equation}
+2 \gamma (2n, b_n) = \Gamma (2n)
+\end{equation}
+with $\gamma$ and $\Gamma$ the incomplete and complete gamma functions respectively.
 
 This equation has been widely used in different contexts because of its ability to recover two famous profiles
 \begin{enumerate*}[label={(\alph*)}]

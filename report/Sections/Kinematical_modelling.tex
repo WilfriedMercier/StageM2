@@ -49,3 +49,23 @@ We also do not take into account features such as a central bar, arms or clumps.
 In our case, we assume we have smooth velocity fields with no bar, no arms and no clumps such as HII regions.
 In our model, $4$ morphological and $1$ kinematical parameters are used. The inclination of the galaxy, its centre right ascension and declination and the $PA$ of the major axis must be given as fixed values. The kinematical parameter corresponds to the systematic velocity, that is the radial component of the velocity due to the expansion of the Universe.
 
+\subsection{Maximum velocity and velocity dispersion}
+
+The model returns the minimum, maximum, average and median values for the dispersion map once corrected of beam smearing effects. We also recover the rotational velocity on the plateau $V_{\rm{p}}$, as well as the radius at which it is reached $R_{\rm{p}}$ and the maximum radius where the fit was performed $R_{\rm{last}}$. If the model converges to $R_{\rm{p}} > R_{\rm{last}}$, the measure of both $\rm{R_p}$ and $V_{\rm{p}}$ are not reliable any more. Thus any galaxy meeting this condition is not considered in the following.
+
+To remain consistent with other studies, we decided to compute the maximum velocity at $2.2 R_{\rm{d}}$, with $R_{\rm{d}}$ the disc scale length. This is defined as the radial distance in a morphological exponential disc model where the intensity drops by a factor of $e$ with respect to the central value. From this definition, we can compute its scaling relation with $R_{1/2}$. Given that $I(R_{\rm{d}}) = I_0 e^{-1} = I_{\rm{e}} e^{- b_1 ( R_{\rm{d}} / R_{\rm{e}} - 1 )}$, we find
+
+\begin{equation}
+	R_{\rm{e}} = b_1 R_{\rm{d}}
+\end{equation}
+where $b_1$ is the solution of the equation $2 \gamma (2, b_1) = \Gamma(2)$. This also translates as
+
+\begin{equation}
+	\int_0^x t e^{-t} dt = 1 - e^{-x} ( 1 + x) = 1/2
+\end{equation}
+for which we find a solution by making the substitution $x \rightarrow - y - 1$ and using the Lambert W function
+
+\begin{equation}
+	x = - \rm{W} \left ( - \frac{1}{2 e} \right ) - 1 \approx 1.67835
+\end{equation}
+where we only kept the positive, physically meaningful solution. 
