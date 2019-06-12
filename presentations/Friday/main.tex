@@ -3,6 +3,8 @@
 \usepackage{verbatim}
 \usetheme{umu}
 
+\usepackage[inline]{enumitem}
+
 %%% Bibliography
 \usepackage[style=authoryear,backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
@@ -137,39 +139,41 @@
 \end{frame}
 
 
-\section{Checking morphological parameters}
-\subsection{A need for reliable morphological parameters}
-\begin{frame}{Checking a couple of parameters}
-	\framesubtitle{A need for reliable morphological parameters}
+\section{Methodology}
+\subsection{Methodology}
+\begin{frame}{Methodology}
 
-	Morphological parameters are useful for
-	
-	\begin{itemize}[label=$\rhd$]
-		\item the morpho-kinematics comparison
-		\item \textbf{the kinematical model}
-	\end{itemize}
+	\begin{enumerate}[label={\Roman*.}]
+		\item Morphological information
 
-	\vfill
-	
-	The two most important are
-	
-	\begin{itemize}[label=$\rhd$]
-		\item a size measure to select resolved galaxies
-		\begin{itemize}[label=$\cdot$]
-			\item half-light radius $R_{1/2}$
-		\end{itemize}
-		\item the ellipticity
-		\begin{itemize}[label=$\cdot$]
-			\item compute the inclination from $\cos i = 1 - e$
-			\item used as a fixed input for the kinematical model
+		\begin{itemize}[label=$\rhd$]
+			\item \textbf{half-light radius} $R_{1/2}$ to select resolved galaxies
+			\begin{itemize}[label=$\cdot$]
+				\item Cassata, Tasca and Zurich catalogues
+			\end{itemize}
+			\item \textbf{ellipticitiy} to compute the inclination
+			\begin{itemize}[label=$\cdot$]
+				\item fixed input for the kinematical model
+			\end{itemize}		
 		\end{itemize}
 		
-	\end{itemize}
+		\vfill		
+		
+		\item Kinematical modelling
+			\begin{itemize}[label=$\rhd$]
+				\item recover $V_{\rm{max}}$ and $\sigma_{\rm{v}}$
+			\end{itemize}
+		
+		\vfill		
+		
+		\item Tully-Fisher relation
+	\end{enumerate}	
+
 
 \end{frame}
 
 \subsection{Half-light Radius}
-\begin{frame}{Checking a couple of parameters}
+\begin{frame}{Checking morphological parameters}
 	\framesubtitle{Half-light radius}
 	
 	\begin{columns}
@@ -195,7 +199,7 @@
 
 
 \subsection{Ellipticity}
-\begin{frame}{Checking a few parameters}
+\begin{frame}{Checking morphological parameters}
 	\framesubtitle{Ellipticity}
 	\begin{columns}	
 		\begin{column}{0.5\linewidth}
@@ -228,7 +232,7 @@
 			\begin{figure}
 				\centering
 				\includegraphics[width=\linewidth]{{graphics/hist_redshift}.pdf}
-				\caption{The total number corresponds to galaxies with an HST counterpart in Cassata and/or Zurich catalogues.}
+				\caption{The total number corresponds to galaxies with photometric data in Cassata and/or Zurich catalogues.}
 			\end{figure}
 		\end{column}
 		
@@ -247,18 +251,32 @@
 \begin{frame}{Characteristics of our sample}
 	\framesubtitle{Mass-SFR relation}
 	\vspace{-3pt}
+	
+	%drawing first circle (red)
+	\begin{textblock*}{5cm}(8.5cm,4cm)
+		\begin{tikzpicture}
+    		\draw [red, rotate=25] (0,0) ellipse (0.8cm and 2.2cm);
+		\end{tikzpicture}	
+	\end{textblock*}
+	
+	%drawing second circle (blue)
+	\begin{textblock*}{5cm}(5.6cm,4.4cm)
+		\begin{tikzpicture}
+    		\draw [blue, rotate=-20] (0,0) ellipse (0.9cm and 1.7cm);
+		\end{tikzpicture}	
+	\end{textblock*}
+	
 	\begin{columns}
 		\begin{column}{0.4\linewidth}
 			\begin{itemize}[label=$\rhd$]				
 				\item Most of our sample galaxies are on the main sequence
-				\item massive quiescent, low [OII] and very low mass galaxies are lost
+				\item \textcolor{red}{massive quiescent} (low [OII]) and \textcolor{blue}{very low mass galaxies} are lost
 			\end{itemize}
 		\end{column}
-		\begin{column}{0.6\linewidth}
+		\begin{column}{0.75\linewidth}
 		\includegraphics[width=\linewidth]{{graphics/SFR_vs_mass_correctedversiononly}.pdf}
 		\end{column}
-
-	\end{columns}
+	\end{columns}		
 \end{frame}
 
 \section{Kinematical modelling}
