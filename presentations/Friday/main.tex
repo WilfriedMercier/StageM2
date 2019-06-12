@@ -182,7 +182,7 @@
 		\end{column}
 	
 		\hspace{-20pt}
-		\begin{column}{0.3\linewidth}	
+		\begin{column}{0.38\linewidth}	
 			GALFIT run by V. Abril-Melgajero (LAM) on structure galaxies
 			\begin{itemize}[label=$\rhd$]
 				\item GALFIT radius used as a reference
@@ -223,9 +223,13 @@
 \begin{frame}{Characteristics of our sample}
 	\framesubtitle{Redshift distribution}
 	\begin{columns}	
-		\begin{column}{0.5\linewidth}
+		\begin{column}{0.55\linewidth}
 			\vspace{-10pt}		
-			\includegraphics[width=\linewidth]{{graphics/hist_redshift}.pdf}
+			\begin{figure}
+				\centering
+				\includegraphics[width=\linewidth]{{graphics/hist_redshift}.pdf}
+				\caption{The total number corresponds to galaxies with an HST counterpart in Cassata and/or Zurich catalogues.}
+			\end{figure}
 		\end{column}
 		
 		\begin{column}{0.5\linewidth}
@@ -243,13 +247,18 @@
 \begin{frame}{Characteristics of our sample}
 	\framesubtitle{Mass-SFR relation}
 	\vspace{-3pt}
-	\includegraphics[width=\linewidth]{{graphics/SFR_vs_mass_withoutFAST}.pdf}
-		
-	\vspace{-5pt}
-	\begin{itemize}[label=$\rhd$]				
-		\item Most of our sample galaxies are on the main sequence
-		\item massive quiescent and low [OII] and very low mass galaxies are lost
-	\end{itemize}
+	\begin{columns}
+		\begin{column}{0.4\linewidth}
+			\begin{itemize}[label=$\rhd$]				
+				\item Most of our sample galaxies are on the main sequence
+				\item massive quiescent, low [OII] and very low mass galaxies are lost
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.6\linewidth}
+		\includegraphics[width=\linewidth]{{graphics/SFR_vs_mass_correctedversiononly}.pdf}
+		\end{column}
+
+	\end{columns}
 \end{frame}
 
 \section{Kinematical modelling}
