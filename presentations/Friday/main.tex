@@ -5,19 +5,6 @@
 
 \usepackage[inline]{enumitem}
 
-%%% Bibliography
-\usepackage[style=authoryear,backend=biber]{biblatex}
-\addbibresource{bibliography.bib}
-
-% Author names in publication list are consistent 
-% i.e. name1 surname1, name2 surname2
-% See https://tex.stackexchange.com/questions/106914/biblatex-does-not-reverse-the-first-and-last-names-of-the-second-author
-\DeclareNameAlias{author}{first-last}
-
-%%% Suppress biblatex annoying warning
-\usepackage{silence}
-\WarningFilter{biblatex}{Patching footnotes failed}
-
 \usepackage{enumitem}
 \usepackage{siunitx}
 \usepackage{xcolor}
@@ -52,24 +39,36 @@
 \end{frame}
 
 \section{Galaxy evolution}
-\begin{frame}{Galaxy evolution}
-	Morphology at $z> 0.5$ different from the local Universe. \\
+\setbeamercolor{background canvas}{bg=black}
+\begin{frame}{Galaxy evolution through time}
 
-	Kinematics more disturbed. \\
+	\begin{textblock*}{0.9cm}(0.1cm,9.25cm)
+	\raggedleft
+{\usebeamercolor[white]{title in head/foot}\usebeamerfont{title in head/foot}\insertframenumber/\inserttotalframenumber}
+	\end{textblock*}
+
+	\begin{textblock*}{3cm}(2cm,9.25cm)
+	{\usebeamercolor[white]{author in head/foot}\usebeamerfont{author in head/foot}\insertshortauthor}
+	\end{textblock*}
+
+	\begin{textblock*}{9cm}(\dimexpr\the\paperwidth-9cm,9.25cm) 
+	\raggedleft
+	{\usebeamercolor[white]{block}\usebeamerfont{title in head/foot}Evolution of galaxy dynamics over the last 10 Gyrs...}
+	\end{textblock*}
 	
-	Why ?
+	\includegraphics[width=\linewidth]{{graphics/evolution_gals}.pdf}
 
-	\vfill
+\end{frame}
+
+\setbeamercolor{background canvas}{bg=white}
+\begin{frame}{Kinematics in the current context ?}
+	Explain evolution of morphology with kinematics
+
 	\begin{itemize}[label=$\rhd$]
-		\item Impact of the environment on the kinematics ? On the morphology ? How do they scale with each other ?
+		\item main processes in disc formation
+		\item impact of merging, inflows, outflows can be measured
 		\item Which physical processes are shaping galaxies ?
-		\begin{itemize}[label=$\cdot$]
-			\item Which is/are dominant  ?
-			\item How to identify them ?
-		\end{itemize}
-		\item Origin of quenching ?
-		\item Ancestors of local giant spirals ?
-		
+		\item kinematics $\rightarrow$ rotation curve $\rightarrow$ dark matter distribution
 	\end{itemize}
 \end{frame}
 
@@ -141,8 +140,18 @@
 
 \section{Methodology}
 \subsection{Methodology}
+\setbeamercolor{background canvas}{bg=UmUBlue}
 \begin{frame}{Methodology}
 
+	\begin{textblock*}{10cm}(1cm,1.66cm)
+		\begin{tikzpicture}
+			\useasboundingbox (0,-0.05) rectangle(\the\paperwidth,0.95);
+			\fill[color=UmUBlue] (-2,0+1.60) rectangle(\the\paperwidth,0.03+1.70);
+			\fill[color=black] (-1,0-6.5) rectangle(\the\paperwidth,0.03-6.5);
+	  	\end{tikzpicture}
+  	\end{textblock*}
+
+	\color{white}
 	\begin{enumerate}[label={\Roman*.}]
 		\item Morphological information
 
@@ -168,10 +177,10 @@
 		
 		\item Tully-Fisher relation
 	\end{enumerate}	
-
-
 \end{frame}
 
+
+\setbeamercolor{background canvas}{bg=white}
 \subsection{Half-light Radius}
 \begin{frame}{Checking morphological parameters}
 	\framesubtitle{Half-light radius}
@@ -382,12 +391,12 @@
 	\framesubtitle{Tully-Fisher relation}
 \end{frame}
 
-\begin{frame}[t,allowframebreaks]
-\frametitle{Bibliography}
+\section{Perspectives}
+\begin{frame}{Perspectives}
 
-\nocite{*} % will display the non-cited publications as well. Useful for a publication list.
+\underline{Short term:}
 
-\printbibliography
+\underline{Long term:}
 
 \end{frame}
 \end{document}
