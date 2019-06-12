@@ -41,38 +41,45 @@
 \section{Galaxy evolution}
 \setbeamercolor{background canvas}{bg=black}
 \begin{frame}{Galaxy evolution through time}
-
-	\begin{textblock*}{0.9cm}(0.1cm,9.25cm)
-	\raggedleft
-{\usebeamercolor[white]{title in head/foot}\usebeamerfont{title in head/foot}\insertframenumber/\inserttotalframenumber}
-	\end{textblock*}
-
-	\begin{textblock*}{3cm}(2cm,9.25cm)
-	{\usebeamercolor[white]{author in head/foot}\usebeamerfont{author in head/foot}\insertshortauthor}
-	\end{textblock*}
-
-	\begin{textblock*}{9cm}(\dimexpr\the\paperwidth-9cm,9.25cm) 
-	\raggedleft
-	{\usebeamercolor[white]{block}\usebeamerfont{title in head/foot}Evolution of galaxy dynamics over the last 10 Gyrs...}
-	\end{textblock*}
+	
+	\begin{textblock*}{10cm}(1cm,1.66cm)
+		\begin{tikzpicture}
+			\useasboundingbox (0,-0.05) rectangle(\the\paperwidth,9.2);
+			\fill[color=black] (-2,0+1.60) rectangle(\the\paperwidth,0.03+1.70);
+	  	\end{tikzpicture}
+  	\end{textblock*}
 	
 	\includegraphics[width=\linewidth]{{graphics/evolution_gals}.pdf}
 
 \end{frame}
 
-\setbeamercolor{background canvas}{bg=white}
-\begin{frame}{Kinematics in the current context ?}
-	Explain evolution of morphology with kinematics
+\begin{frame}{Why studying kinematics ?}
+	\begin{textblock*}{10cm}(1cm,1.66cm)
+		\begin{tikzpicture}
+			\useasboundingbox (0,-0.05) rectangle(\the\paperwidth,9.2);
+			\fill[color=black] (-2,0+1.60) rectangle(\the\paperwidth,0.03+1.70);
+	  	\end{tikzpicture}
+  	\end{textblock*}
+	
+	\begin{textblock*}{10cm}(3cm, 1cm) 
+		\includegraphics[width=\linewidth]{{graphics/evolution_gals}.pdf}
+	\end{textblock*}
+	
+	\begin{textblock*}{12cm}(1cm, 5.8cm) 
+		\color{white}
+		Explain evolution of morphology with kinematics
 
-	\begin{itemize}[label=$\rhd$]
-		\item main processes in disc formation
-		\item impact of merging, inflows, outflows can be measured
-		\item Which physical processes are shaping galaxies ?
-		\item kinematics $\rightarrow$ rotation curve $\rightarrow$ dark matter distribution
-	\end{itemize}
+		\begin{itemize}[label=$\rhd$]
+			\item main processes responsible for disc formation
+			\item impact of merging, inflows, outflows can be measured
+			\item kinematics $\rightarrow$ rotation curve $\rightarrow$ dark matter distribution
+		\end{itemize}
+	\end{textblock*}
 \end{frame}
 
 
+\setbeamercolor{background canvas}{bg=white}
+\color{black}
 \section{IFS \& MUSE}
 \begin{frame}{Integral Field Spectroscopy \& MUSE}
 
@@ -394,9 +401,21 @@
 \section{Perspectives}
 \begin{frame}{Perspectives}
 
-\underline{Short term:}
+	\underline{Short term:}
+
+	\begin{itemize}[label=$\rhd$]
+		\item Tully-Fisher relation
+		\item Variation between morphological and kinematical PA ?
+	\end{itemize}
 
 \underline{Long term:}
+
+	\begin{itemize}[label=$\rhd$]
+		\item Morphological modelling
+		\item Angular momentum evolution ?
+		\item Dark matter vs. luminous mass ?
+		\item \textbf{larger sample}
+	\end{itemize}
 
 \end{frame}
 \end{document}
