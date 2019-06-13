@@ -535,9 +535,9 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 showColorbar=False, locLegend='best', tickSize=24, title='', titlesize=24, 
                 colorbarOrientation='vertical', colorbarLabel=None, colorbarTicks=None, colorbarTicksLabels=None,
                 colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24,
-                outputName=None, overwrite=False, tightLayout=True, 
+                outputName=None, overwrite=False, tightLayout=True, linewidth=3,
                 fillstyle='full', unfilledFlag=False, alpha=1.0,
-                noCheck=False, legendNcols=1, removeGrid=False):
+                noCheck=False, legendNcols=1, removeGrid=False, markerSize=16, legendMarkerColor='black'):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     This function has been developed to be used with numpy arrays or list of numpy arrays (structured or not). Working with astropy tables or any other kind of data structure might or might not work depending on its complexity and behaviour. 
@@ -583,16 +583,22 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         whether to hide the y ticks or not
     label : string
         legend label for the data
+    legendMarkerColor : list of strings/chars/RGBs
+        the color of each marker in the legend
     legendNcols : int
         number of columns in the legend
     legendTextSize : int
         size for the legend
     linestyle : string, list of strings for many plots
         which line style to use
+    linewidth : float
+        the width of the line
     locLegend : string, int
         position where to place the legend
     marker : string, char, list of both for many plots
         the marker to use for the data
+    markerSize : float or list of floats for scatter plots
+        the size of the marker
     noCheck : boolean
         whether to check the given parameters all have the relevant shape or not
     numPlot : int (3 digits)
@@ -670,6 +676,14 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     except:
         marker = [marker]*len(datax)
     try:
+        np.shape(markerSize[1])[0]
+    except:
+        markerSize = [markerSize]*len(datax)
+    try: 
+        np.shape(legendMarkerColor)[0]
+    except:
+        legendMarkerColor = [legendMarkerColor]*len(datax)
+    try:
         np.shape(zorder)[0]
     except:
         zorder = [zorder]*len(datax)
@@ -719,16 +733,18 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     tmp = None
     sct = None
     
-    for dtx, dty, mrkr, clr, zrdr, lnstl, lbl, pltFlg, fllstl, lph, nflldFlg in zip(datax, datay, marker, color, zorder, linestyle, label, plotFlag, fillstyle, alpha, unfilledFlag):
+    for dtx, dty, mrkr, mrkrSz, clr, zrdr, lnstl, lbl, pltFlg, fllstl, lph, nflldFlg in zip(datax, datay, marker, markerSize, color, zorder, linestyle, label, plotFlag, fillstyle, alpha, unfilledFlag):
         edgecolor = clr
         if nflldFlg:
             facecolor = "none"
         else:
             facecolor=clr
         
+        print(pltFlg)
         if pltFlg:
             tmp = plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, alpha=lph,
-                           linestyle=lnstl, markerfacecolor=facecolor, markeredgecolor=edgecolor)
+                           linestyle=lnstl, markerfacecolor=facecolor, markeredgecolor=edgecolor,
+                           markersize=mrkrSz, linewidth=linewidth)
         else:            
             #Defining default bounds for scatter plot if not given
             if cmapMin is None:
@@ -738,7 +754,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 
             markerObject = MarkerStyle(marker=mrkr, fillstyle=fllstl)
             sct = plt.scatter(dtx, dty, label=lbl, marker=markerObject, zorder=zrdr, 
-                              cmap=cmap, vmin=cmapMin, vmax=cmapMax, alpha=lph, c=clr)
+                              cmap=cmap, vmin=cmapMin, vmax=cmapMax, alpha=lph, c=clr, s=mrkrSz)
             if nflldFlg:
                 sct.set_facecolor('none')
             
@@ -760,7 +776,9 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 col.ax.set_xticklabels(colorbarTicksLabels, size=colorbarTicksLabelsSize)
             
     if showLegend:
-        plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True, ncol=legendNcols)
+        leg = plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True, ncol=legendNcols)
+        for marker, mkclr in zip(leg.legendHandles, legendMarkerColor):
+            marker.set_color(mkclr)
         
     #Define Y limits if required
     if ylim[0] is not None:
