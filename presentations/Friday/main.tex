@@ -40,7 +40,7 @@
 
 \section{Galaxy evolution}
 \setbeamercolor{background canvas}{bg=black}
-\begin{frame}{Galaxy evolution through time}
+\begin{frame}{Galaxy evolution through cosmic time}
 	
 	\begin{textblock*}{10cm}(1cm,1.66cm)
 		\begin{tikzpicture}
@@ -65,9 +65,9 @@
 		\includegraphics[width=\linewidth]{{graphics/evolution_gals}.pdf}
 	\end{textblock*}
 	
-	\begin{textblock*}{12cm}(1cm, 5.8cm) 
+	\begin{textblock*}{11cm}(1cm, 5.8cm) 
 		\color{white}
-		Explain the co-evolution of morphology with kinematics
+		Explain the co-evolution of morphological and dynamical properties of galaxies
 
 		\begin{itemize}[label=$\rhd$]
 			\item main processes responsible for disc formation and settling ?
@@ -123,9 +123,9 @@
 
 
 \section{Initial sample}
-\begin{frame}{Our sample}
+\begin{frame}{Initial sample}
 	\begin{columns}
-		\begin{column}{0.5\linewidth}	
+		\begin{column}{0.65\linewidth}	
 			\begin{figure}
 				\includegraphics[width=\linewidth]{{graphics/CGr30}.eps}
 				\caption{HST image of COSMOS group CGr30}
@@ -151,47 +151,21 @@
 
 \section{Methodology}
 \subsection{Methodology}
-\setbeamercolor{background canvas}{bg=UmUBlue}
 \begin{frame}{Methodology}
-
-	\begin{textblock*}{10cm}(1cm,1.66cm)
-		\begin{tikzpicture}
-			\useasboundingbox (0,-0.05) rectangle(\the\paperwidth,0.95);
-			\fill[color=UmUBlue] (-2,0+1.60) rectangle(\the\paperwidth,0.03+1.70);
-			\fill[color=black] (-1,0-6.5) rectangle(\the\paperwidth,0.03-6.5);
-	  	\end{tikzpicture}
-  	\end{textblock*}
-
-	\color{white}
-	\begin{enumerate}[label={\Roman*.}]
-		\item Morphological information
-
-		\begin{itemize}[label=$\rhd$]
-			\item \textbf{half-light radius} $R_{1/2}$ to select resolved galaxies
-			\begin{itemize}[label=$\cdot$]
-				\item Cassata, Tasca and Zurich catalogues
-			\end{itemize}
-			\item \textbf{ellipticitiy} to compute the inclination
-			\begin{itemize}[label=$\cdot$]
-				\item fixed input for the kinematical model
-			\end{itemize}		
-		\end{itemize}
-		
-		\vfill		
-		
-		\item Kinematical modelling
-			\begin{itemize}[label=$\rhd$]
-				\item recover $V_{\rm{max}}$ and $\sigma_{\rm{v}}$
-			\end{itemize}
-		
-		\vfill		
-		
-		\item Tully-Fisher relation
-	\end{enumerate}	
+	\begin{textblock*}{11.5cm}(0.1cm, 1.2cm)
+		\includegraphics[width=1.1\linewidth]{{graphics/SchematicsMorpho}.eps}
+	\end{textblock*}
+	
+	\begin{textblock*}{11cm}(8.5cm, 5cm)
+		\textcolor{OliveGreen}{Prior data/information} \\ 
+		{\Large\textbf{\textcolor{blue}{Morphology}}} \\ 
+		\textcolor{magenta}{Kinematics} \\ 
+		\textcolor{orange}{Analysis}
+	\end{textblock*}
+	
 \end{frame}
 
 
-\setbeamercolor{background canvas}{bg=white}
 \subsection{Half-light Radius}
 \begin{frame}{Checking morphological parameters}
 	\framesubtitle{Half-light radius}
@@ -242,10 +216,8 @@
 \end{frame}
 
 
-\section{Characteristics of our sample}
-\subsection{Redshift distribution}
-\begin{frame}{Characteristics of our sample}
-	\framesubtitle{Redshift distribution}
+\section{Sample selection and redshift distribution}
+\begin{frame}{Sample selection and redshift distribution}
 	\vspace{-15pt}
 	\begin{columns}	
 		\begin{column}{0.55\linewidth}
@@ -296,13 +268,29 @@
 		\begin{column}{0.4\linewidth}
 			\begin{itemize}[label=$\rhd$]				
 				\item Most of our sample galaxies are on the main sequence
-				\item \textcolor{red}{massive quiescent} (low [OII]) and \textcolor{blue}{very low mass galaxies} are lost
+				\item \textcolor{red}{massive quiescent} (low [OII]) and \textcolor{blue}{very low mass galaxies} (small size) are lost
 			\end{itemize}
 		\end{column}
 		\begin{column}{0.75\linewidth}
 		\includegraphics[width=\linewidth]{{graphics/SFR_vs_mass_correctedversiononly}.pdf}
 		\end{column}
 	\end{columns}		
+\end{frame}
+
+\section{Methodology}
+\subsection{Methodology}
+\begin{frame}{Methodology}
+	\begin{textblock*}{11.5cm}(0.1cm, 1.2cm)
+		\includegraphics[width=1.1\linewidth]{{graphics/SchematicsKinematics}.eps}
+	\end{textblock*}
+	
+	\begin{textblock*}{11cm}(8.5cm, 5cm)
+		\textcolor{OliveGreen}{Prior data/information} \\ 
+		\textcolor{blue}{Morphology} \\ 
+		{\Large\textbf{\textcolor{magenta}{Kinematics}}} \\ 
+		\textcolor{orange}{Analysis}
+	\end{textblock*}
+	
 \end{frame}
 
 \section{Kinematical modelling}
@@ -415,7 +403,20 @@
 \subsection{Tully-Fisher relation}
 \begin{frame}{First results}
 	\framesubtitle{Tully-Fisher relation}
+	\begin{columns}
+		\begin{column}{0.7\linewidth}		
+			\includegraphics[width=\linewidth]{{graphics/TFRz}.pdf}
+		\end{column}
+		\begin{column}{0.4\linewidth}
+			\begin{itemize}[label=$\rhd$]
+				\item First TFR obtained yesterday
+				\item \textbf{still investigating}
+				\item comparison with Eagle simulation (Schaye+15)
+			\end{itemize}
+		\end{column}
+	\end{columns}
 \end{frame}
+
 
 \section{Perspectives}
 \begin{frame}{Perspectives}
