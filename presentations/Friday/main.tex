@@ -4,8 +4,8 @@
 \usetheme{umu}
 
 \usepackage[inline]{enumitem}
-
-\usepackage{enumitem}
+\usepackage[labelformat=empty]{caption}
+\captionsetup[figure]{font=scriptsize}
 \usepackage{siunitx}
 \usepackage{xcolor}
 
@@ -61,18 +61,18 @@
 	  	\end{tikzpicture}
   	\end{textblock*}
 	
-	\begin{textblock*}{10cm}(3cm, 1cm) 
+	\begin{textblock*}{10cm}(1.5cm, 1cm) 
 		\includegraphics[width=\linewidth]{{graphics/evolution_gals}.pdf}
 	\end{textblock*}
 	
 	\begin{textblock*}{12cm}(1cm, 5.8cm) 
 		\color{white}
-		Explain evolution of morphology with kinematics
+		Explain the co-evolution of morphology with kinematics
 
 		\begin{itemize}[label=$\rhd$]
-			\item main processes responsible for disc formation
-			\item impact of merging, inflows, outflows can be measured
-			\item kinematics $\rightarrow$ rotation curve $\rightarrow$ dark matter distribution
+			\item main processes responsible for disc formation and settling ?
+			\item impact of merging, inflows and outflows on these processes ?
+			\item kinematics $\rightarrow$ rotation curve $\rightarrow$ dark matter and angular momentum distribution ?
 		\end{itemize}
 	\end{textblock*}
 \end{frame}
@@ -101,7 +101,11 @@
 				\item $\SI{0.2}{arcsec}$ spatial sampling
 				\item spectral range $[\SI{4650}{\angstrom}, \SI{9300}{\angstrom}]$
 				\item seeing-limited or AO observations
-				\item \textbf{low-mass galaxies + blind surveys}
+				\item high sensitivity
+				\begin{itemize}[label=$\rightarrow$]
+					\item \textbf{low-mass galaxies + blind surveys}
+				\end{itemize}								
+				
 			\end{itemize}
 		\end{column}
 
@@ -134,9 +138,6 @@
 				\item $16$ MUSE fields in COSMOS area
 				\item exposures from $1$ to $\SI{10}{hr}$
 				\item seeing-limited ($\rm{FWHM} \lesssim \SI{0.7}{"}$) or AO ($\rm{FWHM} \lesssim \SI{0.5}{"}$)
-				\begin{itemize}[label=$\cdot$]
-					\item \textit{deep} and \textit{best\_seeing} observations
-				\end{itemize}
 				\item $\mathbf{\sim 500}$ \textbf{field galaxies with [OII] detection}
 				\begin{itemize}[label=$\cdot$]
 					\item HST-ACS counterparts
@@ -245,24 +246,30 @@
 \subsection{Redshift distribution}
 \begin{frame}{Characteristics of our sample}
 	\framesubtitle{Redshift distribution}
+	\vspace{-15pt}
 	\begin{columns}	
 		\begin{column}{0.55\linewidth}
 			\vspace{-10pt}		
 			\begin{figure}
 				\centering
+				\includegraphics[width=\linewidth]{{graphics/SNR_vs_R_halfLight_arcsec}.pdf}	
+			\end{figure}
+
+		\end{column}
+		
+		\begin{column}{0.4\linewidth}
+			\begin{figure}
 				\includegraphics[width=\linewidth]{{graphics/hist_redshift}.pdf}
-				\caption{The total number corresponds to galaxies with photometric data in Cassata and/or Zurich catalogues.}
+				\caption{The total number corresponds to galaxies with photometric data in Cassata and/or Zurich catalogues.}			
 			\end{figure}
 		\end{column}
 		
-		\begin{column}{0.5\linewidth}
-			\begin{itemize}[label=$\rhd$]				
+	\end{columns}
+							\begin{itemize}[label=$\rhd$]				
 				\item sample of \textbf{103 galaxies} with $R_{\rm{1/2}} > \SI{0.35}{"}$ and $\rm{SNR} > 5$
 				\item we loose galaxies at $z \approx 1.4$
 				\item redshift distribution is not drastically changed
 			\end{itemize}
-		\end{column}
-	\end{columns}
 
 \end{frame}
 
