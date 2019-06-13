@@ -537,7 +537,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24,
                 outputName=None, overwrite=False, tightLayout=True, 
                 fillstyle='full', unfilledFlag=False, alpha=1.0,
-                noCheck=False, legendNcols=1):
+                noCheck=False, legendNcols=1, removeGrid=False):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     This function has been developed to be used with numpy arrays or list of numpy arrays (structured or not). Working with astropy tables or any other kind of data structure might or might not work depending on its complexity and behaviour. 
@@ -605,6 +605,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         whether to place the y axis of the plot on the right or not
     plotFlag : boolean, list of booleans for many plots
         if True, plots with pyplot.plot function. If False, use pyplot.scatter
+    removeGrid : boolean, list of booleans for many plots
+        whether to remove the grid or not
     textsize : int
         size for the labels
     showColorbar : boolean
@@ -636,7 +638,9 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     ax1.xaxis.set_ticks_position('both')
     ax1.set_title(title, size=titlesize)
     ax1.tick_params(which='both', direction='in', labelsize=tickSize)
-    plt.grid(zorder=1000)
+    
+    if not removeGrid:
+        plt.grid(zorder=1000)
     
     #Checking shape consistency between datax and datay
     shpX = np.shape(datax)
