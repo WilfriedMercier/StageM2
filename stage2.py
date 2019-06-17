@@ -389,7 +389,7 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
                 label='', zorder=0, textsize=24, showLegend=False, legendTextSize=24,
                 xlim=[None, None], locLegend='best', tickSize=24, title='', titlesize=24,
                 outputName=None, overwrite=False, tightLayout=True, integralIsOne=None,
-                align='mid', histtype='stepfilled', alpha=1.0, cumulative=False, legendNcols=1, hatch=None):
+                align='mid', histtype='stepfilled', alpha=1.0, cumulative=False, legendNcols=1, hatch=None, orientation='vertical'):
 
     """
     Function which plots on a highly configurable subplot grid 1D histograms. A list of data can be given to have multiple histograms on the same subplot.
@@ -432,6 +432,8 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
         position where to place the legend
     numPlot : int (3 digits)
         the subplot number
+    orientation : str
+        orientation of the bars
     outputName : str
         name of the file to save the graph into. If None, the plot is not saved into a file
     overwrite : boolean
@@ -497,7 +499,7 @@ def asManyHists(numPlot, data, bins=None, weights=None, hideXlabel=False, hideYl
         
     n, bns, ptchs = plt.hist(data, bins=bins, range=rang, density=integralIsOne, weights=weights, color=color,
                              align=align, histtype=histtype, label=label, zorder=zorder, alpha=alpha,
-                             cumulative=cumulative, hatch=hatch)
+                             cumulative=cumulative, hatch=hatch, orientation=orientation)
     
     #set hatching pattern if there is one
     
