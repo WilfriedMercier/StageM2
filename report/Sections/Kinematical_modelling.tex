@@ -3,69 +3,128 @@
 \label{sec:kinematical_modelling}
 
 \subsection{Manual cleaning}
+\label{sec:manual_cleaning}
 
 For every selected galaxy, we ran the automatic cleaning routine as described in Section \ref{sec:selecting_galaxies}. Cleaned maps were produced and the velocity maps were visually inspected. Isolated pixels were removed even if they had a clearly visible [OII] doublet. We also inspected their line near the edges and we removed any pixel whose velocity seemed inconsistent with that of its neighbours (a single negative value around positives ones for instance). Twelve galaxies were unresolved and $3$ were too close to the edges of the MUSE fields which resulted in missing data. Relaxing the $\rm{SNR}$ threshold in the routine to $3$ allowed us to recover $6$ galaxies out of $12$. 
 
-\subsection{Kinematical parametrisation}
+\subsection{Velocity field and dispersion maps}
+\label{sec:vel_field_and_disp_map}
 
-The MUSE velocity maps only give us information about a single projected component of the 3D velocity field. Indeed, for a given pixel, the mean offset of the best fit Gaussian profile of the observed line is used in the usual Doppler shift formula to derive the velocity
+Without going too much into details, it is interesting to understand how the different velocities maps are produced so that we can apply corrections to PSF related effects in order to derive more accurate measurements of the kinematical parameters of our galaxies. Given that the corrections applied to the velocity dispersion maps by the fitting routine we used are based on \shortciteA{Epinat2010}, we tried to keep as much as possible the same notations in the following and refer the reader to this article, particularly the appendix A for more details. \\
 
-\begin{equation}
-	\frac{\lambda_{\rm{obs}} - \lambda_{\rm{em}}}{\lambda_{\rm{em}}} = \frac{v}{c}
-\end{equation}
-with $v$ positive if it recedes from us and negative if it approaches. This means the only measure we have is the radial component of the gas velocity within the pixels. If we use the same coordinate system as defined in \shortciteA{Epinat2008}, we can write the observed projected radial component $V_{\rm{obs}}$ as 
+The velocity field is defined as the first moment of the emitting line ([OII] doublet in our case)
 
 \begin{equation}
-	V_{\rm{obs}} ( (x_c , y_c) , R, \theta , i, V_{\rm{sys}} , \rm{PA} ) = V_{\rm{sys}} + \left [ V_{\rm{rot}} (R) \cos \theta + V_{\rm{exp}} (R) \sin \theta \right ] \sin i + V_z (R) \cos i
-	\label{eq:v_obs}
+	V(x,y) = \int_\lambda L(x,y,\lambda) v(\lambda) d\lambda / M(x, y)
+	\label{eq:vel_field_def}
 \end{equation}
-where $(x_c , y_c)$ is the galaxy centre position, $R$ the radial distance in the galactic plane, $i$ the galaxy inclination and $\rm{PA}$ the kinematical position angle (which might be different from the morphological one). In Eq.\,\ref{eq:v_obs}, the velocity components are
-\begin{enumerate*}[label={(\alph*)}]
-	\item $V_{\rm{sys}}$ the systematic velocity due to the expansion of the Universe
-	\item $V_{\rm{rot}}$ the rotational velocity tangent to the plane of the galaxy
-	\item $V_{\rm{exp}}$ the expansion velocity oriented in the radial direction in the galactic plane
-	\item $V_z$ the vertical velocity normal to the plane.
-\end{enumerate*}
-
-In practice, spectroscopic measurements give us $\Delta V_{\rm{obs}} = V_{\rm{obs}} - V_{\rm{sys}}$. In Eq.\,\ref{eq:v_obs}, the dependence on the kinematical major axis position angle is implicit since $\theta$ is defined as the angle in the galactic plane starting from the major axis. Thus, $\theta = 0 \degree$ ($90 \degree$) when we measure the velocity of a point on the major (minor) axis. The dependence on the galaxy centre position is also implicit as the radial distance is counted from this point. \\
-
-Both $R$ and $\theta$  can be easily derived given $(x_c , y_c)$ and the $\rm{PA}$, but the inclination of the galaxy must be know in advance. Indeed, models tend to poorly converge when the inclination is let free to vary. More importantly, assuming the rotation curve along the major axis reaches a maximum rotational velocity or at least a plateau, we deduce from Eq.\,\ref{eq:v_obs} that the maximum rotational velocity will scale as
+where $L(x, y, \lambda)$ is the line spectral light distribution and $M(x,y) = \int_\lambda L d\lambda$ the line flux (zero order moment). On the other hand, the velocity dispersion map is defined as the square root of the (central) second order moment
 
 \begin{equation}
-	V_{\rm{obs}}^{\rm{max}} (R_{\rm{max}}, i) = V_{\rm{rot}} (R_{\rm{max}}) \sin i
+	\sigma_{\rm{v}} (x,y) = \left ( \overline{V^2(x,y)} - \overline{V(x,y)}^2 \right )^{1/2}
+	\label{eq:disp_field_def}
 \end{equation}
-where $R_{\rm{max}}$ represents the radius at which the maximum/plateau velocity is reached. Thus, just by looking at the rotation curve and by measuring its maximum value, we cannot raise the degeneracy between the inclination, which will lower the velocity, and the real maximum rotational velocity. Hence, it must be used as a fixed input.
+where $\overline{V^2(x,y)}$ is defined as in Eq.\,\ref{eq:vel_field_def} with $v \rightarrow v^2$. However, we have in practice a spectrum with a finite resolution due to spectral sampling. Thus, if we have $N$ contiguous spectral channels $\lbrace \lambda_i \rbrace_{i\leq N}$, and if the line is spectrally resolved, we can rewrite Eq.\,\ref{eq:vel_field_def} and \ref{eq:disp_field_def} with a discrete summation instead of an integral
+
+\begin{equation}
+	\overline{V(x,y)} \approx \sum_{i \leq N} S_i(x,y,\lambda_i) v(\lambda_i) / M(x, y)
+	\label{eq:vel_field_def_sampled}
+\end{equation}
+where $S_i(x,y,\lambda_i)$ will be the spectral light distribution in the spectral channel centred on $\lambda_i$ and $M(x,y) \approx \sum_i S_i$.
 
 
-\subsection{Model}
+\subsection{Velocity field model}
 \label{subsec:model}
+\subsubsection{Ramp model}
+\label{subsec:ramp_model}
 
-We deduce the kinematical parameters of our galaxies by fitting 2D velocity models onto the cleaned velocity maps. Though a few different models exist, some derived assuming a certain mass distribution, others purely based on visual inspections of the velocity curves, we focussed on a single model. We shall inspect how our conclusions might change if we use other models in future analysis. \\
+In order to derive the kinematical parameters of our galaxies, we must fit a 2D velocity model onto the cleaned velocity fields. Galaxies kinematical models tend to describe the movement of gas by assuming circular rotation in the plane of the galaxy. The inclination of the galaxy on the sky will have the effect to bend the velocity field and produce a 'spider-diagram' (see Fig.\,\ref{fig:velocity_map} for an example). A few different models exist which might yield slightly different results. Some are derived assuming a certain mass distribution such as \shortciteA{Freeman1970} model of a thin exponential disc. Others rely on a visual description of observed galaxy rotation curves such as the 'ARCTAN' function of \shortciteA{Courteau1997} or the linear ramp model from \shortciteA{Wright2009} and \shortciteA{Epinat2012}.\\
 
-This model we are using in this analysis consists in describing the rotation curve along the kinematical major axis as a linearly increasing slope in the central part, till reaching a turnover point whereafter the velocity remains constant. This relies on the assumption of a thin disk, which might no longer be true for nearly edge-on galaxies ($75 \degree \lesssim i \lesssim 90 \degree$) due to the increasing depth leading to higher values of opacity. The second assumption is that there actually is a global rotation in our galaxies. In the local Universe, we know this might not be true for ellipticals. However, in our case, we expect spheroidal systems to still have some rotation, though it might be less significant.
 
-We also do not take into account features such as a central bar, arms or clumps. The main reason is that we are lacking resolution to clearly see these effects in the kinematical maps. Some galaxies do show arms and clumpy components in HST images. However, even if the nebular emissions trace these structures, the MUSE PSF will blend them in a manner that all relevant information will be lost. Moreover, these structures are instability driven and the most distant galaxies in our sample are probably still unrelaxed systems. So, in this regard, we expect to see few of them at these redshifts.\\
-
-In our case, we assume we have smooth velocity fields with no bar, no arms and no clumps such as HII regions.
-In our model, $4$ morphological and $1$ kinematical parameters are used. The inclination of the galaxy, its centre right ascension and declination and the $PA$ of the major axis must be given as fixed values. The kinematical parameter corresponds to the systematic velocity, that is the radial component of the velocity due to the expansion of the Universe.
-
-\subsection{Maximum velocity and velocity dispersion}
-
-The model returns the minimum, maximum, average and median values for the dispersion map once corrected of beam smearing effects. We also recover the rotational velocity on the plateau $V_{\rm{p}}$, as well as the radius at which it is reached $R_{\rm{p}}$ and the maximum radius where the fit was performed $R_{\rm{last}}$. If the model converges to $R_{\rm{p}} > R_{\rm{last}}$, the measure of both $\rm{R_p}$ and $V_{\rm{p}}$ are not reliable any more. Thus any galaxy meeting this condition is not considered in the following.
-
-To remain consistent with other studies, we decided to compute the maximum velocity at $2.2 R_{\rm{d}}$, with $R_{\rm{d}}$ the disc scale length. This is defined as the radial distance in a morphological exponential disc model where the intensity drops by a factor of $e$ with respect to the central value. From this definition, we can compute its scaling relation with $R_{1/2}$. Given that $I(R_{\rm{d}}) = I_0 e^{-1} = I_{\rm{e}} e^{- b_1 ( R_{\rm{d}} / R_{\rm{e}} - 1 )}$, we find
+We chose the linear ramp model to describe our velocity fields as it was found to better describe simulated galaxy rotation curves at high redshift
 
 \begin{equation}
-	R_{\rm{e}} = b_1 R_{\rm{d}}
+	V(R) = V_{\rm{s}} + V_{\rm{c}}  \times
+	\begin{cases}
+ 		R / R_{\rm{c}} &\mbox{if } R < R_{\rm{c}} \\
+		1 &\mbox{if }  R \geq R_{\rm{c}}
+	\end{cases}
 \end{equation}
-where $b_1$ is the solution of the equation $2 \gamma (2, b_1) = \Gamma(2)$. This also translates as
+
+This simple model consists in a linearly increasing slope in the central part till it reaches a radius $R_{\rm{c}}$ (curvature radius) beyond which the rotation velocity $V_{\rm{c}}$ remains the same (plateau). Such a modelling will only work under the assumption of the existence of a measurable global rotation. We also do not take into account features such as a central bar, spiral arms or clumps which are resolved for some galaxies in HST-ACS images. This is because of the lack of spatial resolution in our MUSE data which prevents us from clearly distincting these components in the kinematics. \\
+
+We have in total $3$ fixed input parameters which must be known in advance: the inclination, and the centre right ascension and declination. The inclination is used by the model to appropriately bend the velocity field. As discussed in Appendix \ref{sec:vel_decompo}, there is a degeneracy between the maximum rotation velocity and the inclination of the galaxy so that the kinematical model would not converge to reliable values of $i$ if it were to freely vary. The free parameters are the systematic velocity $V_{\rm{s}}$, the curvature radius and the plateau velocity. 
+
+
+\newpage
+\subsection{Beam-smearing effect on the dispersion}
+\label{sec:beam_smearing_effect}
+\subsubsection{Impact of the PSF}
+\label{sec:impact_PSF}
+
+The measured velocity dispersion in each pixel is affected both by the real dispersion related to local turbulent motion on the line of sight and by instrumental effects called beam-smearing. If we want to perform statistics on our morpho-kinematics parameters, such as computing a distribution for $V_{\rm{max}} / \sigma_{\rm{v}}$ which we can then use to study the Tully-Fisher Relation (TFR) of our sample, we need to derive a physically meaningful value of the average or median velocity dispersion. \\
+
+The light distribution in each channel will be convolved with the spatial PSF so that $S_i^{\rm{0}} = S_i * \rm{PSF}$ and $M_{\rm{0}} = M * \rm{PSF}$. Any raw velocity moment of order $\alpha$ can be computed by substituting $S_i \rightarrow S_i^{\rm{0}}$ and $M \rightarrow M_{\rm{0}}$ in Eq.\,\ref{eq:vel_field_def} with $v \rightarrow v^{\alpha}$
 
 \begin{equation}
-	\int_0^{b_1} t e^{-t} dt = 1 - e^{-b_1} ( 1 + b_1) = 1/2
+	\overline{V_0^{\alpha}} = \left [ \left ( \overline{V^{\alpha}} M \right ) * \rm{PSF} \right ] / M_0
+	\label{eq:raw_moment}
 \end{equation}
-for which we find a solution by making the substitution $b_1 \rightarrow - y - 1$ and using the Lambert W function
+
+Given Eq.\,\ref{eq:raw_moment}, we can compute the effect of the spatial PSF on the velocity dispersion
+
+\begin{align}
+	\sigma_0^2 & = \overline{V_0^2} - \overline{V_0}^2 \\
+	& = \left [ \frac{\left ( \sigma^2 + \overline{V}^2 \right ) M}{M_0} \right ] * \rm{PSF} - \left [ \left (  \frac{\overline{V} M}{ M_0} \right ) * \rm{PSF} \right ]^2
+\end{align}
+
+\subsubsection{Spatial sampling}
+\label{sec:spatial_sampling}
+
+The second effect to take into account is spatial sampling. The spectral light distribution is now spatially discretized as follows
+
+\begin{align}
+	S_1 ( x_j , y_k , \lambda_i ) & = (\Delta x \Delta y)^{-1}\int_{\rm{pixel}} S_i^0 (x, y, \lambda_i) dx dy \\
+	& = \left \langle S_i^0 (x, y, \lambda_i) \right \rangle_{(x_j , y_k)}
+	\label{eq:spatial_sampling_on_light}
+\end{align}
+so that it corresponds to the average integrated light in a pixel centred on $(x_j , y_k)$ of width $\Delta x$ and height $\Delta y$. By summing Eq.\,\ref{eq:spatial_sampling_on_light} over all pixels, one recovers the total flux as
 
 \begin{equation}
-	b_1 = - \rm{W} \left ( - \frac{1}{2 e} \right ) - 1 \approx 1.67835
+	M_1 (x_j , y_k ) = \left \langle M (x,y) * {\rm{PSF}} \right \rangle_{(x_j , y_k)}
 \end{equation}
-where we only kept the positive, physically meaningful solution. 
+and more generally any raw velocity moment of order $\alpha$ will be written as
+
+\begin{equation}
+	\overline{V_1^{\alpha}} ( x_j , y_k) = \left \langle \left [ \frac{M \overline{V^{\alpha}}}{M_1} \right ] * {\rm{PSF}} \right \rangle_{(x_j , y_k)}
+\end{equation}
+
+This finally gives us the expression for the measured velocity dispersion affected by beam smearing effects
+
+\begin{equation}
+	\sigma_{\rm{v}}^{\rm{obs}} (x_j , y_k ) = \left [ \left \langle \left [ \frac{\left (\sigma_{\rm{v}}^2 + \overline{V}^2 \right ) M}{M_1} \right ] * \rm{PSF} \right \rangle_{(x_j , y_k)} - \left \langle \frac{\overline{V}M}{M_1} * \rm{PSF} \right \rangle_{(x_j , y_k)}^2 \right ]^{1/2}
+	\label{eq:sigma_obs}
+\end{equation}
+
+We see in Eq.\,\ref{eq:sigma_obs} that we need to know the best-fit velocity field model of our galaxy, as well as the PSF, to invert it and retrieve the real velocity dispersion map $\sigma_{\rm{v}}(x,y)$ from the observed one. 
+
+
+
+\subsection{Modelling}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{{Figures/maps_CGr30_deep_91_o2_paper}.eps}
+	\caption[Kinematical model example]{An example of the kinematical model for the galaxy \texttt{Gr30\_deep\_91}. From left to right we find
+		\begin{enumerate*}[label=]
+			\item Top: HST image, MUSE image and SNR map.
+			\item Middle: observed velocity field, velocity model and residual between the two.
+			\item Bottom: Dispersion map, dispersion model of the beam-smearing effect and the residual map.
+		\end{enumerate*}		
+	  The maximum rotational velocity is deduced from the kinematical parameters of thofe velocity field model. The velocity dispersion is computed from the residual map of the dispersion.}
+	\label{fig:velocity_map}
+\end{figure}
+
+We applied the kinematical model and the beam-smearing correction described in previous sections on the $\sim 100$ field galaxies of our sample with an IDL routine, from B. Epinat, based on the Markwardt MPFIT IDL library. This code uses a reduced $\chi^2$ method with the Levenberg-Marquardt algorithm to fit a ramp model on the velocity field, and computes from it the dispersion map after accounting for beam-smearing effects. The derived morphological and kinematical parameters are given in Table \ref{table:kinematical_params}. \\
+
+We inspected the model against the velocity field for every galaxy, especially the centre position. We expected a couple of MUSE fields to have centre position offsets because of astrometry issues during the data processing. Thus, whenever the centre did seem offset, we moved it in a $3\times \SI{3}{px}$ box and searched for the position with the best $\chi^2$. The model converged in all cases except for the galaxy \texttt{CGr\_61\_134}. By lack of time, we did not investigate it further and we removed it from the analysis. An example of a kinematical model is given in Fig.\,\ref{fig:velocity_map} for \texttt{Gr30\_deep\_91}. This is a quite extended galaxy compared to others, at intermediate redshift and with a smooth velocity field. We also flagged $10$ galaxies which had poor spatial resolution compared to the remaining sample (generally because of low $\rm{SNR}$).
