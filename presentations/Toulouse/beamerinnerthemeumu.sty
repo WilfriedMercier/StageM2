@@ -1,0 +1,65 @@
+\mode<presentation>
+
+\setbeamertemplate{sections/subsections in toc}[circle]
+\setbeamertemplate{items}[circle]
+\usebeamercolor[fg]{normal text}
+
+\setbeamertemplate{background}{
+\begin{tikzpicture}
+
+  
+\ifnum\thepage>1\relax%
+% background for pages > 1 
+	%\fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
+\else 
+
+	% Colored line
+  %\fill[color=UmUBlue] (0,\the\paperheight) rectangle(\the\paperwidth,8.65);
+
+  % background for the title page
+  \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+
+  % background logo
+  \node[inner sep=0pt][opacity=1] (logo) at (6,3.7){\includegraphics[width=9cm]{graphics/galaxy.png}};
+  
+  %irap and omp logos
+  \node[inner sep=0pt] (logo) at (9.5,1){\includegraphics[width=2cm]{graphics/irap_logo}};
+  \node[inner sep=0pt] (logo) at (11.5,2.8){\includegraphics[width=1.5cm]{graphics/omp_logo}};
+    \node[inner sep=0pt] (logo) at (11.5,1.2){\includegraphics[width=2cm]{graphics/sdu2e}};
+  
+
+\fi
+% in debug mode, show the grid
+\ifdefined\DEBUG
+	\draw[help lines,xstep=1,ystep=1,gray] (current page.south west) grid (current page.north east);
+\fi
+\end{tikzpicture}
+}
+
+% Title page
+\defbeamertemplate*{title page}{umu}[1][]
+{
+%\begin{textblock*}{10cm}(2cm,0.5cm)
+%{\usebeamercolor[white]{author}\usebeamerfont{author}\insertinstitute}
+%\end{textblock*}
+
+\begin{textblock*}{12cm}(0.75cm,0.5cm)
+{\usebeamercolor[fg]{title}\usebeamerfont{title}\inserttitle}
+\end{textblock*}
+
+\begin{textblock*}{10cm}(1cm,8cm)
+{\usebeamercolor[fg]{author}\usebeamerfont{author}\insertauthor}
+\end{textblock*}
+
+\begin{textblock*}{10cm}(1cm,7.5cm)
+{\usebeamercolor[fg]{author}\usebeamerfont{author}Candidature à l’école doctorale SDU2E}
+\end{textblock*}
+
+\begin{textblock*}{10cm}(3.5cm,3.3cm)
+{\usebeamercolor[fg]{author}\usebeamerfont{author}Sous la direction de Contini Thierry}
+\end{textblock*}
+
+}
+
+\mode
+<all>
