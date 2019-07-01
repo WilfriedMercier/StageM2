@@ -10,6 +10,7 @@ MAGIC (MUSE-gAlaxy Groups In Cosmos) is  an ESO spectroscopic survey (PI: T. Con
 
 \begin{table}[htbp]
 
+	\centering
 	\hspace{50pt}
 
 	\begin{tabular}{ccccccc}
@@ -51,7 +52,7 @@ MAGIC (MUSE-gAlaxy Groups In Cosmos) is  an ESO spectroscopic survey (PI: T. Con
 	
 	\end{tabular}
 	
-	\caption[Main characteristics of the COSMOS area.]{Main characteristics of the COSMOS area. Groups ending with \_d correspond to deep observations (full stacked OBs) and with \_bs correspond to best-seeing observations (only OBs with a seeing below $\SI{0.7}{"}$). The seeing is given for the observed [OII] wavelength corresponding to the group's average redshift. 1. COSMOS group number 2. Group centre's right ascension 3. Group centre's declination 4. Exposure time of MUSE observations 5. Spatial resolution (PSF $\rm{FWHM}$) measured in MUSE data 6. Total number of detected galaxies within MUSE FoV 7. Number of field galaxies}
+	\caption[Main characteristics of the MUSE observations in the COSMOS area.]{Main characteristics of the MUSE observations in the COSMOS area at the beginning of the internship. Groups ending with \_d correspond to deep observations (full stacked OBs) and with \_bs correspond to best-seeing observations (only OBs with a seeing below $\SI{0.7}{"}$). 1. COSMOS group number 2. Group centre's right ascension 3. Group centre's declination 4. Exposure time of MUSE observations 5. Spatial resolution (PSF $\rm{FWHM}$) measured in MUSE data and given for the observed [OII] wavelength corresponding to the group's average redshift. 6. Total number of detected galaxies within MUSE FoV 7. Number of field galaxies with a secure redshift $0.4 \leq z \leq 1.4$}
 	\label{table:MUSEfieldsProp}
 \end{table}
 
@@ -75,59 +76,54 @@ where $I_{e, \rm{d}}$, $I_{e, \rm{b}}$ are the effective intensities of the disk
 
 \subsubsection{Morphological information from COSMOS catalogues}
 
-The total number of galaxies detected in the 14 MUSE fields in the COSMOS area is around $1000$. Roughly half of them belong to structures and the other half are labelled as "field" galaxies. However, not all of them are useful to our study. Some may be too close to the edge of the MUSE field-of-view, others may be too noisy with a low SNR, or even too small, preventing any relevant kinematical modelling. It is thus mandatory to apply a selection on our data set of field galaxies, first to save time for the analysis, but also to reduce uncertainties.
+The total number of galaxies detected in the 16 MUSE fields in the COSMOS area is around $1000$. Roughly half of them belong to structures and the other half are labelled as "field" galaxies. However, not all of them are useful to our study. Some may be too close to the edge of the MUSE field-of-view, others may be too noisy with a low SNR, or even too small, preventing any relevant kinematical modelling. It is thus mandatory to apply a selection on our data set of field galaxies, first to save time for the analysis, but also to reduce uncertainties.\\
 
-Our goal is to perform a joint study of the morphology and the kinematics of these galaxies. The tools and the models for the kinematical modelling were already developed as they were used by V. Abril-Melgajero. On the other hand, fitting morphological models with software such as GalFit or SExtractor would have required additional time which we did not have during this internship. Hopefully for us, morphological modelling had already been performed on the galaxies in the COSMOS field, so we could focus on the kinematical part. \\
+Our goal is to perform a joint study of the morphology and the kinematics of these galaxies. The tools and the models for the kinematical modelling were already developed as they were used by V. Abril-Melgajero. On the other hand, fitting morphological models with software such as GALFIT \shortcite{GALFIT} or SExtractor \shortcite{SExtractor} would have required additional time which we did not have during this internship. Hopefully for us, morphological modelling had already been performed on some galaxies in the COSMOS field, so we could focus on the kinematical part. \\
 
-Morphological information for all the galaxies in COSMOS can be found in various catalogues and tables\footnote{\url{https://irsa.ipac.caltech.edu/data/COSMOS/tables/morphology/}}. To start with, we decided to use the two most complete catalogues we could find, that of Tasca and Cassata. Both catalogues, which are not published but publicly available, contain morphological information including the central position of the galaxy, its half-light radius, concentration and asymmetry parameters, ellipticity, PA of the major morphological axis, and so forth for roughly $232 000$ galaxies. The authors obtained morphological information by running SExtractor on HST images of the galaxies in \shortciteA{laigle_cosmos2015_2016} catalogue. \\
+Morphological information can be found in various catalogues and tables\footnote{\url{https://irsa.ipac.caltech.edu/data/COSMOS/tables/morphology/}}. To start with, we decided to use the two most complete we could find, that of Tasca and Cassata. Both catalogues, which are not published but publicly available, contain morphological information including the central position of the galaxy, its half-light radius, concentration and asymmetry parameters, ellipticity, PA of the major morphological axis, and so forth for roughly $232 000$ galaxies found in the ACS catalogue from \shortciteA{Leauthaud2007}. The authors obtained morphological information either with a combination of SExtractor and Morpheus \shortcite{Abraham2007}, or with GIM2D \shortcite{GIM2D} using HST images. \\
 
-Since we already had in hand a catalogue combining spectroscopic information (emission line fluxes, redshift, etc.) from MUSE measurements with photometric data from \shortciteA{laigle_cosmos2015_2016}, we cross-matched it with Cassata's and Tasca's tables to collect their morphological parameters. We cross-matched first with each catalogue separately, and then with both, using the right ascension $\alpha$ and declination $\delta$ of the centre of the galaxies, allowing for a maximum separation between the MUSE source and the closest source within the catalogues of $\SI{1}{arcsec}$ maximum. This procedure was done for structure galaxies as well in order to use them to check the robustness and consistency of the catalogues parameters.
+Since we already had in hand a catalogue combining spectroscopic information (emission line fluxes, redshift, etc.) from MUSE measurements with photometric data from \shortciteA{laigle_cosmos2015_2016}, we cross-matched it with Cassata's and Tasca's tables to collect their morphological parameters. We cross-matched first with each catalogue separately, and then with both, using the right ascension $\alpha$ and declination $\delta$ of the centre of the galaxies, allowing for a maximum separation between the MUSE source and the closest source within the catalogues of $\SI{1}{arcsec}$. This procedure was done for structure galaxies as well in order to use them to check the robustness and consistency of the catalogues parameters.
 
+
+
+\newpage
 \subsection{Checking catalogues values consistency}
-\subsubsection{Reasons for checking catalogues values}
+\subsubsection{Reasons for checking catalogues values consistency and robustness}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 	\centering
-	\begin{minipage}[c]{0.49\linewidth}
-		\includegraphics[width=\linewidth]{../Plots/Error_on_inc_versus_b_a.pdf}
-		\subcaption{Error on inclination as a function of $b/a$ and its absolute error. Contours of $\Delta (b/a)$ are plotted in black dashed lines with their corresponding value.}
-	\end{minipage}
-	\hfill
-	\begin{minipage}[c]{0.49\linewidth}
-		\includegraphics[width=\linewidth]{../Plots/RelError_on_inc_versus_b_a.pdf}
-		\subcaption{Error on inclination as a function of $b/a$ and its relative error. Contours of $\epsilon (b/a)$ are plotted in black and red dashed lines with their corresponding value.}
-	\end{minipage}
-	\caption[Error on inclination as a function of $b/a$ and its error.]{Error on inclination as a function of $b/a$ and its error. Left: as a function of the absolute error on $b/a$ ($\Delta (b/a)$). Right: as a function of the relative error on $b/a$ ($\epsilon ( b/a)$). Red contours correspond to values for which there is a 50\% and 100\% error on $b/a$.}
+	\includegraphics[width=\linewidth]{{../Plots/RelError_on_inc_versus_b_a}.pdf}
+	\caption[Theoretical evolution of inclination uncertainty with $b/a$]{Theoretical uncertainty of the inclination as a function the minor-axis to major-axis ratio $b/a$ and its absolute (left) or relative (right) error. Contours are plotted in black dashed lines, with the red ones corresponding to a $50\%$ and $100\%$ error on $b/a$. The term error represents here any kind of uncertainty which could be used as an error estimate on $b/a$. This illustrates the importance to have measures of $b/a$ as reliable as possible for the kinematical modelling.}
 	\label{fig:erreur_inclinaison}
 \end{figure}
 
-As a first step, we must select a sample based on relevant criteria. This is meant to ensure that we have reliable morphological and kinematical parameters and to reduce statistical errors. Given that any kinematical modelling relies on prior morphological information (galaxy centre, ellipticity, $\rm{PA}$), we can only use a combination of values derived from spectral fitting, for instance the $\rm{SNR}$, and from morphological modelling such as a measure of a galaxy radius to select our sample.  
+As a first step, we must select a sample based on relevant criteria. This is meant to ensure that we have reliable morphological and kinematical parameters and to reduce statistical errors. Given that any kinematical modelling relies on prior morphological information (galaxy centre, ellipticity, $\rm{PA}$), we can only use a combination of values derived from spectral fitting, for instance the [OII] $\rm{SNR}$, and from morphological modelling such as measures of radius and inclination to select our sample.  \\
 
-Before this internship, spectral fitting on the integrated spectra of the galaxies had already been done, and we combined our data with morphological information from COSMOS catalogues as discussed in the previous section. Potentially useful morphological information included half-light radii, magnitudes, ratios of minor to major axis ($b/a$) or equivalently a measure of the ellipticity of the galaxies. Nevertheless, using this data without checking first how well it compares to values found in other catalogues and/or derived using different softwares/models could lead to high biases and uncontrolled errors. Thus, before discussing any selection criteria for our sample, we must first assess the reliability of the parameters we are going to use in later sections. \\
+Before this internship, spectral fitting on the integrated spectra of the galaxies had already been done, and we combined our data with morphological information from COSMOS catalogues as discussed in the previous section. Potentially useful morphological information included half-light radii, magnitudes, ratios of minor to major axis ($b/a$) or equivalently a measure of the ellipticity of the galaxies. Nevertheless, using this data without checking first how well it compares to values found in other catalogues and/or derived using different softwares/models could lead to high biases. Thus, before discussing any selection criteria for our sample, we must first assess the reliability of the parameters we are going to use in next sections. \\
 
-Important values to check are the half-light radii, as it will be used to select our sample, the $b/a$ ratio and the $\rm{PA}$ since these are prior information for the kinematical modelling. We also checked that there was a correlation between GALFIT and the catalogues magnitudes. The axes ratio has a crucial importance since it is directly related to the inclination of the galaxy on the sky through Eq.\,\ref{eq:inclinaison}. Given a certain error $\Delta (b/a)$, and using the usual formula for computing the error $\Delta f = | \partial_x f | \Delta x$ of a function $f$, we find for the inclination
+Important values to check are the half-light radius, as it will be used to select our sample, the $b/a$ ratio and the $\rm{PA}$ since these are prior information for the kinematical modelling. We also checked if there was a correlation between the parameters obtained using the bulge/disk decomposition with GALFIT and the catalogues. The axes ratio has a crucial importance since it is directly related to the inclination of the galaxy on the sky through Eq.\,\ref{eq:inclinaison}. Given a certain error $\Delta (b/a)$, and using the variance formula to compute an uncertainty $\Delta f = | \partial_x f | \Delta x$ of a function $f$, we find for the inclination
 
 \begin{equation}
 	\Delta i = \Delta (b/a) \left | \frac{b}{a} \left ( 2 - \frac{b}{a} \right ) \right | ^{-1/2}
+	\label{eq:error_inclination}
 \end{equation}
 
-This is illustrated in Fig.\,\ref{fig:erreur_inclinaison} where $\Delta i$ has been plotted as a function of $b/a$ and its error (absolute on the left, relative on the right). Contours of the error on $b/a$ have been over-plotted to show how evolves $\Delta i$ given a fixed error on $b/a$. As expected, the higher the error on $b/a$ the higher the error on $i$. An error as high as 50\% could yield $\Delta i \approx \SI{27}{\degree}$, though this value is reached for $b/a \approx 1$ where the axes ratio is the least constrained by the morphology. A more appropriate error on $b/a$ of 20\% gives a maximum $\Delta i$ slightly above $\SI{10}{\degree}$, which is acceptable. 
-
-Since the inclination has a strong impact on the galaxy intrinsic maximum rotational velocity, and potentially on the classification of galaxies as rotationally supported or dispersion dominated, this indicates us that for any proper kinematical modelling we must check carefully that the values of axes ratios are consistent between catalogues.
+This is illustrated in Fig.\,\ref{fig:erreur_inclinaison} where $\Delta i$ has been plotted as a function of $b/a$ and its error (absolute on the left, relative on the right). Contours of the error on $b/a$ have been over-plotted to show how evolves the uncertainty on $i$ given a fixed error on $b/a$. As expected, the higher the error on $b/a$ the higher the uncertainty on $i$. An error as high as 50\% could yield $\Delta i \approx \SI{27}{\degree}$, though this value is reached for $b/a \approx 1$ where the axes ratio is the least constrained by the morphology. Nevertheless, Eq.\,\ref{eq:error_inclination} is only a linear approximation and should not be used for too high values of $\Delta (b/a)$. A more appropriate error on $b/a$ of 20\% gives a maximum $\Delta i$ slightly above $\SI{10}{\degree}$, which is acceptable. Since the inclination has a strong impact on the galaxy intrinsic maximum rotational velocity, and potentially on the classification of galaxies as rotationally supported or dispersion dominated, this shows we must check carefully that the values of axes ratios are consistent between catalogues.
 
 \subsubsection{Catalogues used for comparison}
 
-As stated in previous sections, we cross-matched our catalogue of galaxies detected by MUSE in COSMOS with Cassata's and Tasca's, two tables with morphological information for the galaxies listed in \shortciteA{laigle_cosmos2015_2016}. However, as can be seen in Fig.\,\ref{fig:comp_radii} and \ref{fig:comp_radii_with_bulge_or_disk_radius}, we found large discrepancies between the parameters. Thus, to better understand their origin, we chose to cross-match our catalogue with another one (Zurich) also based on Laigle catalogue. This table has fewer HST counterparts of MUSE galaxies than in the other two but it contains additional morphological information which we can use for the comparison. In addition to that, we already had GALFIT morphological information on $\sim 500$ group galaxies with strong confidence in their value. Therefore, we chose to compare the data in the three morphological catalogues with that of GALFIT.
+We cross-matched our catalogue of galaxies detected by MUSE in COSMOS with Cassata's and Tasca's. However, as can be seen in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} and \ref{fig:comp_radii}, we found large discrepancies between the parameters. Thus, to better understand their origin, we chose to cross-match our catalogue with another one (Zurich). This table has fewer HST counterparts of MUSE galaxies than in the other two but it contains additional morphological information which we can use for the comparison. In addition to that, we already had GALFIT morphological information on $\sim 500$ group galaxies with strong confidence in their value. Therefore, we chose to compare the data in the three morphological catalogues with that of GALFIT.
 
 \subsubsection{Total magnitudes}
+\label{sec:tot_mag}
 
 \begin{figure}[htbp]
 	\includegraphics[width=\linewidth]{../Plots/catalogMag_against_GalfitMag_corrected.pdf}
-	\caption[Comparison between magnitudes]{Comparison between the morphological catalogues magnitudes and that of GALFIT for cluster galaxies. Magnitudes from the catalogues agree well between each other. Left: compared with GALFIT disk magnitude only. The slope is too high and a few points are scattered far from the line. Right: compared with the total GALFIT magnitude as defined in Eq.\,\ref{eq:tot_mag_final_version}. The plain line represents the best-fit model. We find a linear relation with an offset $(5.96 \pm 0.04)\, \rm{mag}$ and with a scatter of about $\SI{0.21}{mag}$.}
+	\caption[Comparison between GALFIT and catalogues magnitudes]{Comparison between the morphological catalogues magnitudes and that of GALFIT for cluster galaxies. Magnitudes from the catalogues agree well between each other. Left: compared with GALFIT disk magnitude only. The slope is too high and a few points are scattered far from the line. Right: compared with the total GALFIT magnitude as defined in Eq.\,\ref{eq:tot_mag_final_version}. The plain line represents the best-fit linear relation. We find a zero-point offset $(5.96 \pm 0.04)\, \rm{mag}$ (see Sec.\,\ref{sec:tot_mag}) and a scatter of about $\SI{0.2}{mag}$.}
 	\label{fig:comp_mags}
 \end{figure}
 
-The first value we can easily compare is the apparent magnitude. Cassata's, Tasca's and Zurich's catalogues provide a measure of the total magnitude derived from fitting with SExtractor a single Sérsic profile with a free Sérsic index $n$ on HST images. Given that V. Abril-Melgajero  modelled the cluster galaxies light profiles with GALFIT using two Sérsic profiles with fixed Sérsic indices ($n = 1, 4$), we have two measures of their magnitude: one for the bulge component $m_{\rm{b}}^{\rm{GF}}$, and another for the disk component $m_{\rm{d}}^{\rm{GF}}$. To have a meaningful comparison between magnitudes, we need to combine both to get the GALFIT total magnitude. Either component is defined as
+The first value we compared is the apparent magnitude. The three catalogues provide a measure of the total magnitude derived from fitting with a single Sérsic profile with a free Sérsic index $n$ on HST images. Given that V. Abril-Melgajero  modelled the group galaxies light profiles with GALFIT using two Sérsic profiles with fixed Sérsic indices ($n = 1, 4$), we have two measures of their magnitude: one for the bulge component $m_{\rm{b}}^{\rm{GF}}$, and another for the disk component $m_{\rm{d}}^{\rm{GF}}$. To have a meaningful comparison between magnitudes, we need to combine both to get the GALFIT total magnitude. Either component is defined as
 
 \begin{equation}
 	m_i^{GF} = -2.5 \log_{10} \left ( F_i^{\rm{GF}} \right ) + \rm{C}
@@ -151,6 +147,11 @@ This is the value that should be compared with the three catalogues magnitudes. 
 
 The same comparison was done on field galaxies, except we did not have GALFIT magnitudes in this case. We also found a good agreement between the catalogues magnitudes.
 
+
+
+
+
+
 \newpage
 \subsubsection{Morphological type classification}
 \label{subsubsec:classification}
@@ -158,20 +159,22 @@ The same comparison was done on field galaxies, except we did not have GALFIT ma
 \begin{wrapfigure}{r}{.6\linewidth}
 	\centering
 	\includegraphics[width=\linewidth]{{../Plots/comparisonClassTypes}.pdf}
-	\caption[Morphological types comparison]{Comparison between morphological types given in Tasca and Zurich catalogues against that of Cassata. Galaxies are labelled as follows: E for ellipticals, Sp for spirals/disks-like, Irr for irregulars. The percentage of galaxies falling into the given classes is indicated in red and the method compared with Cassata's is shown on the top left corner of each plot. We find good agreement between Tasca and Cassata types but not between Cassata and Zurich.}
+	\caption[Morphological types consistency]{Comparison between morphological types given in Tasca and Zurich catalogues against that of Cassata. Galaxies are labelled as follows: E for ellipticals, Sp for spirals/disks-like, Irr for irregulars. The percentage of galaxies falling into the given classes is indicated in red and the method compared with Cassata's is shown on the top left corner of each plot. We find good agreement between Tasca and Cassata types but not between Cassata and Zurich.}
 	\label{fig:morpho_comp}
 \end{wrapfigure}
 
-We might expect to have some discrepancies in our data because of the models used between GALFIT and SExtractor/GIM2D. A way to check this effect is to study how these differences scale with the morphological type of the galaxies. For instance, if we use the disk half-light radius of GALFIT to compare with that of SExtractor, we might expect to have some scatter in our relation for the elliptical galaxies as the disk component is not the best one to describe them.\\
+We expect to have some discrepancies in our data because of the models used between GALFIT and SExtractor/GIM2D. To check this effect, we can study how the differences between morphological parameters scale with the morphological type of the galaxies. \\
 
-To see how these relations scale with morphological types, we can use the classification given in the three morphological catalogues. These classifications are based on methods which can be quite different and which can use morphological parameters in different ways. A more detailed explanation of the parameters used, of how these methods work, of their strength and weaknesses can be found in Appendix \ref{appendix:classification}. We provide below a short introduction to these classifications:
+For instance, if we use the disk half-light radius of GALFIT to compare with that of SExtractor, we might expect to have some scatter in our relation for the elliptical galaxies as the disk component is not the best one to describe them.\\
+
+We used the classification given in the three morphological catalogues which are based on different methods. We provide below a short introduction to these classifications:\\
 
 \begin{itemize}
-	\item Cassata's catalogue gives a classification based on morphological parameters they derived with SExtractor. To do so, they use a reference of $500$ galaxies with known parameters which they visually classify as either elliptical, disk-like/spiral or irregular. From this set, each time a new galaxy must be classified, its $11$ closest neighbours are inspected and the most frequent class is assigned to the galaxy.
+	\item Cassata's catalogue gives a classification based on their morphological parameters. They use a set of $500$ reference galaxies with known parameters which they visually classify either as elliptical, disk-like/spiral or irregular. From this set, each time a new galaxy must be classified, its $11$ closest neighbours in parameter space are inspected and the most frequent class among them is assigned to the new galaxy.
 	
-	\item Tasca's catalogue gives different classifications based on three methods. The first one is similar to the one used by Cassata. This is also the classification they recommend to use. The second one uses the technique described in (insert Abraham 1996 here) using the asymmetry and concentration parameters. The last one uses a support vector machine to classify galaxies.
+	\item Tasca's catalogue gives different classifications based on three methods. The first is similar to the one used by Cassata. The second one uses the technique described in \shortciteA{Abraham1996b} using the asymmetry and concentration parameters. The last one uses a support vector machine to classify the galaxies.
 	
-	\item Zurich's catalogue gives a single classification called Zurich Estimator of Structural Type (ZEST) which is described in \shortcite{Scarlata2007}. This method is based on a Principal Component Analysis (PCA). They decided to keep the first three Principal Components (PA) which retain most of the information present in the original five parameters (concentration, asymmetry, Gini coefficient, second-order moment of the brightest pixels producing $20\%$ of the total flux and the ellipticity of the galaxy).
+	\item Zurich's catalogue gives a single classification called Zurich Estimator of Structural Type (ZEST) which is described in \shortciteA{Scarlata2007}. This method is based on a Principal Component Analysis (PCA). They only keep the first three Principal Components (PA) which retain most of the information present in the original five parameters (concentration, asymmetry, Gini coefficient, second-order moment of the brightest pixels producing $20\%$ of the total flux and the ellipticity of the galaxy).
 \end{itemize}
 
 The morphological types given in Tasca's and Zurich's catalogues are compared against the class given by Cassata in Fig.\,\ref{fig:morpho_comp}. We observe a good agreement between Cassata's and Tasca's types with just a few elliptical galaxies labelled as disk-like and vice versa. Roughly $50\%$ of the galaxies appear to be elliptical. On the contrary, Zurich's classification seems to label more than $70\%$ of the galaxies as disk-like, including a large number of elliptical galaxies .\\
@@ -180,6 +183,10 @@ Considering the recommendation of Tasca to use its Int class and since we find a
 
 \subsubsection{Half-light radii}
 \label{sec:comp_radii}
+
+Perhaps the most important parameter we have to check is the half-light radius. Indeed, if we underestimate it, we might remove from our sample galaxies which are spatially resolved in MUSE data and therefore reduce our statistics. On the other hand, overestimating it would give us too many unresolved galaxies for which we would spend time removing noise dominated pixels without being able to perform their kinematical analysis in the end. Hence, it is mandatory to thoroughly check the values of the half-light radius from the three catalogues against that of GALFIT, and understand the origin of any discrepancies if there happens to be some. \\
+
+We found a quite large disagreement between GALFIT half-light radii and those given in the morphological catalogues, as well as between them. This is illustrated in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} and \ref{fig:comp_radii} where half-light radii in the catalogues are compared against that of GALFIT. Galaxies are colour coded according to the classification given in Cassata's catalogue. We checked that using Tasca's classifications as described in Sec.\,\ref{subsubsec:classification} did not change our conclusions. In these plots, we decided to use for the x-axis the half-light radius of the GALFIT disk component $R_{1/2 , \rm{d}}^{\rm{GF}}$ for all the galaxies, even though we might expect the ellipticals to be better described by their GALFIT bulge half-light radius. This choice is further discussed below.\\
 
 \begin{figure}[htbp]
 	\centering
@@ -195,19 +202,15 @@ Considering the recommendation of Tasca to use its Int class and since we find a
 	\label{fig:comp_radii}
 \end{figure}
 
-Perhaps the most important parameter we have to check is the half-light radius. Indeed, if we underestimate it, we might remove from our sample galaxies which are spatially resolved in MUSE data and therefore reduce our statistics. On the other hand, overestimating it would give us too many unresolved galaxies for which we would spend time removing noise dominated pixels without being able to perform their kinematical analysis in the end. Hence, it is mandatory to thoroughly check the values of the half-light radius from the three catalogues against that of GALFIT, and understand the origin of any discrepancies if there happens to be some. \\
+The catalogues radii seem to be overestimated with respect to that of GALFIT for low $R_{1/2 , \rm{d}}^{\rm{GF}}$. Those compared in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} and \ref{fig:comp_radii} are all derived from SExtractor and, given that it does not take into account the PSF in its fitting routine, we expect the PSF to dominate for galaxies with small angular sizes. On the contrary, GALFIT does take into account the PSF in its calculation, and therefore we expect its half-light radius to decrease with lower values of $R_{1/2 , \rm{d}}^{\rm{GF}}$. When focussing on galaxies with a GALFIT radius larger than the HST-ACS PSF $\rm{FWHM}$ which is around $\SI{0.15}{"}$ ($4 - \SI{5}{px}$), we observe a global underestimation for all the catalogues, up to roughly 50\%. This scatter is mainly due to elliptical galaxies. On the contrary, radii of disk-like galaxies have the least scatter and biais, especially the values given in Zurich's catalogue. This different behaviour between elliptical and disk-like galaxies might be explained, as mentioned above, by the fact that we are using the half-light radius of GALFIT disk component to asses the reliability of the elliptical galaxies radii given in the catalogues. A better choice may be to use the bulge component, which better describes the light profile of an elliptical galaxy, and its half-light radius for this population.\\
 
-We found a quite large disagreement between GALFIT half-light radii and those given in the morphological catalogues, as well as between them. This is illustrated in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} and \ref{fig:comp_radii} where half-light radii in the catalogues are compared against that of GALFIT. Galaxies are colour coded according to the classification given in Cassata's catalogue. We checked that using Tasca's classifications as described in Sec.\,\ref{subsubsec:classification} did not change our conclusions. In these plots, we decided to use for the x-axis the half-light radius of the GALFIT disk component $R_{1/2 , \rm{d}}^{\rm{GF}}$ for all the galaxies, even though we might expect the ellipticals to be better described by their GALFIT bulge half-light radius. This choice is further discussed below.\\
-
-The catalogues radii seem to be overestimated with respect to that of GALFIT for low $R_{1/2 , \rm{d}}^{\rm{GF}}$. These are computed with SExtractor and, given that it does not take into account the PSF in its fitting routine, we expect the PSF to dominate for galaxies with small angular sizes. On the contrary, GALFIT does take into account the PSF in its calculation, and therefore we expect its half-light radius to decrease with lower values of $R_{1/2 , \rm{d}}^{\rm{GF}}$. When focussing on galaxies with a GALFIT radius larger than the HST-ACS PSF $\rm{FWHM}$ which is around $\SI{0.15}{"}$ ($4 - \SI{5}{px}$), we observe a global underestimation for all the catalogues, up to roughly 50\%. This scatter is mainly due to elliptical galaxies. On the contrary, radii of disk-like galaxies have the least scatter and biais, especially the values given in Zurich's catalogue. This different behaviour between elliptical and disk-like galaxies might be explained, as mentioned above, by the fact we are using the half-light radius of GALFIT disk component to asses the reliability of the elliptical galaxies radii give in the catalogues. A better choice may be to use the bulge component, which better describes the light profile of an elliptical galaxy, and its half-light radius for this population.\\
-
-If we decide to split the galaxies into two categories, ellipticals and disks/irregulars, and if we use for the first category the bulge radius $R_{1/2 , \rm{b}}^{\rm{GF}}$, and for the second $R_{1/2 , \rm{d}}^{\rm{GF}}$, we find that elliptical galaxies half-light radii from the catalogues are now overestimated as shown in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} lower panel. These results suggest that elliptical galaxies in this sample are neither dominated (in terms of radius) by the disk component, nor by the bulge in the GALFIT model. Even though we did not push further the analysis on this discrepancy, we still mention that the next step should be to directly compute the half-light radius of the GALFIT model by integrating Eq.\,\ref{eq:GALFIT_light_profile} up to half its total luminosity.
+If we split the galaxies into two categories, ellipticals and disks/irregulars, and if we use for the first category the bulge radius $R_{1/2 , \rm{b}}^{\rm{GF}}$, and for the second $R_{1/2 , \rm{d}}^{\rm{GF}}$, we find that elliptical galaxies half-light radii from the catalogues are now underestimated with GALFIT as shown in Fig.\,\ref{fig:comp_radii_with_bulge_or_disk_radius} lower plot. These results suggest that elliptical galaxies in this sample are neither dominated (in terms of radius) by the disk component, nor by the bulge in the GALFIT model. Even though we did not push further the analysis on this discrepancy, we still mention that the next step should be to directly compute the half-light radius of the GALFIT model by integrating Eq.\,\ref{eq:GALFIT_light_profile} up to half its total luminosity.
 
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/correctedRadiusLinearRegression}.pdf}
-	\caption[Bias before/after correction]{Biais and scatter before and after applying the correction mentioned in the paragraph. The dashed line represents the 1-1 line if there was no bias. Left: half-light radius relative error as a function of Cassata's radius. Right: scaling between Cassata's and GALFIT radii. The scatter around $\SI{0.2}{px}$ is not significantly changed after the bias correction.}
+	\caption[Half-light radius bias before/after correction]{Biais and scatter before and after applying the correction mentioned in the paragraph. The dashed line represents the 1-1 line if there was no bias. Left: half-light radius relative error as a function of Cassata's radius. Right: scaling between Cassata's and GALFIT radii. The scatter around $\SI{0.2}{px}$ is not significantly changed after the bias correction.}
 	\label{fig:correction_biais_radius}
 \end{figure}
 
@@ -216,10 +219,10 @@ Based on Fig.\,\ref{fig:comp_radii}, we decided to use the galaxies half-light r
 \begin{equation}
 	R_{1/2}^{\rm{Corrected}} = R_{1/2}^{\rm{Cassata}} \left ( 1 + \beta + \alpha R_{1/2}^{\rm{Cassata}} \right ) ^{-1}
 \end{equation}
-where $R_{1/2}^{\rm{Corrected}}$ is the new half-light radius after the bias correction and $\alpha$, $\beta$ the parameters of our fit. Based on previous arguments, we only fitted galaxies for which $R_{1/2}^{\rm{GF}} > \SI{5}{px}$. Once a best fit solution was found, we slightly adjusted it by applying weights on ellipticals in order to limit their impact on disk-like galaxies radii which appeared to be too much overestimated. We found $\alpha = 1.95 \times 10^{-3}$ and $\beta = -0.349$, which gives us $261$ field galaxies with a radius either from Zurich or from the corrected value of Cassata.
+where $R_{1/2}^{\rm{Corrected}}$ is the new half-light radius after the bias correction and $\alpha$, $\beta$ the parameters of our fit. Based on previous arguments, we only fitted galaxies for which $R_{1/2}^{\rm{GF}} > \SI{5}{px}$. Once a best fit solution was found, we slightly adjusted it by applying a weight on ellipticals in order to limit their impact on disk-like galaxies radii which appeared to be too much overestimated without. We find $\alpha = 1.95 \times 10^{-3}$ and $\beta = -0.349$, which gives us $261$ field galaxies. We kept Zurich radius whenever a galaxy had one, and the bias corrected Cassata radius when we only had this value.
 
 
-\newpage
+%\newpage
 \subsubsection{Ellipticity}
 
 \begin{figure}[H]
@@ -233,7 +236,7 @@ where $R_{1/2}^{\rm{Corrected}}$ is the new half-light radius after the bias cor
 		\includegraphics[width=\linewidth]{{../Plots/checkMorpho/check_b_a_GF}.pdf}
 		\subcaption{GALFIT axes ratio against that of Cassata for galaxies in structures. Globally, the axes ratio in the catalogue seems to be underestimated. If we separate the galaxies as disk or bulge dominated according to the most luminous component, we find that most of the scatter comes from elliptical galaxies.}
 	\end{minipage}
-	\caption[Ellipticity comparison]{Comparison between Cassata, Zurich and GALFIT $b/a$ axes ratio. Zurich catalogue gives two values computed with SExtractor and GIM2D, and Cassata only with SExtractor. Error bars are only available for a few GIM2D and GALFIT values.}
+	\caption[Ellipticity robustness]{Comparison between Cassata, Zurich and GALFIT $b/a$ axes ratio. Zurich catalogue gives two values computed with SExtractor and GIM2D, and Cassata only with SExtractor. Error bars are only available for a few GIM2D and GALFIT values.}
 	\label{fig:check_ellipticity}
 \end{figure}
 
@@ -268,7 +271,7 @@ The first parameter we can think of to make our selection is the size of the gal
 
 The PSF Full Width at Half Maximum ($\rm{FWHM}$) is directly related to the seeing conditions, and it can be easily derived from the relation $I_{\rm{PSF}} ( \rm{FWHM}/2) = I_0 /2$. Since it gives us information about the minimum spatial extent within which we start to loose information, we could use it as a starting point for our selection criterion. Moreover, we will need a reliable measure of the PSF $\rm{FWHM}$ for each galaxy when performing the kinematical modelling. Indeed, according to the aforementioned articles the value of the $\rm{FWHM}$ is expected to linearly decrease with wavelength. All galaxies are observed via their [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet at the same rest-frame wavelength. But, given that they are all located at a different redshift $z$, we actually observe them at wavelengths covering the entire MUSE spectrum, that is we have the usual relation $\lambda_{\rm{obs}} = \lambda_{\rm{em}} ( 1 + z )$, where $\lambda_{\rm{em}}$, $\lambda_{\rm{obs}}$ are the emitted (rest-frame) and observed wavelengths respectively. Therefore, there is not just one $\rm{FWHM}$ value per field, but one per galaxy. \\
 
-To derive this value, we need to compute the linear evolution in each field by measuring the $\rm{FWHM}$ of stars for at least two different wavelengths. Assuming seeing conditions are similar within a field (no spatial dependence), we can use the same relation per MUSE field to compute the $\rm{FWHM}$ for the observed [OII] wavelength at the redshift of the galaxies. These measures had already been done by B. Epinat and V. Abril-Melgajero on at least two stars per field. Though a more rigorous modelling of the wavelength variation of the PSF $\rm{FWHM}$ including both more data points and potentially higher order terms is mandatory for future analysis, we decided to stick to this values in the present work, keeping in mind the uncertainties which will affect the velocity dispersion maps in the modelling section. A representation of the $\rm{FWHM}$ variation with wavelength for the 16 MUSE fields is shown in Fig.\,\ref{fig:FWHM_var_lambda}. Most MUSE fields have $\rm{FWHM}$ values below $\SI{0.7}{"}$ which is not surprising given that it was one of the constraints of the observations. CGr23 is the only FoV to have its $\rm{FWHM}$ above $\SI{0.7}{"}$ for almost every wavelength.\\
+To derive this value, we need to compute the linear evolution in each field by measuring the $\rm{FWHM}$ of stars for at least two different wavelengths. Assuming seeing conditions are similar within a field (no spatial dependence), we can use the same relation per MUSE field to compute the $\rm{FWHM}$ for the observed [OII] wavelength at the redshift of the galaxies. These measures had already been done by B. Epinat and V. Abril-Melgajero on at least two stars per field. Though a more rigorous modelling of the wavelength variation of the PSF $\rm{FWHM}$ including both more data points and potentially higher order terms is mandatory for future analysis, we decided to stick to these values in the present work, keeping in mind the uncertainties which will affect the velocity dispersion maps in the modelling section. A representation of the $\rm{FWHM}$ variation with wavelength for the 16 MUSE fields is shown in Fig.\,\ref{fig:FWHM_var_lambda}. Most MUSE fields have $\rm{FWHM}$ values below $\SI{0.7}{"}$ which is not surprising given that it was one of the constraints of the observations.\\
 
 To have a criterion which is not galaxy dependent, we decided to keep galaxies with a size $2 R_{1/2} \geq \SI{0.7}{"}$ since this corresponds to an upper limit for the $\rm{FWHM}$ for almost every field. Moreover, according to \shortciteA{Swinbank2017} who compared the half-light radius of the nebular [OII] emission in MUSE images with that of their HST counterpart in ACS \textit{I} or WFC3 \textit{H}-band, the [OII] half-light radius seems to scale with the broad-band continuum HST radius as 
 
@@ -276,7 +279,7 @@ To have a criterion which is not galaxy dependent, we decided to keep galaxies w
 	R_{1/2}^{\rm{OII}} = (1.18 \pm 0.03) R_{1/2}^{\rm{HST}}
 \end{equation}
 
-Thus, by using an upper limit, we might loose a few galaxies which might have been resolved enough. Nevertheless, this was mandatory if we wanted to keep a sample not too large given the time constraints.
+Thus, by using an upper limit, we may loose a few galaxies which might have been resolved enough. Nevertheless, given the time constraints, this was mandatory if we wanted to keep a sample of reasonable size.
 
 
 
@@ -292,11 +295,11 @@ The other information we use to select our sample is the signal to noise ratio. 
 Since the typical $\rm{SNR}$ value used by the routine to remove noise dominated pixels in the MUSE maps is around $5$, we decided as a first step to choose an SNR lower limit of $10$ on the [OII] flux measured in integrated spectra, allowing us to keep galaxies with strong enough detection.
 
 
-
+%\newpage
 \subsubsection{Inspecting galaxies}
 \label{sec:selecting_galaxies}
 
-We decided to visually inspect galaxies around the $\rm{SNR}$ and the size cuts to quantify
+We visually inspected galaxies around the $\rm{SNR}$ and the size cuts in order to quantify
 \begin{enumerate*}[label={(\alph*)}]
 	\item how many resolved galaxies would be lost if we applied the criteria given in Sec.\,\ref{sec:cut_size} and \ref{sec:cut_SNR} (false negative)
 	\item how many unresolved galaxies would be selected in our sample (false positive).
@@ -306,11 +309,11 @@ To do so, we defined four boxes: $5 \leq \rm{SNR} \leq 10$, $10 \le \rm{SNR} \le
 \begin{wrapfigure}{l}{.58\linewidth}
 	\centering
 	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/SNR_vs_R_halfLight_arcsec}.pdf}
-	\caption[Selected sample]{Full sample of $261$ field galaxies with our selection box over-plotted (hatched area). Galaxies with $5 \leq \rm{SNR} \leq 15$ and $0.25" \leq R_{1/2} \leq 0.45"$ (bounds plotted as dashed lines) were visually inspected to check how many resolved galaxies we might have lost. Selection criteria from Sec.\,\ref{sec:cut} are also plotted as solid red lines. No specific trend appear with redshift.}
+	\caption[Sample selection]{Full sample of $261$ field galaxies with our selection box over-plotted (hatched area). Galaxies with $5 \leq \rm{SNR} \leq 15$ and $0.25" \leq R_{1/2} \leq 0.45"$ (bounds plotted as dashed lines) were visually inspected to check how many resolved galaxies we might have lost. Selection criteria from Sec.\,\ref{sec:cut} are also plotted as solid red lines. No specific trend appear with redshift.}
 	\label{fig:sample_selection}
 \end{wrapfigure}
 
-We then ran an automatic cleaning routine for all the galaxies in these boxes. The algorithm used removes any pixel which either has its $\rm{SNR}$ below $5$ or a dispersion below a certain percentage $\gamma$ of the velocity dispersion $\sigma_{\rm{v}}$ computed from the Line Spread Function (LSF) $\rm{FWHM}$. The LSF corresponds to the spectral equivalent of a spatial PSF, and tells us how much the instrument will broaden out an infinitely thin line. According to \shortcite{Bacon2017} and \shortcite{Guerou2017} who measured the LSF variation with wavelength in the Hubble Ultra Deep Field (HUDF) and Hubble Deep Field South (HDFS) and who found that it was stable through time, we computed the LSF $\rm{FWHM}$ as
+We then ran an automatic cleaning routine for all the decided togalaxies in these boxes. The algorithm used removes any pixel which either has its $\rm{SNR}$ below $5$ or a dispersion below a certain percentage $\gamma$ of the velocity dispersion $\sigma_{\rm{v}}$ computed from the Line Spread Function (LSF) $\rm{FWHM}$. The LSF corresponds to the spectral equivalent of a spatial PSF, and tells us how much the instrument will broaden out an infinitely thin line. According to \shortcite{Bacon2017} and \shortcite{Guerou2017} who measured the LSF variation with wavelength in the Hubble Ultra Deep Field (HUDF) and Hubble Deep Field South (HDFS) and who found that it was stable through time, we computed the LSF $\rm{FWHM}$ as
 
 \begin{equation}
 	\rm{FWHM} = a \lambda^2 + b \lambda + c
@@ -322,11 +325,15 @@ with $a = 5.866 \times 10^{-8}$, $b = - 9.187 \times 10^{-4}$, $c = 6.040$. The 
 \end{equation}
 where $\sigma = \rm{FWHM} \left (2 \sqrt{2 \log 2} \right )^{-1}$ is the spectral dispersion due to the LSF. \\
 
-The choice to keep pixels with a velocity dispersion above $\gamma \sigma_{\rm{v}}$ was motivated by the fact that sky lines from OH molecules in the atmosphere can generate false [OII] emission lines. Sky subtraction during the data reduction can indeed produce fake residuals with P-cygni profiles for the brightest OH sky lines in the MUSE datacubes. However, these are always found to have a width below the LSF $\rm{FWHM}$. So any pixel with a false detection will be removed with this criteriion. The percentage $\gamma$, which we chose to be $80\%$, is meant to not remove pixels with real detection which might have thin lines.\\
+The choice to keep pixels with a velocity dispersion above $\gamma \sigma_{\rm{v}}$ was motivated by the fact that sky lines from OH molecules in the atmosphere can generate fake emission lines, mimicking the [OII] doublet. Sky subtraction during the data reduction can indeed produce fake residuals with P-cygni profiles for the brightest OH sky lines in the MUSE datacubes. However, these are always found to have a width below the LSF $\rm{FWHM}$. So any pixel with a fake detection will be removed with this criterion. The percentage $\gamma$, which we chose to be $80\%$, is meant to not remove pixels with real detection which might have thin lines.\\
 
-After visually inspecting their sizes in the cleaned maps, we classified them as resolved or not. Among the $261$ field galaxies, $103$ fall into the limits imposed in Sec.\,\ref{sec:cut}. We find that roughly $26\%$ of the galaxies below the cuts are actually false negatives and that $15\%$ above them are false positives. Since this classification is purely visual, slightly relaxing the constraints on to whether a galaxy is resolved enough or not allow these values to vary by roughly $10\%$. Our criteria for the selection therefore seem reasonable, though in future works we might increase our sample by a factor of $\sim 1.5$ by visually inspecting each galaxy separately.
+After visually inspecting the galaxy sizes in the cleaned [OII] maps, we classified them as resolved if they had a large enough extension (typically larger than the PSF $\rm{FWHM}$) or not otherwise. Among the $261$ field galaxies which have morphological information in the catalogues, $103$ fall into the limits imposed in Sec.\,\ref{sec:cut}. We find that roughly $26\%$ of the galaxies below the cuts are actually false negatives and that $15\%$ above them are false positives. Since this classification is purely visual, slightly relaxing the constraints on to whether a galaxy is resolved enough or not allow these values to vary by roughly $10\%$. Our criteria for the selection therefore seem reasonable, though in future works we might increase our sample by a factor of $\sim 1.5$ by visually inspecting each galaxy separately.
 
-\newpage
+
+
+
+
+%\newpage
 \subsection{Characterisation of the sample}
 \label{sec:sample_characterisation}
 
@@ -334,32 +341,40 @@ After visually inspecting their sizes in the cleaned maps, we classified them as
 
 \begin{wrapfigure}{r}{.4\linewidth}
 	\centering
+	\vspace{10pt}
 	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/cumulative_hist_redshift}.pdf}
-	\caption[Redshift distribution]{Redshift distribution of the total sample (grey), selected (green) and unselected (blue) galaxies. Redshift bins of size $0.1$ have been used. Top: density plot as a function of redshift. Bottom: cumulative distribution. We lack most of the galaxies at redshift $1.4$. Other redshift bins do not loose to many galaxies with respect to the unselected ones except maybe at~$z~\approx~0.5$.}
+	\caption[Redshift distribution]{Redshift distribution of the total sample (grey) and selected (blue) galaxies. Redshift bins of size $0.1$ have been used. Top: density plot as a function of redshift. Bottom: cumulative distribution. We lack most of the galaxies at redshift $1.4$. The redshift distribution of the selcted galaxies remains consistent with the original one.}
 	\label{fig:redshift_distribution}
 \end{wrapfigure}
 
-The choice of the [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet for the kinematical analysis was mainly due to the large range of redshift it covers given the MUSE spectral range. We therefore had in our catalogue galaxies spanning a redshift domain from $0.3$ to about $1.4$. As shown in Fig.\,\ref{fig:redshift_distribution}, we loose after our selection a significant fraction of galaxies at all redshifts, and in particular the majority of the most distant galaxies. It is not surprising to loose galaxies at high redshift as these have the lowest angular sizes on the sky at a fixed physical length. Nevertheless, we are globally selecting less galaxies per redshift bin than we are putting aside. The average and median redshifts are $0.749$ and $0.719$ for the selected galaxies, $0.809$ and $0.750$ for the unselected ones. Thus, our sample remains consistent in terms of redshift even after the selection.
+The choice of the [OII] $\lambda\lambda 3729, \SI{3729}{\angstrom}$ doublet for the kinematical analysis was mainly due to the large range of redshift it covers given the MUSE spectral range. We therefore had in our catalogue galaxies spanning a redshift domain from $0.3$ to about $1.4$. As shown in Fig.\,\ref{fig:redshift_distribution}, we loose after our selection a significant fraction of galaxies at all redshifts, and in particular the majority of the most distant galaxies. It is not surprising to loose galaxies at high redshift as these have the lowest angular sizes on the sky at a fixed physical length. Nevertheless, we are globally selecting more galaxies per redshift bin than we are putting aside. The average and median redshifts are $0.749$ and $0.719$ for the selected galaxies, $0.809$ and $0.750$ for the unselected ones. Thus, our sample remains consistent in terms of redshift even after the selection.
 
 
+
+%\newpage
 \subsubsection{Mass-SFR relation}
 
-\begin{figure}[hbtp]
+Our sample spans 3 orders of magnitude both in mass and $\rm{SFR}$ in the ranges $10^{8.07} \leq M / \si{M_{\odot}} \leq  10^{11.1}$ and $0.04 \leq \rm{SFR} / ( \si{M_{\odot}. yr^{-1} }) \leq 126$. We investigate our sample in the mass-$\rm{SFR}$ diagram in Fig.\,\ref{fig:sfr_vs_mass}. Star-forming galaxies are expected to lie on a diagonal line $\log M$-$\log \rm{SFR}$ space, with some scatter, called the galaxies Main Sequence (MS). A few highly star-forming galaxies such as starburst galaxies and Ultra Luminous InfraRed Galaxies (ULIRG/LIRG) are generally found above the main sequence. Massive quiescent (low $\rm{SFR}$) galaxies can also be found below the MS. In our sample, we recover galaxies on the main-sequence after the selection. We loose massive galaxies with low SFR which is probably due to the fact that we are selecting galaxies with a high enough [OII] surface brightness. Since [OII] flux comes from ionised regions which correlate with star formation, most quiescent galaxies are eliminated during observation, and the few large enough to be detected will have too low $\rm{SNR}$ values to be selected. We also loose the very low mass end of our sample ($\log_{10} (M / \rm{M_{\odot}}) \lesssim 8.5$). This is explained by the fact that there exists a scaling relation between a galaxy mass and its radius so that more massive galaxies are also larger and vice-versa. Thus, it appears that the very low mass end is removed from our sample when performing the size selection. \\
+
+\begin{wrapfigure}{l}{0.5\linewidth}
 	\centering
 	\includegraphics[width=\linewidth]{{../Plots/Selection_plots/SFR_vs_mass_withoutFAST}.pdf}
 	\caption[SFR-mass relation]{SFR-mass relation for selected (filled circles) and unselected (open circles) galaxies. Left: SFR extracted from SED fitting \shortcite{laigle_cosmos2015_2016}. Right: the redshift corrected SFR as given in Eq.\,\ref{eq:SFR_corrected_redshift}. Most of our sample lies on the galaxies main sequence. We are loosing almost every massive quiescent galaxies on the lower right part of the plane, as well as the very low mass ones on the lower left.}
 	\label{fig:sfr_vs_mass}
-\end{figure}
+\end{wrapfigure}
 
-Our sample spans 3 orders of magnitude both in mass and $\rm{SFR}$ in the ranges $10^{8.07} \leq M / \si{M_{\odot}} \leq  10^{11.1}$ and $0.04 \leq \rm{SFR} / ( \si{M_{\odot}. yr^{-1} }) \leq 126$. We can investigate where our sample lies in the mass-$\rm{SFR}$ diagram as shown in Fig.\,\ref{fig:sfr_vs_mass}. Star-forming galaxies are expected to lie on a diagonal line with some scatter in $\log M$-$\log \rm{SFR}$ space called the galaxies Main Sequence (MS) or the star-formation sequence. A few highly star-forming galaxies such as starburst galaxies and Ultra Luminous InfraRed Galaxies (ULIRG/LIRG) are generally found above the main sequence. Some massive quiescent (low $\rm{SFR}$ values) galaxies can also be found below the MS. In our sample, we recover galaxies on the main-sequence after the sample selection. We loose massive galaxies with low SFR values which is probably due to the fact that we are selecting galaxies with a high enough [OII] surface brightness. Since [OII] flux comes from ionised regions which correlate with star formation, most quiescent galaxies are eliminated during observation, and the few large enough to be detected will have too low $\rm{SNR}$ values to be selected. We also loose the very low mass end of our sample (below $\log_{10} (M / \rm{M_{\odot}}) \sim 8.5$). This is explained by the fact that there exists a scaling relation between a galaxy mass and its radius so that more massive galaxies are also larger and vice-versa. Thus, it appears that the very low mass end is actually removed from our sample when performing the size selection.\\
-
-We also checked if there was any redshift evolution in the main sequence. We refer to \shortciteA{Boogaard2018} who derived a redshift evolution for galaxies observed with MUSE in the HUDF on the MS found roughly in the same redshift, mass and $\rm{SFR}$ intervals. They modelled the log of the $\rm{SFR}$ as a plane in $\log M$ - $\log (1 + z)$ space 
+We also took into account the redshift evolution of the main sequence. We refer to \shortciteA{Boogaard2018} who derived a this evolution for galaxies observed with MUSE in the HUDF on the main-sequence found roughly in the same redshift, mass and $\rm{SFR}$ intervals. They modelled the log of the $\rm{SFR}$ as a plane in $\log M - \log (1 + z)$ space
 
 \begin{equation}
-	\log_{10} \left ( \frac{\rm{SFR}}{\si{M_{\odot} . yr^{-1}}} \right ) = 0.83_{-0.06}^{+0.07} \log_{10} \left ( \frac{M}{\si{M_{\odot}}} \right ) - 0.83^{+0.05}_{-0.05} + 1.74_{-0.68}^{+0.66} \log_{10} \left ( \frac{1+z}{1+z_0} \right )
-	\label{eq:SFR_corrected_redshift}
+	\begin{split}
+		\log_{10} \left ( \frac{\rm{SFR}}{\si{M_{\odot} . yr^{-1}}} \right ) & =  0.83_{-0.06}^{+0.07} \log_{10} \left ( \frac{M}{\si{M_{\odot}}} \right ) \\
+		& - 0.83^{+0.05}_{-0.05} \\
+		& + 1.74_{-0.68}^{+0.66} \log_{10} \left ( \frac{1+z}{1+z_0} \right )
+		\label{eq:c}
+	\end{split}
 \end{equation}
-where $z_0$ acts as a normalisation factor which will scale the relation at this redshift. We chose the median redshift of the selected galaxies to apply the $\rm{SFR}$ correction shown in the right plot of Fig.\,\ref{fig:sfr_vs_mass}. Though we do not find a significant improvement in the scatter after the correction is applied.
+
+where $z_0$ acts as a normalisation factor which will scale the relation at this redshift. We chose the median redshift of the selected galaxies to apply the $\rm{SFR}$ correction shown in Fig.\,\ref{fig:sfr_vs_mass}.
 
 
 

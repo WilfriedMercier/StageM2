@@ -1,4 +1,10 @@
-\documentclass[a4paper, twoside, 12pt]{article}
+\documentclass[a4paper, twoside, 11pt]{article}
+ 
+\usepackage[T1]{fontenc}
+ 
+%bibliography package
+\usepackage{multicol}
+ 
 %text packages
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -19,7 +25,8 @@
 \usepackage{gensymb}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{siunitx}\usepackage{breakcites}
+\usepackage{siunitx}
+\usepackage{breakcites}
 
 % set margins for double-sided printing
 \usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm, head=15pt]{geometry} 
@@ -56,10 +63,10 @@
 \title{Evolution of galaxy dynamics over the last 10 Gyrs with MUSE/VLT}
 
 \newcommand{\thesisdate}{April 22, 2019}
-\newcommand{\thesisauthor}{Mercier Wilfried}
+\newcommand{\thesisauthor}{\textsc{Mercier} Wilfried}
 \newcommand{\thesistype}{Master Thesis}
-\newcommand{\supervisor}{Contini Thierry}
-\newcommand{\cosupervisor}{Epinat Benoît}
+\newcommand{\supervisor}{\textsc{Contini} Thierry}
+\newcommand{\cosupervisor}{\textsc{Epinat} Benoît}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DOCUMENT
@@ -79,6 +86,18 @@
 \thispagestyle{empty}
 \section*{Abstract}
 
+We present a morpho-kinematics study of $\sim 100$ star-forming galaxies located in low-density environment (so called "field" galaxies) with [OII] detection in the redshift range $0.4 < z < 1.4$ observed with MUSE, and with HST-ACS counterparts, in the COSMOS area. The main goal was to perform the kinematical modelling of a subsample of spatially resolved galaxies in an initial MUSE sample of $\sim 500$ galaxies at intermediate redshift in order to study the joint evolution of their morphological (size, inclination) and kinematical parameters (maximum rotation velocity and velocity dispersion) over a large range of stellar mass ($\sim 10^8 - 10^{11}$) and redshift. 
+
+In Section\,\ref{sec:Intro}, after introducing the field of extra-galactic astrophysics and explaining the importance of morpho-kinematics analysis on the understanding of galaxy evolution through cosmic time, we give a brief overview of Integral Field Spectroscopy concept and MUSE instrument.
+
+The methodology behind the selection of a spatially resolved sample of galaxies is given in Section\,\ref{sec:Sample_selection}. We retrieve from three different HST catalogues the morphological parameters of approximately half the field galaxies. We then check their consistency and robustness against each other, as well as against a morphological modelling performed by V. Abril-Melgarejo (PhD student at LAM, Marseille) on another sample of group and cluster galaxies observed in the same MUSE fields. After correcting for any bias, we select a subsample of $\sim 100$ spatially resolved galaxies with high enough signal-to-noise [OII] detection. According to this selection, we are loosing galaxies at $z \approx 1.4$, as well as those with a low stellar mass (low size) or which are nearly quenched (low [OII] $\rm{SNR}$).
+
+Velocities maps based on the [OII] emission-line doublet, and produced with the CAMEL software, are automatically cleaned of pixels with fake detection and then visually inspected. Remaining isolated pixels and/or with large velocity offsets ($\approx 50 - \SI{100}{\kilo\meter \, \second^{-1}}$) were also removed. We model the galaxies with a thin rotating disc  using a ramp model with $3$ free parameters, from which we derive inclination, beam-smearing and LSF corrected values for the maximum rotation velocity ($V_{\rm{max}}$) and the velocity dispersion ($\sigma_{\rm{v}}$). We give a description of the modelling in Section\,\ref{sec:kinematical_modelling}.
+
+We provide an early investigation of the link between the morphological and kinematical properties of our sample in Section \ref{sec:morpho_kin_analysis}. The $V_{\rm{max}}/ \sigma_{\rm{v}}$ distribution is looked upon. We find that $90\%$ of our sample are rotationally supported galaxies ($V_{\rm{max}}/ \sigma_{\rm{v}} > 2$) and give some insight into why we have a larger proportion than in other studies. We recover the Tully-Fisher Relation and investigate its potential evolution with redshift and galaxy size. A correlation is found between $\rm{SFR}$ and velocity dispersion which seems consistent with an origin of the velocity dispersion mainly driven by energy injection during star formation.
+
+Finally we conclude on the work accomplished during these three months and we give some indications about the next questions which will be investigated during the remaining and last month of internship at IRAP and potentially beyond if this internship is to be continued into a PhD.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,9 +109,19 @@
 \clearpage
 \listoffigures
 \listoftables
-\clearpage
-\afterpage{\blankpage}
 
+\newpage
+\section*{Acknowledgements}
+
+Before beginning this report, or finishing it should I say as it is the last bit I am working on, I would like to thank a few people for the opportunity which was given to me to do my Master 2 internship at IRAP. To start with, I would like to greatly thank my two supervisors, Thierry Contini and Benoit Epinat, for their continuous support throughout this internship, for the many corrections given to the report and all the interesting discussions which followed. I would also like to thank them for letting me go to LAM, in Marseille. This stay was a great opportunity to learn more about the kinematics of galaxies observed with integral field spectroscopy while visiting during the evenings a city I had never been to until now. Also a great thank to Valentina for teaching me how to properly use all the different IDL codes and for never hesitating to answer my questions.
+
+ I obviously thank everyone who has been reading and correcting mistakes and typos in the report, starting once again with Thierry and Benoit, but also Lina Issa who has been an attentive reader during this last month. Thanks to the Observatory of Paris and IRAP for allowing me to do this internship, as well as everyone in the GAHEC group.
+ 
+ Finally, I more generally thank everyone I have spent time with at IRAP. The other students from the Observatory of Paris, Aline, Cyril, Naïs, Mikel and Sylvain, Segolène for spending time in the same office and for supporting with me the intense music coming from outside during the last day of the report writing, and all the other interns and PhD students we spent time with during and after lunch.
+
+\newpage
+\null\thispagestyle{empty}
+\newpage
 \pagenumbering{arabic}
 
 
@@ -106,8 +135,14 @@
 % Sample selection
 \input{./Sections/Sample_selection}
 
-%Kinematical modelling
+% Kinematical modelling
 \input{./Sections/Kinematical_modelling}
+
+% Data nalysis
+	\input{./Sections/Analysis.tex}
+
+% Conclusion
+\input{./Sections/Conclusion.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %BIBLIOGRAPHY
@@ -116,9 +151,11 @@
 \clearpage
 \renewcommand*{\thesection}{}\textbf{}
 
-\def\bibfont{\small}
-\bibliographystyle{apacite}
-\bibliography{Bibliography.bib}
+\begin{multicols}{2}
+	\def\bibfont{\footnotesize}
+	\bibliographystyle{apacite}
+	{\footnotesize\bibliography{Bibliography.bib}}
+\end{multicols}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %APPENDICES
@@ -129,10 +166,21 @@
 \renewcommand*{\thesection}{\Alph{section}}\textbf{}
 
 % APPENDIX on morphological classification
-\input{Appendices/Appendix_1.tex}
+%\input{Appendices/Appendix_1.tex}
 
 % APPENDIX on PSF variation with wavelength
 \input{Appendices/Appendix_2.tex}
+
+% APPENDIX on kinematics modelling
+\input{Appendices/Appendix_Kinematics.tex}
+
+%APPENDIX on  morpho-kinematics plots
+\input{Appendices/Appendix_plots.tex}
+
+%APPENDIX on morpho-kinematics parameters
+\input{Appendices/Appendix_params.tex}
+
+
 
 
 \end{document}
