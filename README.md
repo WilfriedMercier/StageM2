@@ -1,5 +1,3 @@
-# [Main folder](https://github.com/WilfriedMercier/StageM2)
-
 Name| Langage | Description
 :---: | :---: | :---
 *Analyze\_field\_galaxies.ipynb* | Jupyter notebook | Notebook in which the kinematical and morphological properties of the field galaxies within our sample are analyzed.
@@ -241,14 +239,3 @@ __Note__: Column names must be exactly these ones.
 Such *.txt* files can either be made manually or can be automatically generated using *Create\_hst\_stamps\_input.ipynb*. 
 
 This notebook will use the *.vot* files in *[outputs/SelectedGals\_sep\_by\_cluster/](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)CGr\** folders which contain the selected galaxies in the corresponding cluster.
-
-# [PSF_data folder](https://github.com/WilfriedMercier/StageM2/tree/master/PSF_data)
-
-This folder contains tabular data related to spatial FWHM variations with the wavelength of observation and with the given observed group. This information can be found in the *.ods* files. 
-
-Programs for model fitting, generating final maps and their associated input *.txt* example files are also given in this folder.
-
-# *[outputs/region\_ds9](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/regions_ds9)*
-
-This is where the region files for ds9 with all the selected galaxies per MUSE field are.  There is a single short jupyter notebook called *create_regions.ipynb* which generates these files using the astropy and the multiprocessing libraries. Centre positions are gathered from the VOtable files in *[outputs/SelectedGals\_sep\_by\_cluster](https://github.com/WilfriedMercier/StageM2/tree/master/outputs/SelectedGals_sep_by_cluster)*.
-
