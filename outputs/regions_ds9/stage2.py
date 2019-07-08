@@ -539,7 +539,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24,
                 outputName=None, overwrite=False, tightLayout=True, linewidth=3,
                 fillstyle='full', unfilledFlag=False, alpha=1.0,
-                noCheck=False, legendNcols=1, removeGrid=False, markerSize=16, legendMarkerColor='black'):
+                noCheck=False, legendNcols=1, removeGrid=False, markerSize=16, legendMarkerColor='black',
+                norm=None):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
     This function has been developed to be used with numpy arrays or list of numpy arrays (structured or not). Working with astropy tables or any other kind of data structure might or might not work depending on its complexity and behaviour. 
@@ -603,6 +604,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         the size of the marker
     noCheck : boolean
         whether to check the given parameters all have the relevant shape or not
+    norm : Matplotlib Normalize instance
+        the norm of the colormap
     numPlot : int (3 digits)
         the subplot number
     outputName : str
@@ -670,10 +673,6 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         except:
             linestyle = [linestyle]*len(datax)
     try:
-        np.shape(color)[0]
-    except:
-        color = [color]*len(datax)
-    try:
         np.shape(marker)[0]
     except:
         marker = [marker]*len(datax)
@@ -732,8 +731,14 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         ax1.yaxis.set_label_position("right")
 
     #Plotting
-    tmp = None
+    tmp = []
     sct = None
+    
+    #Defining default bounds for scatter plot if not given
+    if cmapMin is None:
+        cmapMin = np.min(color[plotFlag==False])
+    if cmapMax is None:
+        cmapMax = np.max(color[plotFlag==False])
     
     for dtx, dty, mrkr, mrkrSz, clr, zrdr, lnstl, lbl, pltFlg, fllstl, lph, nflldFlg in zip(datax, datay, marker, markerSize, color, zorder, linestyle, label, plotFlag, fillstyle, alpha, unfilledFlag):
         edgecolor = clr
@@ -742,26 +747,18 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         else:
             facecolor=clr
         
-        print(pltFlg)
         if pltFlg:
-            tmp = plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, alpha=lph,
+            tmp.append(plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, alpha=lph,
                            linestyle=lnstl, markerfacecolor=facecolor, markeredgecolor=edgecolor,
-                           markersize=mrkrSz, linewidth=linewidth)
+                           markersize=mrkrSz, linewidth=linewidth))
         else:            
-            #Defining default bounds for scatter plot if not given
-            if cmapMin is None:
-                cmapMin = np.min(clr)
-            if cmapMax is None:
-                cmapMax = np.max(clr)
-                
             markerObject = MarkerStyle(marker=mrkr, fillstyle=fllstl)
             sct = plt.scatter(dtx, dty, label=lbl, marker=markerObject, zorder=zrdr, 
-                              cmap=cmap, vmin=cmapMin, vmax=cmapMax, alpha=lph, c=clr, s=mrkrSz)
+                              cmap=cmap, norm=norm, vmin=cmapMin, vmax=cmapMax, alpha=lph, c=clr, s=mrkrSz)
+            tmp.append(sct)
+            
             if nflldFlg:
                 sct.set_facecolor('none')
-            
-    if tmp is None:
-        tmp = sct
         
     if np.any(np.logical_not(plotFlag)) and showColorbar:
         col = plt.colorbar(sct, orientation=colorbarOrientation)
@@ -824,98 +821,3 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         plt.savefig(outputName, bbox_inches=bbox_inches)
     
     return ax1, tmp
-
-
-# a = np.array([0,1,2])
-# test = [a, a*2]
-
-# printSimpleStat(test)
-
-
-# from sys import exit
-# import importlib
-
-# from astropy.io.votable import is_votable, parse
-# from astropy.table import Table, vstack
-# from astropy.coordinates import SkyCoord
-# from astropy import units as u
-# import numpy as np
-
-# import matplotlib.pyplot as plt
-# from matplotlib.colors import from_levels_and_colors
-# from matplotlib.markers import MarkerStyle
-
-# pathdata = "outputs/"
-# data     = ["matching_fieldGals_Cassata_and_Zurich_corrected_radius.vot"]
-
-# for name in data:
-#     voTag = is_VOtable(pathdata+name)
-#     if voTag:        
-#         fullFileName = pathdata + name
-#         #Retrieving the data
-#         table = parse(fullFileName)
-#         full  = table.get_first_table()
-        
-#         print("Size of", name, "is", full.array.shape[0], "\n")
-#     else:
-#         exit("Exiting")
-        
-# catalog = parse(pathdata+data[0]).get_first_table().array
-# fields  = np.asarray(catalog.dtype.names)
-
-# #Checking that the matching procedure did not duplicate galaxies
-# checkDupplicates([catalog], names=["matching_fieldGals_Cassata_and_Zurich_corrected_radius.vot"])
-
-# #Converting to an astropy table for simplicity
-# table = Table(catalog)      
-
-# printSimpleStat(catalog['Separation_ZURICH'], unit=u.arcsec)
-# print("\nNumber of galaxies in matching catalog:", np.shape(table)[0])
-
-# #Converting size in arcsec
-# size     = table['Corrected_radius']*0.03
-# redshift = table['Z_MUSE']
-# lmass    = table['lmass']
-
-# m           = np.logical_and(maskToRemoveVal([size, lmass], astroTableMask=True),
-#                              maskToRemoveVal([size, lmass]))
-# size, lmass, redshift = applyMask([size, lmass, redshift], m)
-
-# findWhereIsValue([size, lmass])
-
-# plt.rcParams["figure.figsize"] = (12, 12) # (w, h)
-# f = plt.figure()
-# plt.subplots_adjust(wspace=0.45, hspace=0.05)
-
-# xline = [np.min(lmass), np.max(lmass)]
-# yline = [0.7, 0.7]
-# asManyPlots(111, [lmass, xline], [size, yline], xlabel=r'$\log_{10} (M/M_{\odot})$', ylabel=r'$R_{1/2} \ \ [\rm{arcsec}]$',
-#             plotFlag=[False, True], color=[redshift, 'black'], marker=['o', 'None'], linestyle=["None", 'dashed'],
-#             cmap='gist_heat', showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
-#             outputName='Plots/Selection_plots/size_vs_log10Mass.pdf', overwrite=False)
-
-# redshift = table['Z_MUSE']
-# fluxOII = table['OII_3726_FLUX'] + table['OII_3729_FLUX']
-# errflux = table['OII_3726_FLUX_ERR'] + table['OII_3729_FLUX_ERR']
-# m = maskToRemoveVal([fluxOII, errflux], astroTableMask=True)
-# m = np.logical_and(m, maskToRemoveVal([fluxOII, errflux]))
-
-# fluxOII, errflux, redshift = applyMask([fluxOII, errflux, redshift], m)
-
-# findWhereIsValue([fluxOII, errflux])
-# SNR     = fluxOII/errflux
-
-# plt.rcParams["figure.figsize"] = (12, 12) # (w, h)
-# f = plt.figure()
-# plt.subplots_adjust(wspace=0.45, hspace=0.05)
-
-# asManyPlots(111, [SNR], [fluxOII], xlabel=r'$\rm{SNR}$', ylabel=r'$\rm{Flux OII \ \ [10^{-20} erg \, s^{-1} \, cm^{-2}]}$',
-#             plotFlag=False, color=[redshift], marker='o', cmap='gist_heat', 
-#             showColorbar=True, colorbarLabel=r'$\rm{redshift \,\, z}$',
-#             outputName='Plots/Selection_plots/Flux_vs_SNR.pdf', overwrite=False)
-
-# asManyHists(111, [np.array([1,2,2,3]), np.array([1,1,1,2,3])], xlabel='xlabel', ylabel='ylabel', color=['blue', 'yellow'], histtype='stepfilled', label=['a', 'b'], showLegend=True, alpha=0.7, outputName='test.pdf', overwrite=True, cumulative=True)
-
-# asManyHists(111, np.array([1,2,2,3]), xlabel='xlabel', ylabel='ylabel', color='red', histtype='barstacked', label='a', showLegend=True)
-
-# plt.show()
