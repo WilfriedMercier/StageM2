@@ -677,7 +677,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     except:
         marker = [marker]*len(datax)
     try:
-        np.shape(markerSize[1])[0]
+        np.shape(markerSize)[0]
     except:
         markerSize = [markerSize]*len(datax)
     try: 
@@ -734,12 +734,6 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     tmp = []
     sct = None
     
-    #Defining default bounds for scatter plot if not given
-    if cmapMin is None:
-        cmapMin = np.min(color[plotFlag==False])
-    if cmapMax is None:
-        cmapMax = np.max(color[plotFlag==False])
-    
     for dtx, dty, mrkr, mrkrSz, clr, zrdr, lnstl, lbl, pltFlg, fllstl, lph, nflldFlg in zip(datax, datay, marker, markerSize, color, zorder, linestyle, label, plotFlag, fillstyle, alpha, unfilledFlag):
         edgecolor = clr
         if nflldFlg:
@@ -751,7 +745,14 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
             tmp.append(plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, alpha=lph,
                            linestyle=lnstl, markerfacecolor=facecolor, markeredgecolor=edgecolor,
                            markersize=mrkrSz, linewidth=linewidth))
-        else:            
+        else:     
+            #Defining default bounds for scatter plot if not given
+            if cmapMin is None:
+                cmapMin = np.min(color[plotFlag==False])
+            if cmapMax is None:
+                cmapMax = np.max(color[plotFlag==False])
+            
+            print("marker Size", mrkrSz)
             markerObject = MarkerStyle(marker=mrkr, fillstyle=fllstl)
             sct = plt.scatter(dtx, dty, label=lbl, marker=markerObject, zorder=zrdr, 
                               cmap=cmap, norm=norm, vmin=cmapMin, vmax=cmapMax, alpha=lph, c=clr, s=mrkrSz)
