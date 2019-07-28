@@ -1,0 +1,56 @@
+\clearpage
+\section{Additional information about kinematics}
+\label{sec:info_on_kinematics}
+
+\subsection{Velocity decomposition}
+\label{sec:vel_decompo}
+
+MUSE velocity maps only give us the projected component of the 3D velocity field on the line of sight. This value is computed from the mean of the best fit Gaussian profile of the observed line, and from the Doppler shift formula
+
+\begin{equation}
+	\frac{\lambda_{\rm{obs}} - \lambda_{\rm{em}}}{\lambda_{\rm{em}}} = \frac{v}{c}
+\end{equation}
+with $v$ positive if it recedes from us and negative if it approaches. This means the only measure we have is the radial component of the gas velocity within the pixels. If we use the same coordinate system as defined in \shortciteA{Epinat2008}, we can write the observed projected radial component $V_{\rm{obs}}$ as 
+
+\begin{equation}
+	V_{\rm{obs}} ( (x_c , y_c) , R, \theta , i, V_{\rm{sys}} , \rm{PA} ) = V_{\rm{sys}} + \left [ V_{\rm{rot}} (R) \cos \theta + V_{\rm{exp}} (R) \sin \theta \right ] \sin i + V_z (R) \cos i
+	\label{eq:v_obs}
+\end{equation}
+where $(x_c , y_c)$ is the galaxy centre position, $R$ the radial distance in the galactic plane, $i$ the galaxy inclination and $\rm{PA}$ the kinematical position angle (which might be different from the morphological one). In Eq.\,\ref{eq:v_obs}, the velocity components are
+\begin{enumerate*}[label={(\alph*)}]
+	\item $V_{\rm{sys}}$ the systematic velocity
+	\item $V_{\rm{rot}}$ the rotational velocity tangent to the plane of the galaxy
+	\item $V_{\rm{exp}}$ the expansion velocity oriented in the radial direction in the galactic plane
+	\item $V_z$ the vertical component normal to the plane.
+\end{enumerate*}
+The dependence on the kinematical $\rm{PA}$ is implicit since $\theta$ is defined as the angle in the galactic plane counted from the major axis. Thus, $\theta = 0 \degree$ ($90 \degree$) when we measure the velocity of a point on the major (minor) axis. The dependence on the galaxy centre position is also implicit as the radial distance is computed relative to this point. \\
+
+Both $R$ and $\theta$  can be easily derived given $(x_c , y_c)$ and the $\rm{PA}$, but the inclination of the galaxy must be know in advance. Indeed, models tend to poorly converge when the inclination is let free to vary. More importantly, assuming the rotation curve along the major axis reaches a maximum rotational velocity or at least a plateau, we deduce from Eq.\,\ref{eq:v_obs} that the maximum rotational velocity will scale as
+
+\begin{equation}
+	V_{\rm{obs}}^{\rm{max}} (R_{\rm{max}}, i) = V_{\rm{rot}} (R_{\rm{max}}) \sin i
+	\label{eq:V_obs_max}
+\end{equation}
+where $R_{\rm{max}}$ represents the radius where the maximum/plateau velocity is reached. Thus, just by looking at the rotation curve and by measuring its maximum value, we cannot raise the degeneracy between the inclination, which will lower the velocity, and the real maximum rotational velocity. Hence, it must be used as a fixed input.
+
+\subsection{Computing the disk scale length}
+\label{sec:disk_scale_length}
+
+The model returns the minimum, maximum, average and median values for the dispersion map once corrected of beam smearing effects. We also recover the rotation velocity on the plateau $V_{\rm{c}}$, as well as the radius at which it is reached $R_{\rm{c}}$ and the maximum radius where the fit was performed $R_{\rm{last}}$.\\
+
+We compute the maximum velocity at $2.2 R_{\rm{d}}$, with $R_{\rm{d}}$ the disc scale length. This is defined as the radial distance in a morphological exponential disc model where the intensity drops by a factor of $e$ with respect to the central value. From this definition, we can compute its scaling relation with $R_{1/2}$. From Eq.\,\ref{eq:SersicProfile} and given that $I(R_{\rm{d}}) = I_0 e^{-1} = I_{\rm{e}} e^{- b_1 ( R_{\rm{d}} / R_{\rm{e}} - 1 )}$, we find
+
+\begin{equation}
+	R_{\rm{e}} = b_1 R_{\rm{d}}
+\end{equation}
+where $b_1$ is the solution of the equation $2 \gamma (2, b_1) = \Gamma(2)$. This also translates as
+
+\begin{equation}
+	\int_0^{b_1} t e^{-t} dt = 1 - e^{-b_1} ( 1 + b_1) = 1/2
+\end{equation}
+for which we find a solution by making the substitution $b_1 \rightarrow - y - 1$ and using the Lambert W function
+
+\begin{equation}
+	b_1 = - \rm{W} \left ( - \frac{1}{2 e} \right ) - 1 \approx 1.67835
+\end{equation}
+where we only kept the positive, physically meaningful solution. 

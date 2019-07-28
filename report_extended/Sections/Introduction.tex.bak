@@ -1,0 +1,53 @@
+\clearpage
+\section{Introduction}
+\label{sec:Intro}
+
+\subsection{MUSE-VLT}
+\label{subsec:MUSE-VLT}
+
+\subsection{Photometry and spectroscopy in galactic astronomy}
+\label{subsec:diffPhotSpec}
+
+\subsubsection{Photometric data}
+\label{subsubsec:photo_data}
+
+Photometric and spectroscopic data have been widely used in the past to study questions related to the formation and evolution of galaxies at both low and high redshifts. Photometry is a key component in the study of galaxy light profiles and the location of the different stellar populations. 
+
+Assuming the galaxies are resolved enough within the images, photometry gives us information about their morphological properties and can tell us how their content is distributed wihtin them. Observations in different wavelenght ranges (bands) give us insight into the differences in distribution between young and old stars (observed respectively in UV and near IR rest-frame bands), which can in turn indicate the presence of HII regions\footnote{Clumpy regions of ionised hydrogen with high values of star formation.} (citation here). Typical wavelengths of observation include the visible spectrum, IR and UV. Ground based near-IR (NIR) photometry can also give information on the distribution of gas and old stars, and space based telescopes observing in the far-IR (FIR) can give us insight into the location of dust. Being able to determine the amount of dust along the line of sight, the so called column density defined as the 3D density integrated along the line of sight, is most important as it is mandatory to derive any robust estimates of absolute magnitude and Star Formation Rate (SFR).
+
+
+Photometric information of galaxies is generally obtained through model fitting of the measured light profile, though other methods exist involving growth of ellipses (cite here).                      
+
+The most commonly used model of galaxy shape, excluding more complicated cases such as irregular structures and merging galaxies, is a Sérsic profile which we generally write as \cite{PetroRadandMag}\footnote{The original definition $I(r) \propto e^{(r/\alpha)^{1/n}}$ from \shortcite{Sersic1963} was modified to Eq.\,\ref{eq:SersicProfile} because of the too small (immeasurable) values $\alpha$ generally takes.} 
+
+\begin{equation}
+    \label{eq:SersicProfile}
+    I(r) = I_{\rm{e}} e^{ - b_n \left ( \left  ( \frac{r}{R_{\rm{e}}}  \right )^{1/n} - 1 \right ) }
+\end{equation}
+
+where $r$ is the radial distance to the morphological centre of the galaxy, $n$ is referred as the Sérsic index of the galaxy, $R_e$ is the effective radius (also called half-light radius) which encloses 50\% of the total luminosity of the galaxy, $I_e$ is the intensity at the position $R_e$ and $b_n$ is a term which ensures that $R_e$ does enclose half the total luminosity. The formal definition of $b_n$ can be shown to be such that $2 \gamma (2n, b_n) = \Gamma (2n)$ with $\gamma$ and $\Gamma$ respectively the incomplete and complete gamma functions.
+
+This equation can simplify into two famous galaxy profiles:
+
+\begin{itemize}
+    \item an exponential disc for $n = 1$ which represents a disk-like/spiral\footnote{We will preferentially use the terms disk-like or late-type galaxies (with respect the Hubble sequence (insert original paper)) rather than spiral galaxies since many of the galaxies studied in the present work do show a disk morphology without clear spiral arm patterns.} galaxies
+    \item a de Vaucouleurs profile for $n = 4$ which describes elliptical (early-type) galaxies
+\end{itemize}
+
+This model with a freely varying Sérsic index is the one used in some morphology fitting softwares such as SExtractor \shortcite{SExtractor} or GIMD2D \shortcite{GIM2D}, but other forms can also be used from time to time. For instance one can use a combination of a bulge and a disk (with two fixed Sérsic indices instead of one allowed to freely vary) as in GALFIT \shortcite{}.
+
+Such morphological parameters derived from the morphology modelling can then be used in various ways, for instance to classify the galaxies as elliptical or spiral using their Sésic index or the most dominant feature between the disk and the bulge component if the modelling was a combination of both. \\ 
+
+If many observations have been carried out on the same sky patch in multiple bands, SED fitting techniques can also be used to derive other useful estimates such as the stellar mass, mean metallicity or star formation rate (citation here). Scaling relations between these parameters can then yield new information on the formation scenarios and physical processes at work, as well as constraining the current models of galaxy formation. However, such methods require long observations of the same sky area with different telescopes probing different wavelength ranges. Moreover, the derived parameters can be quite sensitive to the redshift of the observed structure which, for photometric redshifts, can have large errors if not enough bands are used. \\
+
+\subsubsection{Spectroscopy}
+
+On the other hand, astronomers have also been using spectroscopy to study galaxy chemistry, gas abundance and its kinematics. Contrary to photometry, these methods of observation do not yield an image of the galaxy but instead a spectrum of the pointed area. From such spectra, assuming we are able to unambiguously detect a spectral feature such as a ray ($\rm{H}{\alpha}$, $\rm{H}{\beta}$, OII, OIII, $\rm{Ly}\alpha$, etc.) or a line break (generally Lyman or Balmer break), we can infer a much more precise value for the galaxy redshift than in the photometry case as well as the gas velocity and its dispersion.
+
+The lack of imaging implied that these methods only returned overall information on the whole galaxies or in specific regions chosen in advance for their scientific interest (HII region for instance). This was the case until slit spectroscopy was developed. Opposite to what has been previously said, slit spectroscopy give spectroscopic information not in a single pixel, but along a slit. Galaxies studied with this method generally relied on prior morphological information 
+
+Such data gives us information about how the gas moves inside the galaxies and allows one to classify the galaxies based on their kinematics (rotationally supported or dispersion dominated, see insert citation here). \\
+
+In this context, it has become clear that a combination of these techniques would be necessary to better constrain the models of galaxy formation and to study in more details the origin of the observed scaling laws (SFR-mass, mass-size, luminosity-mass relations, etc.). In recent years, this has become possible with the advent of Integral Field Spectroscopy (IFS) astronomy. This technique combines the advantages of both photometry and spectroscopy by measuring the spectrum of each pixel in an image, yielding a 3D cube with two spatial and one spectral dimensions. Such instruments lacked for the most part a good spatial resolution until recently, but have now filled the gap. \\
+
+MUSE is an Integral Field Unit (IFU) mounted on the VLT in Chile which spans a $\SI{1}{\arcmin} \times \SI{1}{\arcmin}$ Field of View (FoV). Its wavelength range covers both the visual spectrum and the Near Infra-Red part (NIR), going from $\SI{4650}{\angstrom}$ to $\SI{9300}{\angstrom}$. This instrument was built with the main purpose of performing blind searches of sources in the field. The wavelength range is well suited to detect the OII doublet in the redshift range $0.4$, $1.4$.
