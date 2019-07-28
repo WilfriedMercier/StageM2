@@ -16,6 +16,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.markers import MarkerStyle
 
+from copy import copy
+
 def is_VOtable(fullname):
     """
     Check whether a file is a VOtable.
@@ -539,7 +541,8 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 colorbarLabelSize=24, colorbarTicksSize=24, colorbarTicksLabelsSize=24,
                 outputName=None, overwrite=False, tightLayout=True, linewidth=3,
                 fillstyle='full', unfilledFlag=False, alpha=1.0,
-                noCheck=False, legendNcols=1, removeGrid=False, markerSize=16, legendMarkerColor='black',
+                noCheck=False, legendNcols=1, removeGrid=False, markerSize=16, 
+                legendMarkerFaceColor=None, legendMarkerEdgeColor=None, legendLineColor=None,
                 norm=None):
     """
     Function which plots on a highly configurable subplot grid either with pyplot.plot or pyplot.scatter. A list of X and Y arrays can be given to have multiple plots on the same subplot.
@@ -586,8 +589,12 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         whether to hide the y ticks or not
     label : string
         legend label for the data
-    legendMarkerColor : list of strings/chars/RGBs
-        the color of each marker in the legend
+    legendLineColor : list of strings/chars/RGBs
+        the line color in the legend. If None, uses the plot color (for plots) and black (for scatter plots) as default.
+    legendMarkerEdgeColor : list of strings/chars/RGBs
+        the color of the edges of each marker in the legend. If None, uses the plot color (for plots) and black (for scatter plots) as default.
+    legendMarkerFaceColor : list of strings/chars/RGBs
+        the face color (color of the main area) of each marker in the legend. If None, uses the plot color (for plots) and black (for scatter plots) as default.
     legendNcols : int
         number of columns in the legend
     legendTextSize : int
@@ -605,7 +612,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
     noCheck : boolean
         whether to check the given parameters all have the relevant shape or not
     norm : Matplotlib Normalize instance
-        the norm of the colormap
+        the norm of the colormap (for log scale colormaps for instance)
     numPlot : int (3 digits)
         the subplot number
     outputName : str
@@ -680,10 +687,23 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         np.shape(markerSize)[0]
     except:
         markerSize = [markerSize]*len(datax)
+        
     try: 
-        np.shape(legendMarkerColor)[0]
+        np.shape(legendMarkerFaceColor)[0]
     except:
-        legendMarkerColor = [legendMarkerColor]*len(datax)
+        legendMarkerFaceColor = [legendMarkerFaceColor]*len(datax)
+        
+    try: 
+        np.shape(legendMarkerEdgeColor)[0]
+    except:
+        legendMarkerEdgeColor = [legendMarkerEdgeColor]*len(datax)
+        
+    try: 
+        np.shape(legendLineColor)[0]
+    except:
+        legendLineColor = [legendLineColor]*len(datax)
+        
+        
     try:
         np.shape(zorder)[0]
     except:
@@ -731,8 +751,11 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         ax1.yaxis.set_label_position("right")
 
     #Plotting
-    tmp = []
-    sct = None
+    tmp     = []
+    sct     = None
+    
+    #list of handels for the legend
+    handles = []
     
     for dtx, dty, mrkr, mrkrSz, clr, zrdr, lnstl, lbl, pltFlg, fllstl, lph, nflldFlg in zip(datax, datay, marker, markerSize, color, zorder, linestyle, label, plotFlag, fillstyle, alpha, unfilledFlag):
         edgecolor = clr
@@ -745,6 +768,7 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
             tmp.append(plt.plot(dtx, dty, label=lbl, marker=mrkr, color=clr, zorder=zrdr, alpha=lph,
                            linestyle=lnstl, markerfacecolor=facecolor, markeredgecolor=edgecolor,
                            markersize=mrkrSz, linewidth=linewidth))
+            handles.append(copy(tmp[-1][0]))
         else:     
             #Defining default bounds for scatter plot if not given
             if cmapMin is None:
@@ -776,9 +800,33 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
                 col.ax.set_xticklabels(colorbarTicksLabels, size=colorbarTicksLabelsSize)
             
     if showLegend:
-        leg = plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True, ncol=legendNcols)
-        for marker, mkclr in zip(leg.legendHandles, legendMarkerColor):
-            marker.set_color(mkclr)
+        
+        def isOrisNotNone(data, default):
+            for num, i in enumerate(data):
+                if i is None:
+                    data[num] = default
+            return data
+        
+        if pltFlg:
+                
+        
+            for h, mkfclr, mkeclr, lc, c in zip(handles, legendMarkerFaceColor, legendMarkerEdgeColor, legendLineColor, color):
+                mkfclr, mkeclr, lc = isOrisNotNone([mkfclr, mkeclr, lc], c)
+                
+                h.set_color(lc)
+                h.set_markerfacecolor(mkfclr)
+                h.set_markeredgecolor(mkeclr)
+            leg = plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True, 
+                             ncol=legendNcols, handles=handles)
+            
+        if not pltFlg:
+            leg = plt.legend(loc=locLegend, prop={'size': legendTextSize}, shadow=True, fancybox=True, 
+                             ncol=legendNcols)
+            
+            for marker, mkfclr, mkeclr, lc in zip(leg.legendHandles, legendMarkerFaceColor, legendMarkerEdgeColor, legendLineColor):
+                mkfclr = isOrisNotNone([mkfclr], 'black')
+                
+                marker.set_color(mkfclr)
         
     #Define Y limits if required
     if ylim[0] is not None:
@@ -822,3 +870,18 @@ def asManyPlots(numPlot, datax, datay, hideXlabel=False, hideYlabel=False, hideY
         plt.savefig(outputName, bbox_inches=bbox_inches)
     
     return ax1, tmp
+
+data = [0, 1, 2]
+
+asManyPlots(111, data, data,
+            plotFlag=[True],
+            linestyle=['-'],
+           # color=[data],
+            cmap='winter',
+            showLegend=True,
+            legendMarkerFaceColor='yellow',
+            legendMarkerEdgeColor='red',
+            legendLineColor='black',
+            markerSize=40,
+            color='green',
+            label='coucou')
